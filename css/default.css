@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+:root {
+    --bg-apple-gray : #f5f5f7;
+    --link-apple-blue : #0066cc;
+    --basic-black : #222222;
+    --basic-white : #ebebeb;
+    --basic-orange : #b64400;
+    --basic-gray : #86868b;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html, body {width: 100%; position: relative;}
+img {width: 100%; display: block;}
+video {width: 100%; height: 100%;}
+ul {list-style-type: none;}
+a {text-decoration: none; color: var(--link-apple-blue);}
