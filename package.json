@@ -1,0 +1,26 @@
+{
+  "name": "homepage",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/kskim5958/homepage#readme",
+  "bugs": {
+    "url": "https://github.com/kskim5958/homepage/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kskim5958/homepage.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@types/jquery": "^3.5.33"
+  }
+}
