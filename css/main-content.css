@@ -48,19 +48,22 @@ hr.color--gray {border-top: 1px solid #bbb; border-bottom: 1px solid #fff;}
 .content.equipment:last-of-type {padding-bottom: 7em;}
 
 .content.implant {padding-top: 5em;}
-.content.implant:nth-of-type(2) {background-color: var(--bg-apple-gray); padding-bottom: 5em; margin-top: 5em;}
+.content.implant:nth-of-type(3) {background-color: var(--bg-apple-gray); padding-bottom: 5em; margin-top: 5em;}
 .content.implant:last-of-type {padding-bottom: 7em;}
 
 .text--small {font-size: 0.9em;}
 .text--medium {font-size: 1em;}
 .text--large {font-size: 2em;}
 .text--small.text--bold {font-weight: 500;}
+.text--medium.text--bold {font-weight: 500;}
 .text--large.text--bold {font-weight: 600;}
 .text--gray {color: var(--basic-gray);}
 .text--orange {color: var(--basic-orange);}
 .text--blue {color: var(--link-apple-blue);}
 .text--navy--gradient {background-image: linear-gradient(-74deg, #467396, #1E4462); background-clip: text; -webkit-text-fill-color: transparent;}
 .text--green--gradient {background-image: linear-gradient(132deg, #10640F, #1ECF4C); background-clip: text; -webkit-text-fill-color: transparent;}
+.title--text--large {font-size: 3em; font-weight: 700; padding-bottom: 1em;}
+.title--text--large.wd1200 {width: 1200px; margin: auto;}
 
 .career {width: 1200px; margin: auto; display: flex; flex-direction: row; gap: 50px;}
 .career .title {flex: none;}
@@ -113,6 +116,13 @@ hr.color--gray {border-top: 1px solid #bbb; border-bottom: 1px solid #fff;}
 .implant .text__group.title .text--small {font-size: 1.2em;}
 .implant .text__group.title .text--large {line-height: 1.2;}
 .implant .text__group.title .text--large.text--bold {font-weight: 400;}
+
+.media__text__group {width: 1200px; margin: auto; display: flex; flex-direction: row; gap: 3em; align-items: center;}
+.media__text__group .media {flex: none; width: 60%; height: 400px; border-radius: 1em; overflow: hidden; position: relative;}
+.media__text__group .media img {width: 200%; position: absolute; top: -2%; left: 50%; transform: translate(-50%, 0);}
+.media__text__group .text__group {width: max-content; margin: unset;}
+.media__text__group .text__group .text--medium {font-size: 1.2em;}
+.media__text__group .text__group .text--large {font-family: "Gowun Batang", serif; padding: 0.5em 0;}
 
 .implant__component {display: flex; flex-direction: row; gap: 10em; justify-content: center; align-items: center;}
 .implant__component .title {width: 400px; margin: unset;}

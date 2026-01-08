@@ -1,6 +1,6 @@
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/herder.php'; ?>
 <div id="content__list">
-        <section class="content implant">
+    <section class="content implant">
         <ul class="text__group title">
             <li class="text--small text--bold text--orange">임플란트 이벤트</li>
             <li class="text--large text--bold">오스템임플란트&nbsp;<span>일반등급&nbsp;CA&nbsp;25만원&nbsp;이하</span></li>
@@ -8,6 +8,18 @@
             <li class="text--large text--bold">오스템임플란트&nbsp;<span>프리미엄&nbsp;SOI&nbsp;45만원&nbsp;이하</span></li>
             <li class="text--large text--bold">추가할인 최대 20%</li>
         </ul>
+    </section>
+    <section class="content implant">
+        <div class="media__text__group">
+            <div class="media">
+                <img src="/img/dr__lee__02.jpg" alt="홍원장님 이미지">
+            </div>
+            <div class="text__group">
+                <div class="text--medium text--bold text--orange">치의학박사 이상민 원장</div>
+                <div class="text--large">"임플란트는 치아 뿌리 역할을 하므로 턱뼈와 단단히 결합(골융합)되어야 하며, 이를 위해서는 충분한 골밀도와 골질이 필요합니다."</div>
+                <div class="text--small text--bold text--gray"><a href="">대표원장님 이력더보기</a></div>
+            </div>
+        </div>
     </section>
     <section class="content implant implant__component">
         <div class="title text__group">
@@ -48,6 +60,7 @@
         </ul>
     </section>
     <section class="content implant">
+        <div class="title--text--large wd1200">99%성공률의 임상결과</div>
         <ul class="b4bc__group__list">
             <li>
                 <?php
