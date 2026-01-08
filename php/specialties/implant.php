@@ -32,7 +32,7 @@
                     <img src="/img/implant__fixture__01.png" alt="임플란트 픽스쳐">
                 </div>
                 <div class="text__group">
-                    <div class="text--small text--bold text--orange">스크류</div>
+                    <div class="text--small text--bold text--orange">임플란트 스크류</div>
                     <div class="text--large text--bold">뿌리역할</div>
                     <div class="text--medium">치아의 뿌리를 역할합니다.</div>
                 </div>
@@ -42,7 +42,7 @@
                     <img src="/img/implant__abutment__01.png" alt="임플란트 어버트먼트">
                 </div>
                 <div class="text__group">
-                    <div class="text--small text--bold text--orange">어버트먼트</div>
+                    <div class="text--small text--bold text--orange">임플란트 어버트먼트</div>
                     <div class="text--large text--bold">중간연결장치</div>
                     <div class="text--medium">치아의 뿌리와 인공치아의 연결하는 장치입니다.</div>
                 </div>
@@ -52,7 +52,7 @@
                     <img src="/img/implant__zirconia__01.png" alt="임플란트 크라운">
                 </div>
                 <div class="text__group">
-                    <div class="text--small text--bold text--orange">크라운</div>
+                    <div class="text--small text--bold text--orange">임플란트 크라운</div>
                     <div class="text--large text--bold">인공치아</div>
                     <div class="text--medium">음식물을 씹는 눈에 보여지는 치아형태입니다.</div>
                 </div>
@@ -64,12 +64,12 @@
         <ul class="b4bc__group__list">
             <li>
                 <?php
-                    $croot = $_SERVER["DOCUMENT_ROOT"];
-                    $img_b = '/img/comparison__implant__01__before.jpg';
-                    $img_a = '/img/comparison__implant__01__after.jpg';
-                    $img_i = getimagesize($croot . $img_b);
-                    $img_w = $img_i[0];
-                    $img_h = $img_i[1];
+                $croot = $_SERVER["DOCUMENT_ROOT"];
+                $img_b = '/img/comparison__implant__01__before.jpg';
+                $img_a = '/img/comparison__implant__01__after.jpg';
+                $img_i = getimagesize($croot . $img_b);
+                $img_w = $img_i[0];
+                $img_h = $img_i[1];
                 ?>
                 <div class="media" data-width="<?php echo $img_w ?>" data-height="<?php echo $img_h ?>">
                     <div class="media__b4" style="background-image: url(<?php echo $img_b ?>);">
@@ -85,12 +85,12 @@
             </li>
             <li>
                 <?php
-                    $croot = $_SERVER["DOCUMENT_ROOT"];
-                    $img_b = '/img/comparison__implant__01__before.jpg';
-                    $img_a = '/img/comparison__implant__01__after.jpg';
-                    $img_i = getimagesize($croot . $img_b);
-                    $img_w = $img_i[0];
-                    $img_h = $img_i[1];
+                $croot = $_SERVER["DOCUMENT_ROOT"];
+                $img_b = '/img/comparison__implant__01__before.jpg';
+                $img_a = '/img/comparison__implant__01__after.jpg';
+                $img_i = getimagesize($croot . $img_b);
+                $img_w = $img_i[0];
+                $img_h = $img_i[1];
                 ?>
                 <div class="media" data-width="<?php echo $img_w ?>" data-height="<?php echo $img_h ?>">
                     <div class="media__b4" style="background-image: url(<?php echo $img_b ?>);">
@@ -106,12 +106,12 @@
             </li>
             <li>
                 <?php
-                    $croot = $_SERVER["DOCUMENT_ROOT"];
-                    $img_b = '/img/comparison__implant__01__before.jpg';
-                    $img_a = '/img/comparison__implant__01__after.jpg';
-                    $img_i = getimagesize($croot . $img_b);
-                    $img_w = $img_i[0];
-                    $img_h = $img_i[1];
+                $croot = $_SERVER["DOCUMENT_ROOT"];
+                $img_b = '/img/comparison__implant__01__before.jpg';
+                $img_a = '/img/comparison__implant__01__after.jpg';
+                $img_i = getimagesize($croot . $img_b);
+                $img_w = $img_i[0];
+                $img_h = $img_i[1];
                 ?>
                 <div class="media" data-width="<?php echo $img_w ?>" data-height="<?php echo $img_h ?>">
                     <div class="media__b4" style="background-image: url(<?php echo $img_b ?>);">
@@ -127,12 +127,12 @@
             </li>
             <li>
                 <?php
-                    $croot = $_SERVER["DOCUMENT_ROOT"];
-                    $img_b = '/img/comparison__implant__01__before.jpg';
-                    $img_a = '/img/comparison__implant__01__after.jpg';
-                    $img_i = getimagesize($croot . $img_b);
-                    $img_w = $img_i[0];
-                    $img_h = $img_i[1];
+                $croot = $_SERVER["DOCUMENT_ROOT"];
+                $img_b = '/img/comparison__implant__01__before.jpg';
+                $img_a = '/img/comparison__implant__01__after.jpg';
+                $img_i = getimagesize($croot . $img_b);
+                $img_w = $img_i[0];
+                $img_h = $img_i[1];
                 ?>
                 <div class="media" data-width="<?php echo $img_w ?>" data-height="<?php echo $img_h ?>">
                     <div class="media__b4" style="background-image: url(<?php echo $img_b ?>);">
@@ -146,7 +146,24 @@
                     <div class="text--medium text--gray">더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</div>
                 </div>
             </li>
-        </ul>            
+        </ul>
+    </section>
+    <section class="content implant">
+        <!-- Swiper -->
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">Slide 1</div>
+                <div class="swiper-slide">Slide 2</div>
+                <div class="swiper-slide">Slide 3</div>
+                <div class="swiper-slide">Slide 4</div>
+                <div class="swiper-slide">Slide 5</div>
+                <div class="swiper-slide">Slide 6</div>
+                <div class="swiper-slide">Slide 7</div>
+                <div class="swiper-slide">Slide 8</div>
+                <div class="swiper-slide">Slide 9</div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
     </section>
 </div><!-- #Content-List -->
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/footer.php'; ?>
