@@ -1,7 +1,5 @@
 @import url('default.css');
 
-hr {border: none;}
-
 nav {
     width: 100%;
     font-family: "Noto Sans KR", sans-serif;
@@ -14,17 +12,14 @@ nav {
     left: 0;
     z-index: 1;
 }
-nav.Text--small {font-size: 0.8em;}
-nav .nav__inner {width: 1400px; display: flex; flex-direction: row; justify-content: space-between; margin: auto;}
-nav .Menu {display: flex; flex-direction: row;}
-nav .Menu li {position: relative;}
-nav .Menu__main {padding: 12px 20px;}
-nav .Menu__main a {color: var(--basic-black);}
-nav .Menu li ul {position: absolute;}
 
-hr.wd--90 {width: 90%; margin: auto;}
-hr.mg--type--01 {margin: 5em auto;}
-hr.color--gray {border-top: 1px solid #bbb; border-bottom: 1px solid #fff;}
+nav {font-size: 0.8em;}
+nav .nav__inner {width: 1400px; display: flex; flex-direction: row; justify-content: space-between; margin: auto;}
+nav .menu {display: flex; flex-direction: row;}
+nav .menu li {position: relative;}
+nav .menu__main {padding: 12px 20px;}
+nav .menu__main a {color: var(--basic-black);}
+nav .menu li ul {position: absolute;}
 
 #content__list {width: 100%; position: relative;}
 
@@ -113,26 +108,27 @@ hr.color--gray {border-top: 1px solid #bbb; border-bottom: 1px solid #fff;}
 
 .implant .text__group {width: 1200px; margin: auto;}
 .implant .text__group li:first-of-type {padding-bottom: 1em;}
-.implant .text__group.title .text--small {font-size: 1.2em;}
-.implant .text__group.title .text--large {line-height: 1.2;}
-.implant .text__group.title .text--large.text--bold {font-weight: 400;}
+.implant .text__group .text--large {line-height: 1.4;}
+.implant .text__group .text--large.text--bold {font-weight: 500;}
 
 .media__text__group {width: 1200px; margin: auto; display: flex; flex-direction: row; gap: 3em; align-items: center;}
 .media__text__group .media {flex: none; width: 60%; height: 400px; border-radius: 1em; overflow: hidden; position: relative;}
 .media__text__group .media img {width: 200%; position: absolute; top: -2%; left: 50%; transform: translate(-50%, 0);}
-.media__text__group .text__group {width: max-content; margin: unset;}
-.media__text__group .text__group .text--medium {font-size: 1.2em;}
-.media__text__group .text__group .text--large {font-family: "Gowun Batang", serif; padding: 0.5em 0;}
+.media__text__group .text__group {width: max-content; margin: unset; font-family: "Gowun Batang", serif;}
+.media__text__group .text__group .text--large {padding: 0.5em 0;}
 
 .implant__component {display: flex; flex-direction: row; gap: 10em; justify-content: center; align-items: center;}
-.implant__component .title {width: 400px; margin: unset;}
-.implant__component .title.text__group .text--large {font-size: 2.5em;}
-.implant__component .title.text__group .text--large.text--bold {font-weight: 700;}
-.implant__component .title.text__group .text--medium {font-size: 1.4em; padding-top: 1em;}
+.implant__component .text__group {width: 400px; margin: unset;}
+.implant__component .text__group .text--large {font-size: 2.5em;}
+.implant__component .text__group .text--large.text--bold {font-weight: 700;}
+.implant__component .text__group .text--medium {font-size: 1.4em; padding-top: 1em;}
 .component__list {display: flex; flex-direction: column; gap: 3em;}
 .component__list .component {display: flex; flex-direction: row; gap: 2em; align-items: center; justify-content: start;}
 .component__list .media {width: 150px; position: relative; transform: scaleY(-1);}
 .component__list .text__group {width: max-content; margin: unset;}
+.component__list .text__group .text--large {font-size: 1.6em;}
+.component__list .text__group .text--large.text--bold {font-weight: 500;}
+.component__list .text__group .text--medium {font-size: 1.2em; padding-top: 0.5em;}
 
 .b4bc__group__list {width: 1200px; margin: auto; display: flex; flex-wrap: wrap; align-content: start; gap: 4em 2em;}
 .b4bc__group__list .media {width: 100%; border-radius: 1em; overflow: hidden; position: relative;}
@@ -197,26 +193,16 @@ hr.color--gray {border-top: 1px solid #bbb; border-bottom: 1px solid #fff;}
     width: 100%;
 }
 
+@media (max-width : 1600px) {
+    .text--large {font-size: 1.6em;}
+
+    .implant .text__group {width: 1000px;}
+    .media__text__group {width: 1000px;}
+    .implant__component .text__group {width: 300px;}
+    .component__list .media {width: 100px;}
+    .b4bc__group__list {width: 1000px;}
+}
 
 @media (max-width : 400px) {
-    #Content-List {font-size: 14px;}
 
-    .Guide__Map {width: 90%; height: 350px; margin: auto; border-radius: 10px;}
-    .Guide__Details {width: 80%; flex-direction: column; gap: 40px;}
-    .Guide__Details .Column {width: 100%;}
-    .Guide__Details .Text--large {padding-bottom: 10px;}
-
-    .Career {width: 90%; flex-direction: column; gap: 30px; padding: 80px 0;}
-
-    .Comment-List {width: 90%; flex-direction: column;}
-
-    .Doctor {width: 80%; flex-direction: column; gap: 40px;}
-
-    .Equipment__title {width: 80%; flex-direction: column;}
-    .Equipment__title li:first-of-type {padding-bottom: 2em;}
-    .Equipment__list {width: 100%; gap: 40px;}
-    .Equipment__item .Media {border-radius: 0;}
-
-    .Implant__title {width: 80%; flex-direction: column;}
-    .Implant__title li:first-of-type {padding-bottom: 2em;}
 }

@@ -10,8 +10,8 @@ $(document).ready(function () {
 
     // 공통부분 start
     try {
-        $('nav .Logo').css('width', (logoWidth * $('nav').height()) / logoHeight + 'px');
-        $('nav .Logo img').attr('src', logoPath);
+        $('nav .logo').css('width', (logoWidth * $('nav').height()) / logoHeight + 'px');
+        $('nav .logo img').attr('src', logoPath);
         console.log('메뉴(nav) PHP에서 logoWidth, logoPath 초기화 : success');
     } catch (error) {
         console.log('메뉴(nav) PHP에서 logoWidth, logoPath 초기화 : ' + error);
