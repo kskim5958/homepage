@@ -1,12 +1,22 @@
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/herder.php'; ?>
 <div id="content__list">
-    <section class="content implant">
+    <section class="content implant implant__type">
         <ul class="text__group">
-            <li class="text--small text--bold text--orange">임플란트 이벤트</li>
-            <li class="text--large text--bold">오스템임플란트 일반등급 CA 25만원 이하</li>
-            <li class="text--large text--bold">오스템임플란트 프리미엄 BA 35만원 이하</li>
-            <li class="text--large text--bold">오스템임플란트 프리미엄 SOI 45만원 이하</li>
-            <li class="text--large text--bold">추가할인 최대 20%</li>
+            <li>
+                <div class="text--small text--bold text--orange">오스템임플란트</div>
+                <div class="text--large text--bold text--navy--gradient">칼슘임플란트 CA</div>
+                <div class="text--medium text--gray">Calcium Activated (칼슘 활성화)의 약자로, 표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트를 의미합니다.</div>
+            </li>
+            <li>
+                <div class="text--small text--bold text--orange">오스템임플란트</div>
+                <div class="text--large text--bold text--green--gradient">바이오임플란트 BA</div>
+                <div class="text--medium text--gray">Bio-HA(바이오-하이드록시아파타이트)의 약자로, 표면에 생체 흡수성 재료인 나노 크기의 아파타이트(Apatite)를 코팅하여 초기 골 유착 및 혈액 젖음성을 극대화한 고성능 임플란트 표면 처리 기술을 의미합니다.</div>
+            </li>
+            <li>
+                <div class="text--small text--bold text--orange">오스템임플란트</div>
+                <div class="text--large text--bold text--navy--gradient">칼슘임플란트 SOI</div>
+                <div class="text--medium text--gray">Super Osseointegration의 약자로, '뼈와 가장 잘 붙는다'는 의미이며 오스템 임플란트의 최상위 등급 모델로, 하이드록시아파타이트(HA) 성분 코팅과 UV 처리를 통해 친수성과 혈액 젖음성을 극대화하여 빠른 골유착과 치유 기간 단축을 돕는 프리미엄 임플란트 표면 기술입니다.</div>
+            </li>
         </ul>
     </section>
     <section class="content implant">

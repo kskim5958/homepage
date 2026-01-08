@@ -106,10 +106,10 @@ nav .menu li ul {position: absolute;}
 .equipment .media__group__list .media {overflow: hidden;}
 .equipment .media__group__list .text__group {padding-top: 1em;}
 
-.implant .text__group {width: 1200px; margin: auto;}
-.implant .text__group li:first-of-type {padding-bottom: 1em;}
-.implant .text__group .text--large {line-height: 1.4;}
-.implant .text__group .text--large.text--bold {font-weight: 500;}
+.implant__type .text__group {width: 1200px; margin: auto; display: flex; flex-direction: row; gap: 2em;}
+.implant__type .text__group li {width: 33.3333%;}
+.implant__type .text__group .text--large {font-size: 1.6em; line-height: 1.4;}
+.implant__type .text__group .text--medium {padding-top: 1em;}
 
 .media__text__group {width: 1200px; margin: auto; display: flex; flex-direction: row; gap: 3em; align-items: center;}
 .media__text__group .media {flex: none; width: 60%; height: 400px; border-radius: 1em; overflow: hidden; position: relative;}
@@ -117,20 +117,21 @@ nav .menu li ul {position: absolute;}
 .media__text__group .text__group {width: max-content; margin: unset; font-family: "Gowun Batang", serif;}
 .media__text__group .text__group .text--large {padding: 0.5em 0;}
 
-.implant__component {display: flex; flex-direction: row; gap: 10em; justify-content: center; align-items: center;}
-.implant__component .text__group {width: 400px; margin: unset;}
+.implant__component {display: flex; flex-direction: row; gap: 5em; justify-content: center; align-items: center;}
+.implant__component .text__group {width: 300px; margin: unset;}
 .implant__component .text__group .text--large {font-size: 2.5em;}
 .implant__component .text__group .text--large.text--bold {font-weight: 700;}
 .implant__component .text__group .text--medium {font-size: 1.4em; padding-top: 1em;}
 .component__list {display: flex; flex-direction: column; gap: 3em;}
-.component__list .component {display: flex; flex-direction: row; gap: 2em; align-items: center; justify-content: start;}
+.component__list .component {display: flex; flex-direction: row; gap: 2em; align-items: center; justify-content: space-between;}
 .component__list .media {width: 150px; position: relative; transform: scaleY(-1);}
-.component__list .text__group {width: max-content; margin: unset;}
+.component__list .component:first-of-type .media {width: 120px;}
+.component__list .text__group {width: 150px; margin: unset;}
 .component__list .text__group .text--large {font-size: 1.6em;}
 .component__list .text__group .text--large.text--bold {font-weight: 500;}
 .component__list .text__group .text--medium {font-size: 1.2em; padding-top: 0.5em;}
 
-.b4bc__group__list {width: 1200px; margin: auto; display: flex; flex-wrap: wrap; align-content: start; gap: 4em 2em;}
+.b4bc__group__list {width: 1200px; margin: auto; display: flex; flex-wrap: wrap; align-content: start; gap: 5em 3em;}
 .b4bc__group__list .media {width: 100%; border-radius: 1em; overflow: hidden; position: relative;}
 .b4bc__group__list .text__group {padding-top: 1em; width: 100%;}
 .b4bc__group__list .media .media__bc {width: 50%; height: 100%; background-size: cover; position: relative; top: 0; left: 0;}
@@ -194,13 +195,6 @@ nav .menu li ul {position: absolute;}
 }
 
 @media (max-width : 1600px) {
-    .text--large {font-size: 1.6em;}
-
-    .implant .text__group {width: 1000px;}
-    .media__text__group {width: 1000px;}
-    .implant__component .text__group {width: 300px;}
-    .component__list .media {width: 100px;}
-    .b4bc__group__list {width: 1000px;}
 }
 
 @media (max-width : 400px) {
