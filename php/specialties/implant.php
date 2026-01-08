@@ -148,19 +148,58 @@
             </li>
         </ul>
     </section>
-    <section class="content implant">
+    <section class="content implant materials">
         <!-- Swiper -->
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">Slide 1</div>
-                <div class="swiper-slide">Slide 2</div>
-                <div class="swiper-slide">Slide 3</div>
-                <div class="swiper-slide">Slide 4</div>
-                <div class="swiper-slide">Slide 5</div>
-                <div class="swiper-slide">Slide 6</div>
-                <div class="swiper-slide">Slide 7</div>
-                <div class="swiper-slide">Slide 8</div>
-                <div class="swiper-slide">Slide 9</div>
+                <div class="swiper-slide">
+                    <div class="media">
+                        <video muted autoplay loop>
+                            <source src="/video/video__trios__02.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="text__group">
+                        <div class="text--small text--bold text--orange">임플란트</div>
+                        <div class="text--large text--bold">당일 임플란트</div>
+                        <div class="text--medium text--gray">더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="media">
+                        <video muted autoplay loop>
+                            <source src="/video/video__trios__02.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="text__group">
+                        <div class="text--small text--bold text--orange">임플란트</div>
+                        <div class="text--large text--bold">당일 임플란트</div>
+                        <div class="text--medium text--gray">더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="media">
+                        <video muted autoplay loop>
+                            <source src="/video/video__trios__02.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="text__group">
+                        <div class="text--small text--bold text--orange">임플란트</div>
+                        <div class="text--large text--bold">당일 임플란트</div>
+                        <div class="text--medium text--gray">더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="media">
+                        <video muted autoplay loop>
+                            <source src="/video/video__trios__02.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="text__group">
+                        <div class="text--small text--bold text--orange">임플란트</div>
+                        <div class="text--large text--bold">당일 임플란트</div>
+                        <div class="text--medium text--gray">더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</div>
+                    </div>
+                </div>
             </div>
             <div class="swiper-pagination"></div>
         </div>

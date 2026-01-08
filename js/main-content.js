@@ -57,6 +57,8 @@ $(document).ready(function () {
                     });
                 }
             }
+            element = $('.materials .swiper-slide .media');
+            element.css('height', (element.width() * 9) / 16 + 'px');
             break;
         default:
             break;

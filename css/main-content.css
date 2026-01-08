@@ -186,38 +186,16 @@ hr.color--gray {border-top: 1px solid #bbb; border-bottom: 1px solid #fff;}
     box-shadow: -1207px 0 0 1200px #f50;
 }
 
-    .swiper {
-      width: 100%;
-      height: 400px;
-    }
+.materials .swiper {
+    width: 1200px;
+}
 
-    .swiper-slide {
-      text-align: center;
-      font-size: 18px;
-      background: #444;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .swiper-slide img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .swiper-slide {
-      width: 80%;
-    }
-
-    .swiper-slide:nth-child(2n) {
-      width: 60%;
-    }
-
-    .swiper-slide:nth-child(3n) {
-      width: 40%;
-    }
+.materials .swiper-slide {
+    width: 40%;
+}
+.materials .swiper-slide .media, .materials .swiper-slide .text__group {
+    width: 100%;
+}
 
 
 @media (max-width : 400px) {
