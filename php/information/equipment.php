@@ -1,5 +1,5 @@
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/herder.php'; ?>
-<div id="Content-List">
+<div id="content__list">
     <section class="content equipment">
         <div class="text__group__list">
             <div class="text__group">

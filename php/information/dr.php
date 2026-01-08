@@ -1,5 +1,5 @@
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/herder.php'; ?>
-<div id="Content-List">
+<div id="content__list">
     <section class="content dr">
         <div class="career">
             <div class="title text--large text--bold">경력 키워드</div>

@@ -1,5 +1,5 @@
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/herder.php'; ?>
-<div id="Content-List">
+<div id="content__list">
     <section class="content map">
         <div class="text__title">
             <div class="text--large text--bold">미소더예쁨치과</div>
