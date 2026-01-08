@@ -18,9 +18,19 @@ $(document).ready(function () {
     $('#Content-List').css('margin-top', navHeight + 'px');
     // 공통부분 end
 
-    let element = $('.Media__before__after');
+    let element = $('.b4bc__group__list .media');
     if (element.length != 0) {
-        element.each(function (index, lk_element) {
+        element.each(function (index) {
+            let img_original_width = parseInt($(this).attr('data-width'));
+            let img_original_height = parseInt($(this).attr('data-height'));
+            let element_width = element.eq(index).width();
+            element.eq(index).css('height', (img_original_height * element_width) / img_original_width + 'px');
+        });
+    }
+
+    element = $('.Media__before__after');
+    if (element.length != 0) {
+        element.each(function (index) {
             let img_original_width = parseInt($(this).attr('data-width'));
             let img_original_height = parseInt($(this).attr('data-height'));
             let element_width = element.eq(index).width();

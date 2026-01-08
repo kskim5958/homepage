@@ -106,6 +106,57 @@ hr.color--gray {border-top: 1px solid #bbb; border-bottom: 1px solid #fff;}
 .implant .text__group .text--large {font-size: 1.6em; line-height: 1.2;}
 .implant .text__group .text--large.text--bold {font-weight: 500;}
 
+.b4bc__group__list {width: 700px; margin: auto;}
+.b4bc__group__list .media {width: 100%; position: relative;}
+.b4bc__group__list .media .media__bc {width: 50%; height: 100%; background-size: cover; position: relative; top: 0; left: 0;}
+.b4bc__group__list .media .media__b4 {width: 100%; height: 100%; background-size: cover; position: relative; top: 0; left: 0;}
+
+.b4bc__group__list .media input[type=range] {
+    width: 80%;
+    -webkit-appearance: none;
+    appearance: none; 
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+    border-radius: 16px;
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.b4bc__group__list .media input[type=range]::-webkit-slider-runnable-track {
+    height: 15px;
+    background: #ccc;
+    border-radius: 16px;
+}
+
+.b4bc__group__list .media input[type=range]::-moz-range-track {
+    height: 15px;
+    background: #ccc;
+    border-radius: 16px;
+}
+
+.b4bc__group__list .media input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none; 
+    height: 15px;
+    width: 15px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 2px solid #f50;
+    box-shadow: -1207px 0 0 1200px #f50;
+}
+
+.b4bc__group__list .media input[type=range]::-moz-range-thumb {
+    height: 15px;
+    width: 15px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid #f50;
+    box-shadow: -1207px 0 0 1200px #f50;
+}
+
 .Implant__title {width: 1000px; display: flex; flex-direction: row; gap: 2em; margin: auto;}
 .Implant__title li {flex: 1;}
 .Implant__title li:first-of-type {flex: 1.5;}
@@ -129,55 +180,6 @@ hr.color--gray {border-top: 1px solid #bbb; border-bottom: 1px solid #fff;}
 .Pricing__Information {width: 1000px; margin: auto;}
 .Pricing__Information .Text--small {font-size: 0.9em; font-weight: 500; color: var(--basic-orange);}
 .Pricing__Information .Text--large {font-size: 2em; font-weight: 600; line-height: 1.2;}
-
-.Media__before__after {width: 60%; margin: auto; position: relative; flex: none; border-radius: 1em; overflow: hidden;}
-.Media__before__after .Media__before {width: 100%; height: 100%; background-size: cover; position: relative; top: 0; left: 0; background-color: #10640F;}
-.Media__before__after .Media__after {width: 50%; height: 100%; background-size: cover; position: relative; top: 0; left: 0; background-color: #467396;}
-.Media__before__after input[type=range] {
-    width: 80%;
-    -webkit-appearance: none;
-    appearance: none; 
-    cursor: pointer;
-    outline: none;
-    overflow: hidden;
-    border-radius: 16px;
-    position: absolute;
-    bottom: 5%;
-    left: 50%;
-    transform: translate(-50%, 0);
-}
-
-.Media__before__after input[type=range]::-webkit-slider-runnable-track {
-    height: 15px;
-    background: #ccc;
-    border-radius: 16px;
-}
-
-.Media__before__after input[type=range]::-moz-range-track {
-    height: 15px;
-    background: #ccc;
-    border-radius: 16px;
-}
-
-.Media__before__after input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none; 
-    height: 15px;
-    width: 15px;
-    background-color: #fff;
-    border-radius: 50%;
-    border: 2px solid #f50;
-    box-shadow: -1207px 0 0 1200px #f50;
-}
-
-.Media__before__after input[type=range]::-moz-range-thumb {
-    height: 15px;
-    width: 15px;
-    background-color: #fff;
-    border-radius: 50%;
-    border: 1px solid #f50;
-    box-shadow: -1207px 0 0 1200px #f50;
-}
 
 @media (max-width : 400px) {
     #Content-List {font-size: 14px;}
