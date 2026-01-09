@@ -224,5 +224,5 @@
             <div class="swiper-pagination"></div>
         </div>
     </section>
-</div><!-- #Content-List -->
+</div>
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/footer.php'; ?>
