@@ -28,7 +28,7 @@ nav .menu li ul {position: absolute;}
     font-optical-sizing: none;
     font-size: 16px;
     font-weight: 350;
-    line-height: 1.4;
+    line-height: 1.5;
     color: var(--basic-black);
     word-break: break-all;
 }
@@ -43,7 +43,6 @@ nav .menu li ul {position: absolute;}
 .content.equipment:last-of-type {padding-bottom: 7em;}
 
 .content.implant {padding-top: 5em;}
-.content.implant:nth-of-type(3) {background-color: var(--bg-apple-gray); padding-bottom: 5em; margin-top: 5em;}
 .content.implant:last-of-type {padding-bottom: 7em;}
 
 .text--small {font-size: 0.9em;}
@@ -107,29 +106,36 @@ nav .menu li ul {position: absolute;}
 .equipment .media__group__list .text__group {padding-top: 1em;}
 
 .implant__type .text__group {width: 1200px; margin: auto; display: flex; flex-direction: row; gap: 2em;}
-.implant__type .text__group li {width: 33.3333%;}
+.implant__type .text__group li {width: 33.3333%; position: relative;}
 .implant__type .text__group .text--large {font-size: 1.6em; line-height: 1.4;}
 .implant__type .text__group .text--medium {padding-top: 1em;}
 
-.media__text__group {width: 1200px; margin: auto; display: flex; flex-direction: row; gap: 3em; align-items: center;}
-.media__text__group .media {flex: none; width: 60%; height: 400px; border-radius: 1em; overflow: hidden; position: relative;}
-.media__text__group .media img {width: 200%; position: absolute; top: -2%; left: 50%; transform: translate(-50%, 0);}
-.media__text__group .text__group {width: max-content; margin: unset; font-family: "Gowun Batang", serif;}
-.media__text__group .text__group .text--large {padding: 0.5em 0;}
+.content__group.type__1 .text__group {text-align: center; padding-bottom: 3em;}
+.content__group.type__1 .text__group .text--large {font-size: 3em;}
+.content__group.type__1 .text__group .text--medium {font-size: 1.2em; width: 500px; margin: auto;}
+.content__group.type__1 .media {width: 80%; border-radius: 0 1em 1em 0; overflow: hidden;}
 
-.implant__component {display: flex; flex-direction: row; gap: 5em; justify-content: center; align-items: center;}
-.implant__component .text__group {width: 300px; margin: unset;}
-.implant__component .text__group .text--large {font-size: 2.5em;}
-.implant__component .text__group .text--large.text--bold {font-weight: 700;}
-.implant__component .text__group .text--medium {font-size: 1.4em; padding-top: 1em;}
-.component__list {display: flex; flex-direction: column; gap: 3em;}
-.component__list .component {display: flex; flex-direction: row; gap: 2em; align-items: center; justify-content: space-between;}
-.component__list .media {width: 150px; position: relative; transform: scaleY(-1);}
-.component__list .component:first-of-type .media {width: 120px;}
-.component__list .text__group {width: 150px; margin: unset;}
-.component__list .text__group .text--large {font-size: 1.6em;}
-.component__list .text__group .text--large.text--bold {font-weight: 500;}
-.component__list .text__group .text--medium {font-size: 1.2em; padding-top: 0.5em;}
+.content__group.type__2 {width: 1200px; margin: auto; display: flex; flex-direction: row; gap: 3em; align-items: center;}
+.content__group.type__2 .media {flex: none; width: 60%; height: 400px; border-radius: 1em; overflow: hidden; position: relative;}
+.content__group.type__2 .media img {width: 200%; position: absolute; top: -2%; left: 50%; transform: translate(-50%, 0);}
+.content__group.type__2 .text__group {width: max-content; margin: unset; font-family: "Gowun Batang", serif;}
+.content__group.type__2 .text__group .text--large {padding: 0.5em 0;}
+
+.component .text__group {width: 1200px; margin: auto;}
+.component .text__group .text--large {font-size: 2.5em; line-height: 1.4;}
+.component .text__group .text--large.text--bold {font-weight: 700;}
+.component .text__group .text--medium {width: 400px; font-size: 1.2em; padding-top: 1em;}
+
+.component__list {display: flex; flex-direction: row; gap: 3em; justify-content: center; padding-top: 5em;}
+.component__list .component {display: flex; flex-direction: row; gap: 2em; align-items: start; justify-content: space-between;}
+.component__list .component .media {position: relative; transform: scaleY(-1);}
+.component__list .component.fixture .media {width: 100px;}
+.component__list .component.abutment .media {width: 150px;}
+.component__list .component.zirconia .media {width: 120px;}
+.component__list .component .text__group {width: 150px; margin: unset;}
+.component__list .component .text__group .text--large {width: auto; font-size: 1.6em;}
+.component__list .component .text__group .text--large.text--bold {font-weight: 500;}
+.component__list .component .text__group .text--medium {width: auto; font-size: 1em; padding-top: 0.5em;}
 
 .b4bc__group__list {width: 1200px; margin: auto; display: flex; flex-wrap: wrap; align-content: start; gap: 5em 3em;}
 .b4bc__group__list .media {width: 100%; border-radius: 1em; overflow: hidden; position: relative;}

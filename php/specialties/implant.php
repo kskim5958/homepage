@@ -1,26 +1,37 @@
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/herder.php'; ?>
 <div id="content__list">
+    <section class="content implant">
+        <div class="content__group type__1">
+            <div class="text__group">
+                <div class="text--large text--bold">하루에 임플란트</div>
+                <div class="text--medium text--gray">표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트</div>
+            </div>
+            <div class="media">
+                <img src="/img/dr__lee__02.jpg" alt="">
+            </div>
+        </div>
+    </section>
     <section class="content implant implant__type">
         <ul class="text__group">
             <li>
                 <div class="text--small text--bold text--orange">오스템임플란트</div>
                 <div class="text--large text--bold text--navy--gradient">칼슘임플란트 CA</div>
-                <div class="text--medium text--gray">Calcium Activated (칼슘 활성화)의 약자로, 표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트를 의미합니다.</div>
+                <div class="text--medium text--gray">표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트</div>
             </li>
             <li>
                 <div class="text--small text--bold text--orange">오스템임플란트</div>
                 <div class="text--large text--bold text--green--gradient">바이오임플란트 BA</div>
-                <div class="text--medium text--gray">Bio-HA(바이오-하이드록시아파타이트)의 약자로, 표면에 생체 흡수성 재료인 나노 크기의 아파타이트(Apatite)를 코팅하여 초기 골 유착 및 혈액 젖음성을 극대화한 고성능 임플란트 표면 처리 기술을 의미합니다.</div>
+                <div class="text--medium text--gray">표면에 생체 흡수성 재료인 나노 크기의 아파타이트(Apatite)를 코팅하여 초기 골 유착 및 혈액 젖음성을 극대화한 고성능 임플란트</div>
             </li>
             <li>
                 <div class="text--small text--bold text--orange">오스템임플란트</div>
                 <div class="text--large text--bold text--navy--gradient">칼슘임플란트 SOI</div>
-                <div class="text--medium text--gray">Super Osseointegration의 약자로, '뼈와 가장 잘 붙는다'는 의미이며 오스템 임플란트의 최상위 등급 모델로, 하이드록시아파타이트(HA) 성분 코팅과 UV 처리를 통해 친수성과 혈액 젖음성을 극대화하여 빠른 골유착과 치유 기간 단축을 돕는 프리미엄 임플란트 표면 기술입니다.</div>
+                <div class="text--medium text--gray">표면에 '뼈와 가장 잘 붙는다.'는 의미이며 오스템 임플란트의 최상위 등급 모델로 혈액 젖음성을 극대화하여 빠른 골유착과 치유 기간 단축을 돕는 프리미엄 임플란트</div>
             </li>
         </ul>
     </section>
     <section class="content implant">
-        <div class="media__text__group">
+        <div class="content__group type__2">
             <div class="media">
                 <img src="/img/dr__lee__02.jpg" alt="홍원장님 이미지">
             </div>
@@ -30,10 +41,10 @@
             </div>
         </div>
     </section>
-    <section class="content implant implant__component">
-        <div class="text__group">
-            <div class="text--large text--bold">모든 구성 요소를 최고의 브랜드로</div>
-            <div class="text--medium">임플란트는 3가지로 구성되며 구성품 하나 하나 최고의 재료로 정성을 다해 시술/수술합니다.</div>
+    <section class="content implant component">
+        <div class="title text__group">
+            <div class="text--large text--bold">모든 구성 요소를<br>최고의 브랜드로</div>
+            <div class="text--medium">임플란트는 3가지로 구성되며 구성품 하나 하나<br>최고의 재료로 정성을 다해 시술/수술합니다.</div>
         </div>
         <ul class="component__list">
             <li class="component fixture">
