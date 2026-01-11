@@ -1,0 +1,198 @@
+.content.implant {
+    padding-top: 5em;
+}
+
+.content.implant:last-of-type {
+    padding-bottom: 7em;
+}
+
+.item__introduction {
+    width: 600px;
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto
+}
+
+.item__introduction .content__group {
+    flex: 1;
+}
+
+.item__introduction .text__group {
+    padding-bottom: 2rem;
+}
+
+.item__introduction .text__group:last-of-type {
+    padding-bottom: 0;
+}
+
+.item__introduction .text--medium {
+    padding-top: 0.5rem;
+}
+
+.content__type__01 .content__group {
+    text-align: center;
+}
+
+.content__type__01 .text__group {
+    padding-bottom: 3rem;
+}
+
+.content__type__01 .text--large {
+    font-size: 3em;
+}
+
+.content__type__01 .text--medium {
+    width: 500px;
+    font-size: 1.2em;
+    margin: auto;
+    padding-top: 1rem;
+}
+
+.content__type__01 .media {
+    width: 90%;
+    height: 500px;
+    border-radius: 0 1rem 1rem 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.content__type__01 .media img {
+    width: 150%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.content__type__02 .content__group {
+    width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    align-items: center;
+}
+
+.content__type__02 .media {
+    width: 60%;
+    height: 300px;
+    border-radius: 1rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.content__type__02 .media img {
+    width: 150%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.content__type__02 .text__group {
+    width: 40%;
+    font-family: 'Gowun Batang', sans-serif;
+}
+
+.content__type__02 .text--medium {
+    font-size: 1.2em;
+    padding-bottom: 1rem;
+}
+
+.type .content__group {
+    width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+}
+
+.type .text__group {
+    width: 33.3333%;
+    position: relative;
+}
+
+.type .text__group .text--large {
+    font-size: 1.6em;
+    line-height: 1.4;
+}
+
+.type .text__group .text--medium {
+    padding-top: 1rem;
+}
+
+.component .text__group {
+    width: 1200px;
+    margin: auto;
+}
+
+.component .text__group .text--large {
+    font-size: 2.5em;
+    line-height: 1.4;
+}
+
+.component .text__group .text--large.text--bold {
+    font-weight: 700;
+}
+
+.component .text__group .text--medium {
+    width: 400px;
+    font-size: 1.2em;
+    padding-top: 1em;
+}
+
+.component__list {
+    display: flex;
+    flex-direction: row;
+    gap: 3em;
+    justify-content: center;
+    padding-top: 5em;
+}
+
+.component__list .component {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+    align-items: start;
+    justify-content: space-between;
+}
+
+.component__list .component .media {
+    position: relative;
+    transform: scaleY(-1);
+}
+
+.component__list .component.fixture .media {
+    width: 100px;
+}
+
+.component__list .component.abutment .media {
+    width: 150px;
+}
+
+.component__list .component.zirconia .media {
+    width: 120px;
+}
+
+.component__list .component .text__group {
+    width: 150px;
+    margin: unset;
+}
+
+.component__list .component .text__group .text--large {
+    width: auto;
+    font-size: 1.6em;
+}
+
+.component__list .component .text__group .text--large.text--bold {
+    font-weight: 500;
+}
+
+.component__list .component .text__group .text--medium {
+    width: auto;
+    font-size: 1em;
+    padding-top: 0.5em;
+}

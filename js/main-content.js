@@ -42,12 +42,12 @@ $(document).ready(function () {
             element.find('.media').css('height', (element.find('li').width() * 9) / 16 + 'px');
             break;
         case 'implant':
-            element = $('.b4bc__group__list');
+            element = $('.b4af .content__group');
             if (displayWidth <= 400) {
                 element.find('li').css('width', '100%');
             } else {
                 element.find('li').css('width', (element.width() - extractOnlyNumbers(element.css('gap'), 1)) / 2 + 'px');                
-                element = $('.b4bc__group__list').find('.media');
+                element = element.find('.media');
                 if (element.length != 0) {
                     element.each(function (index) {
                         let img_original_width = parseInt($(this).attr('data-width'));

@@ -1,18 +1,11 @@
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/herder.php'; ?>
 <div id="content__list">
-    <section class="content implant type__1">
+    <section class="content implant item__introduction">
         <div class="content__group">
-            <div class="text__group">
-                <div class="text--large text--bold">하루에 임플란트</div>
-                <div class="text--medium text--gray">표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트</div>
-            </div>
-            <div class="media">
-                <img src="/img/dr__lee__02.jpg" alt="이상민원장 진료이미지">
+            <div class="media crown">
+                <img src="/img/implant__fixture__01.png" alt="">
             </div>
         </div>
-    </section>
-
-    <section class="content implant type__3">
         <ul class="content__group">
             <li class="text__group">
                 <div class="text--small text--bold text--orange">오스템임플란트</div>
@@ -31,7 +24,37 @@
             </li>
         </ul>
     </section>
-    <section class="content implant type__2">
+    <section class="content implant content__type__01">
+        <div class="content__group">
+            <div class="text__group">
+                <div class="text--large text--bold">하루에 임플란트</div>
+                <div class="text--medium text--gray">표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트</div>
+            </div>
+            <div class="media">
+                <img src="/img/dr__lee__02.jpg" alt="이상민원장 진료이미지">
+            </div>
+        </div>
+    </section>
+    <section class="content implant type">
+        <ul class="content__group">
+            <li class="text__group">
+                <div class="text--small text--bold text--orange">오스템임플란트</div>
+                <div class="text--large text--bold text--navy--gradient">칼슘임플란트 CA</div>
+                <div class="text--medium text--gray">표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트</div>
+            </li>
+            <li class="text__group">
+                <div class="text--small text--bold text--orange">오스템임플란트</div>
+                <div class="text--large text--bold text--green--gradient">바이오임플란트 BA</div>
+                <div class="text--medium text--gray">표면에 생체 흡수성 재료인 나노 크기의 아파타이트(Apatite)를 코팅하여 초기 골 유착 및 혈액 젖음성을 극대화한 고성능 임플란트</div>
+            </li>
+            <li class="text__group">
+                <div class="text--small text--bold text--orange">오스템임플란트</div>
+                <div class="text--large text--bold text--navy--gradient">칼슘임플란트 SOI</div>
+                <div class="text--medium text--gray">표면에 '뼈와 가장 잘 붙는다.'는 의미이며 오스템 임플란트의 최상위 등급 모델로 혈액 젖음성을 극대화하여 빠른 골유착과 치유 기간 단축을 돕는 프리미엄 임플란트</div>
+            </li>
+        </ul>
+    </section>
+    <section class="content implant content__type__02">
         <div class="content__group">
             <div class="media">
                 <img src="/img/dr__lee__02.jpg" alt="홍원장님 이미지">
@@ -80,9 +103,8 @@
             </li>
         </ul>
     </section>
-    <section class="content implant">
-        <div class="title--text--large wd1200">99%성공률의 임상결과</div>
-        <ul class="b4bc__group__list">
+    <section class="content implant b4af">
+        <ul class="content__group">
             <li>
                 <?php
                 $croot = $_SERVER["DOCUMENT_ROOT"];

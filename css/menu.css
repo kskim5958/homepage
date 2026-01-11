@@ -1,0 +1,45 @@
+nav {
+    width: 100%;
+    font-family: "Noto Sans KR", sans-serif;
+    background-color: rgb(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+nav {
+    font-size: 0.8em;
+}
+
+nav .nav__inner {
+    width: 1400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: auto;
+}
+
+nav .menu {
+    display: flex;
+    flex-direction: row;
+}
+
+nav .menu li {
+    position: relative;
+}
+
+nav .menu__main {
+    padding: 12px 20px;
+}
+
+nav .menu__main a {
+    color: var(--basic-black);
+}
+
+nav .menu li ul {
+    position: absolute;
+}
