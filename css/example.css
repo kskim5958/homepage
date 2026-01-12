@@ -43,7 +43,7 @@ img {width: 100%;}
 .dentist .content__group {background-color: #1d4746; color: #fff;}
 .dentist .content {
     width: 1000px;
-    height: 400px;
+    height: 500px;
     margin: auto;
     display: flex;
     flex-direction: row;
@@ -53,11 +53,11 @@ img {width: 100%;}
 
 .dentist .text__group, .dentist .media {flex: 1; position: relative;}
 .dentist .media {height: 100%;}
-.dentist .media img {position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 0);}
+.dentist .media img {width: 140%; position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 0);}
 .dentist .text__group {height: auto;}
 .dentist .text__group p {padding-top: 1rem; color: #96b5b5;}
 .dentist .group:nth-of-type(2) {display: flex; flex-direction: row; gap: 1rem; justify-content: space-between; text-align: center; padding-top: 5rem;}
 .dentist .group:nth-of-type(2) .group__sub {border-right: 1px solid #fff; padding-right: 2rem; box-sizing: border-box;}
-.dentist .group:nth-of-type(2) .group__sub:last-of-type {border: none;}
+.dentist .group:nth-of-type(2) .group__sub:last-of-type {border: none; padding: 0;}
 .dentist .group:nth-of-type(2) h2 {font-family: var(--font-type-4); font-size: 2em;}
 .dentist .group:nth-of-type(2) p {padding: 0; font-size: 0.9em;}
