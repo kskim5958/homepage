@@ -19,7 +19,7 @@ img {width: 100%;}
 
 .font--type--2 {font-family: var(--font-type-2);}
 .font--type--3 {font-family: var(--font-type-3);}
-.font--type--4 {font-family: var(--font-type-4);}
+.font--type--4 {font-family: var(--font-type-4); font-weight: 100;}
 .font--type--5 {font-family: var(--font-type-5);}
 
 .line-up--center {
@@ -57,7 +57,7 @@ img {width: 100%;}
 .dentist .text__group {height: auto;}
 .dentist .text__group p {padding-top: 1rem; color: #96b5b5;}
 .dentist .group:nth-of-type(2) {display: flex; flex-direction: row; gap: 1rem; justify-content: space-between; text-align: center; padding-top: 5rem;}
-.dentist .group:nth-of-type(2) .group__sub {border-right: 1px solid #fff; padding-right: 2rem; box-sizing: border-box;}
+.dentist .group:nth-of-type(2) .group__sub {border-right: 3px solid #2f5756; padding-right: 2rem; box-sizing: border-box;}
 .dentist .group:nth-of-type(2) .group__sub:last-of-type {border: none; padding: 0;}
-.dentist .group:nth-of-type(2) h2 {font-family: var(--font-type-4); font-size: 2em;}
+.dentist .group:nth-of-type(2) h2 {font-size: 2em; color: #faebd7; font-family: var(--font-type-4)}
 .dentist .group:nth-of-type(2) p {padding: 0; font-size: 0.9em;}
