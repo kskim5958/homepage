@@ -10,17 +10,20 @@
             <li class="text__group">
                 <div class="text--small text--bold text--orange">오스템임플란트</div>
                 <div class="text--large text--bold text--navy--gradient">칼슘임플란트 CA</div>
-                <div class="text--medium text--gray">표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트</div>
+                <div class="text--small">표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트</div>
+                <div class="text--medium">₩250,000원부터</div>
             </li>
             <li class="text__group">
                 <div class="text--small text--bold text--orange">오스템임플란트</div>
                 <div class="text--large text--bold text--green--gradient">바이오임플란트 BA</div>
-                <div class="text--medium text--gray">표면에 생체 흡수성 재료인 나노 크기의 아파타이트(Apatite)를 코팅하여 초기 골 유착 및 혈액 젖음성을 극대화한 고성능 임플란트</div>
+                <div class="text--small">표면에 생체 흡수성 재료인 나노 크기의 아파타이트(Apatite)를 코팅하여 초기 골 유착 및 혈액 젖음성을 극대화한 고성능 임플란트</div>
+                <div class="text--medium">₩350,000원부터</div>
             </li>
             <li class="text__group">
                 <div class="text--small text--bold text--orange">오스템임플란트</div>
-                <div class="text--large text--bold text--navy--gradient">칼슘임플란트 SOI</div>
-                <div class="text--medium text--gray">표면에 '뼈와 가장 잘 붙는다.'는 의미이며 오스템 임플란트의 최상위 등급 모델로 혈액 젖음성을 극대화하여 빠른 골유착과 치유 기간 단축을 돕는 프리미엄 임플란트</div>
+                <div class="text--large text--bold text--navy--gradient">서피스 옵티마이즈 SOI</div>
+                <div class="text--small">오스템 임플란트의 최상위 등급 모델로 혈액 젖음성을 극대화하여 빠른 골유착과 치유 기간 단축을 돕는 프리미엄 임플란트</div>
+                <div class="text--medium">₩450,000원부터</div>
             </li>
         </ul>
     </section>

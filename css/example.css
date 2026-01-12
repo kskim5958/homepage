@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Diphylleia&display=swap');
+
+* {padding: 0; margin: 0;}
+img {width: 100%;}
+
+:root {
+    --font-type-1 : 'Noto San KR', sans-serif;
+    --font-type-2 : 'Gowun Batang', sans-serif;
+    --font-type-3 : 'Raleway', sans-serif;
+    --font-type-4 : 'Jua', sans-serif;
+    --font-type-5 : 'Diphylleia', sans-serif;
+    --color-black-1 : #1b1b1b;
+    --color-black-2 : #232323;
+}
+
+.font--type--2 {font-family: var(--font-type-2);}
+.font--type--3 {font-family: var(--font-type-3);}
+.font--type--4 {font-family: var(--font-type-4);}
+.font--type--5 {font-family: var(--font-type-5);}
+
+.line-up--center {
+    text-align: center;
+}
+
+.content__outer {
+    padding-top: 5rem;
+}
+
+.content__outer {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.5;
+    font-family: var(--font-type-1);
+    color: var(--color-black-2);
+}
+
+.main__title h1 {font-size: 3em;}
+.main__title h2 {font-size: 2em;}
+
+.dentist .content {
+    width: 1000px;
+    height: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+}
+
+.dentist .text__group, .dentist .media {flex: 1; position: relative;}
+.dentist .text__group {font-family: var(--font-type-5);}
+.dentist .media img {position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 0);}
