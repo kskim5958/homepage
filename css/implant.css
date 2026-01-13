@@ -1,204 +1,91 @@
-.content.implant {
-    padding-top: 5em;
+.content__outer.dentist {padding-top: 10rem;}
+.content__outer.type {padding: 5rem 0;}
+.content__outer.composition {padding: 5rem 0; background-color: var(--color-gray-1);}
+
+.content__outer {
+    padding-top: 5rem;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    font-family: var(--font-type-1);
+    color: var(--color-black-2);
 }
 
-.content.implant:last-of-type {
-    padding-bottom: 7em;
-}
-
-.item__introduction {
-    width: 700px;
-    display: flex;
-    flex-direction: row;
-    gap: 5rem;
-    align-items: center;
-    justify-content: space-between;
-    margin: auto
-}
-
-.item__introduction .content__group {
-    flex: 1;
-}
-
-.item__introduction .text__group {
-    padding-bottom: 2rem;
-}
-
-.item__introduction .text__group:last-of-type {
-    padding-bottom: 0;
-}
-
-.item__introduction .text--large {
-    font-size: 1.6em;
-    padding-bottom: 0.5rem;
-}
-
-.item__introduction .text--medium {
-    font-size: 1.2em;
-    padding-top: 0.5rem;
-}
-
-.content__type__01 .content__group {
-    text-align: center;
-}
-
-.content__type__01 .text__group {
-    padding-bottom: 3rem;
-}
-
-.content__type__01 .text--large {
-    font-size: 3em;
-}
-
-.content__type__01 .text--medium {
-    width: 500px;
-    font-size: 1.2em;
-    margin: auto;
-    padding-top: 1rem;
-}
-
-.content__type__01 .media {
-    width: 90%;
-    height: 500px;
-    border-radius: 0 1rem 1rem 0;
-    overflow: hidden;
-    position: relative;
-}
-
-.content__type__01 .media img {
-    width: 150%;
+.main__title {text-align: center; font-family: var(--font-type-gowun);}
+.main__title h1 {font-size: 5em;}
+.main__title h2 {font-size: 3em; width: fit-content; margin: auto; position: relative;}
+.main__title .text__group h2::after {
+    content: "";
     position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
-}
-
-.content__type__02 .content__group {
-    width: 1200px;
-    margin: auto;
-    display: flex;
-    flex-direction: row;
-    gap: 3rem;
-    align-items: center;
-}
-
-.content__type__02 .media {
-    width: 60%;
+    top: 50%;
+    right: -50%;
+    transform: translate(0, -50%);
+    width: 300px;
     height: 300px;
-    border-radius: 1rem;
     overflow: hidden;
-    position: relative;
+    background-image: url(/img/implant__osstem__mark__01.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
 }
 
-.content__type__02 .media img {
-    width: 150%;
+.dentist .content__group {background-color: #1d4746; color: #fff;}
+.dentist .content {
+    width: 1000px;
+    height: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 6rem;
+    align-items: center;
+}
+
+.dentist .text__group, .dentist .media {flex: 1; position: relative;}
+.dentist .media {height: 100%;}
+.dentist .media img {width: 140%; position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 0);}
+.dentist .text__group {height: auto;}
+.dentist .text__group p {padding-top: 1rem; color: #96b5b5;}
+.dentist .group:nth-of-type(2) {display: flex; flex-direction: row; gap: 1rem; justify-content: space-between; text-align: center; padding-top: 5rem;}
+.dentist .group:nth-of-type(2) .group__sub {border-right: 3px solid #2f5756; padding-right: 2rem; box-sizing: border-box;}
+.dentist .group:nth-of-type(2) .group__sub:last-of-type {border: none; padding: 0;}
+.dentist .group:nth-of-type(2) h2 {font-size: 2em; font-family: var(--font-type-jua); font-weight: lighter; color: #faebd7;}
+.dentist .group:nth-of-type(2) p {padding: 0; font-size: 0.9em;}
+
+.type {background-color: #253b3a;}
+.type .content__group {width: 400px; margin: auto; position: relative;}
+.type .content {width: 100%;}
+.type .label {display: flex; flex-direction: column; gap: 3rem; position: absolute; top: 50%; left: 50%; transform: translate(0, -50%);}
+.type .label .text__group {width: 100%; position: relative;}
+.type .label .text__group:nth-of-type(2) {position: relative; left: -100%; text-align: right;}
+.type .label h1 {font-size: 1.6em; font-weight: 500; color: #fff;}
+.type .label h5 {color: #afcfce}
+.type .label p {color: #faebd7}
+.type .label .text__group::after {
+    content: "";
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgb(255, 255, 255, 0.5);
     position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
+    top: 50%;
+    left: -10%;
+    transform: translate(0, -50%);
 }
 
-.content__type__02 .text__group {
-    width: 40%;
-    font-family: 'Gowun Batang', sans-serif;
+.type .label .text__group:nth-of-type(2)::after {
+    left: unset;
+    right: -10%;
 }
 
-.content__type__02 .text--medium {
-    font-size: 1.2em;
-    padding-bottom: 1rem;
-}
+.composition .content__group {width: 1200px; margin: auto; display: flex; flex-direction: row; gap: 3rem;}
+.composition .content {flex: 1; display: flex; flex-direction: row; gap: 1rem;}
+.composition .content .media {flex: 1; transform: scaleX(-1);}
+.composition .content .text__group {flex: 2;}
+.composition .content .text__group h5 {font-size: 0.9em; font-weight: 500; color: var(--color-orange-1);}
+.composition .content .text__group h2 {font-weight: 600;}
+.composition .content .text__group h2:nth-of-type(2) {font-weight: 500;}
+.composition .content .text__group p {padding: 0.5rem 0;}
 
-.type .content__group {
-    width: 1200px;
-    margin: auto;
-    display: flex;
-    flex-direction: row;
-    gap: 3rem;
-}
-
-.type .text__group {
-    width: 33.3333%;
-    position: relative;
-}
-
-.type .text__group .text--large {
-    font-size: 1.6em;
-    line-height: 1.4;
-}
-
-.type .text__group .text--medium {
-    padding-top: 1rem;
-}
-
-.component .text__group {
-    width: 1200px;
-    margin: auto;
-}
-
-.component .text__group .text--large {
-    font-size: 2.5em;
-    line-height: 1.4;
-}
-
-.component .text__group .text--large.text--bold {
-    font-weight: 700;
-}
-
-.component .text__group .text--medium {
-    width: 400px;
-    font-size: 1.2em;
-    padding-top: 1em;
-}
-
-.component__list {
-    display: flex;
-    flex-direction: row;
-    gap: 3em;
-    justify-content: center;
-    padding-top: 5em;
-}
-
-.component__list .component {
-    display: flex;
-    flex-direction: row;
-    gap: 2em;
-    align-items: start;
-    justify-content: space-between;
-}
-
-.component__list .component .media {
-    position: relative;
-    transform: scaleY(-1);
-}
-
-.component__list .component.fixture .media {
-    width: 100px;
-}
-
-.component__list .component.abutment .media {
-    width: 150px;
-}
-
-.component__list .component.zirconia .media {
-    width: 120px;
-}
-
-.component__list .component .text__group {
-    width: 150px;
-    margin: unset;
-}
-
-.component__list .component .text__group .text--large {
-    width: auto;
-    font-size: 1.6em;
-}
-
-.component__list .component .text__group .text--large.text--bold {
-    font-weight: 500;
-}
-
-.component__list .component .text__group .text--medium {
-    width: auto;
-    font-size: 1em;
-    padding-top: 0.5em;
-}
+.composition .content__group.title {display: block; padding-bottom: 5rem;}
+.composition .content__group.title h1 {font-size: 2.5em; line-height: 1.4;}
+.composition .content__group.title p {font-size: 1.4em; width: 50%; padding: 0; padding: 1rem 0 0 0;}

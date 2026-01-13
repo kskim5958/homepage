@@ -5,13 +5,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-    --bg-apple-gray : #f5f5f7;
-    --link-apple-blue : #0066cc;
-    --basic-black : #222222;
-    --basic-white : #ebebeb;
-    --basic-orange : #b64400;
-    --basic-gray : #86868b;
-    --dark-gray-1 : #222425;
+    --font-type-noto: 'Noto San KR', sans-serif;
+    --font-type-gowun: 'Gowun Batang', sans-serif;
+    --font-type-raleway: 'Raleway', sans-serif;
+    --font-type-jua: 'Jua', sans-serif;
+    --font-type-diphylleia: 'Diphylleia', sans-serif;
+
+    --color-white-1: #ebebeb;
+
+    --color-gray-1: #f5f5f7;
+    --color-gray-2: #86868b;
+    
+    --color-black-1: #222222;
+    --color-black-2: #222425;
+    --color-black-3: #232323;
+
+    --color-blue-1: #0066cc;
+    --color-orange-1: #b64400;
+    --color-green-1: #96b5b5;
 }
 
 * {
@@ -23,67 +34,26 @@ html, body {width: 100%; position: relative;}
 img {width: 100%; display: block;}
 video {width: 100%; height: 100%;}
 ul {list-style-type: none;}
-a {text-decoration: none; color: var(--link-apple-blue);}
+a {text-decoration: none; color: var(--color-blue-1);}
 
-.text--small {
-    font-size: 0.9em;
-}
+.text--small {font-size: 0.9em;}
+.text--medium {font-size: 1em;}
+.text--large {font-size: 2em;}
+.text--small.text--bold {font-weight: 500;}
+.text--medium.text--bold {font-weight: 500;}
+.text--large.text--bold {font-weight: 600;}
 
-.text--medium {
-    font-size: 1em;
-}
+.text--navy--gradient {background-image: linear-gradient(-74deg, #467396, #1E4462); background-clip: text; -webkit-text-fill-color: transparent;}
+.text--green--gradient {background-image: linear-gradient(132deg, #10640F, #1ECF4C); background-clip: text; -webkit-text-fill-color: transparent;}
 
-.text--large {
-    font-size: 2em;
-}
+#content__list {width: 100%; position: relative;}
 
-.text--small.text--bold {
-    font-weight: 500;
-}
-
-.text--medium.text--bold {
-    font-weight: 500;
-}
-
-.text--large.text--bold {
-    font-weight: 600;
-}
-
-.text--gray {
-    color: var(--basic-gray);
-}
-
-.text--orange {
-    color: var(--basic-orange);
-}
-
-.text--blue {
-    color: var(--link-apple-blue);
-}
-
-.text--navy--gradient {
-    background-image: linear-gradient(-74deg, #467396, #1E4462);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.text--green--gradient {
-    background-image: linear-gradient(132deg, #10640F, #1ECF4C);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-#content__list {
-    width: 100%;
-    position: relative;
-}
-
-.content {
+.content__outer {
     font-family: "Noto Sans KR", sans-serif;
     font-optical-sizing: none;
     font-size: 16px;
-    font-weight: 350;
+    font-weight: 400;
     line-height: 1.5;
-    color: var(--basic-black);
+    color: var(--color-black-3);
     word-break: break-all;
 }

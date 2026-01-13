@@ -1,112 +1,124 @@
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/herder.php'; ?>
 <div id="content__list">
-    <section class="content implant item__introduction">
+    <section class="content__outer main__title">
         <div class="content__group">
-            <div class="media crown">
-                <img src="/img/implant__fixture__01.png" alt="">
+            <div class="content">
+                <div class="text__group">
+                    <h2>오스템임플란트</h2>
+                    <h1>단, 25만원</h1>
+                </div>
             </div>
         </div>
-        <ul class="content__group">
-            <li class="text__group">
-                <div class="text--small text--bold text--orange">오스템임플란트</div>
-                <div class="text--large text--bold text--navy--gradient">칼슘임플란트 CA</div>
-                <div class="text--small">표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트</div>
-                <div class="text--medium">₩250,000원부터</div>
-            </li>
-            <li class="text__group">
-                <div class="text--small text--bold text--orange">오스템임플란트</div>
-                <div class="text--large text--bold text--green--gradient">바이오임플란트 BA</div>
-                <div class="text--small">표면에 생체 흡수성 재료인 나노 크기의 아파타이트(Apatite)를 코팅하여 초기 골 유착 및 혈액 젖음성을 극대화한 고성능 임플란트</div>
-                <div class="text--medium">₩350,000원부터</div>
-            </li>
-            <li class="text__group">
-                <div class="text--small text--bold text--orange">오스템임플란트</div>
-                <div class="text--large text--bold text--navy--gradient">서피스 옵티마이즈 SOI</div>
-                <div class="text--small">오스템 임플란트의 최상위 등급 모델로 혈액 젖음성을 극대화하여 빠른 골유착과 치유 기간 단축을 돕는 프리미엄 임플란트</div>
-                <div class="text--medium">₩450,000원부터</div>
-            </li>
-        </ul>
     </section>
-    <section class="content implant content__type__01">
+    <section class="content__outer dentist">
         <div class="content__group">
-            <div class="text__group">
-                <div class="text--large text--bold">하루에 임플란트</div>
-                <div class="text--medium text--gray">표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트</div>
-            </div>
-            <div class="media">
-                <img src="/img/dr__lee__02.jpg" alt="이상민원장 진료이미지">
-            </div>
-        </div>
-    </section>
-    <section class="content implant type">
-        <ul class="content__group">
-            <li class="text__group">
-                <div class="text--small text--bold text--orange">오스템임플란트</div>
-                <div class="text--large text--bold text--navy--gradient">칼슘임플란트 CA</div>
-                <div class="text--medium text--gray">표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트</div>
-            </li>
-            <li class="text__group">
-                <div class="text--small text--bold text--orange">오스템임플란트</div>
-                <div class="text--large text--bold text--green--gradient">바이오임플란트 BA</div>
-                <div class="text--medium text--gray">표면에 생체 흡수성 재료인 나노 크기의 아파타이트(Apatite)를 코팅하여 초기 골 유착 및 혈액 젖음성을 극대화한 고성능 임플란트</div>
-            </li>
-            <li class="text__group">
-                <div class="text--small text--bold text--orange">오스템임플란트</div>
-                <div class="text--large text--bold text--navy--gradient">칼슘임플란트 SOI</div>
-                <div class="text--medium text--gray">표면에 '뼈와 가장 잘 붙는다.'는 의미이며 오스템 임플란트의 최상위 등급 모델로 혈액 젖음성을 극대화하여 빠른 골유착과 치유 기간 단축을 돕는 프리미엄 임플란트</div>
-            </li>
-        </ul>
-    </section>
-    <section class="content implant content__type__02">
-        <div class="content__group">
-            <div class="media">
-                <img src="/img/dr__lee__02.jpg" alt="홍원장님 이미지">
-            </div>
-            <div class="text__group">
-                <div class="text--medium">치의학박사 이상민 원장</div>
-                <div class="text--large">"임플란트는 치아 뿌리 역할을 하므로 턱뼈와 단단히 결합(골융합)되어야 하며, 이를 위해서는 충분한 골밀도와 골질이 필요합니다."</div>
-            </div>
-        </div>
-    </section>
-    <section class="content implant component">
-        <div class="title text__group">
-            <div class="text--large text--bold">모든 구성 요소를<br>최고의 브랜드로</div>
-            <div class="text--medium">임플란트는 3가지로 구성되며 구성품 하나 하나<br>최고의 재료로 정성을 다해 시술/수술합니다.</div>
-        </div>
-        <ul class="component__list">
-            <li class="component fixture">
+            <div class="content">
+                <div class="text__group">
+                    <div class="group">
+                        <h1>치의학박사, 경희치과병원 교수<br>임플란트전문의, 오스템인정의</h1>
+                        <p>다년간의 임플란트 수술 경험과 다양한 케이스를 다뤄본 의료진을 선택하세요. 단순히 많은 임플란트를 심는 것보다 전후 사진을 통해 장기적인 결과를 보여줄 수 있는 곳이 좋습니다.</p>
+                    </div>
+                    <div class="group">
+                        <div class="group__sub">
+                            <h2>99%</h2>
+                            <p>임플란트<br>성공케이스</p>
+                        </div>
+                        <div class="group__sub">
+                            <h2>12,000+</h2>
+                            <p>임플란트<br>식립케이스</p>
+                        </div>
+                        <div class="group__sub">
+                            <h2>20년</h2>
+                            <p>임플란트<br>경력</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="media">
-                    <img src="/img/implant__fixture__01.png" alt="임플란트 픽스쳐">
+                    <img src="/img/sample__model__doctor__1.png" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content__outer implant type">
+        <div class="content__group">
+            <div class="content">
+                <div class="media">
+                    <img src="/img/implant__fixture__01.png" alt="">
+                </div>
+            </div>
+            <div class="content label">
+                <div class="text__group">
+                    <h5>오스템임플란트</h5>
+                    <h1>칼슘임플란트</h1>
+                    <p>표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트</p>
                 </div>
                 <div class="text__group">
-                    <div class="text--small text--bold text--orange">임플란트 스크류</div>
-                    <div class="text--large text--bold">뿌리역할</div>
-                    <div class="text--medium">치아의 뿌리를 역할합니다.</div>
-                </div>
-            </li>
-            <li class="component abutment">
-                <div class="media">
-                    <img src="/img/implant__abutment__01.png" alt="임플란트 어버트먼트">
+                    <h5>오스템임플란트</h5>
+                    <h1>칼슘임플란트</h1>
+                    <p>표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트</p>
                 </div>
                 <div class="text__group">
-                    <div class="text--small text--bold text--orange">임플란트 어버트먼트</div>
-                    <div class="text--large text--bold">중간연결장치</div>
-                    <div class="text--medium">치아의 뿌리와 인공치아의 연결하는 장치입니다.</div>
+                    <h5>오스템임플란트</h5>
+                    <h1>칼슘임플란트</h1>
+                    <p>표면 처리에 칼슘 이온을 더해 임플란트 표면의 친수성을 높여 골유착(뼈와 달라붙는 것) 성능을 향상시킨 임플란트</p>
                 </div>
-            </li>
-            <li class="component zirconia">
-                <div class="media">
-                    <img src="/img/implant__zirconia__01.png" alt="임플란트 크라운">
-                </div>
-                <div class="text__group">
-                    <div class="text--small text--bold text--orange">임플란트 크라운</div>
-                    <div class="text--large text--bold">인공치아</div>
-                    <div class="text--medium">음식물을 씹는 눈에 보여지는 치아형태입니다.</div>
-                </div>
-            </li>
-        </ul>
+            </div>
+        </div>
     </section>
-    <section class="content implant b4af">
+    <section class="content__outer implant composition">
+        <div class="content__group title">
+            <div class="content">
+                <div class="text__group">
+                    <h1>모든 구성요소를 최고의 재료로<br>정성을 다합니다.</h1>
+                    <p>본원은 임플란트를 구성하는 모든 요소에 정성을 다해 치아의 원래 기능을 회복시키는데 최선을 다합니다.</p>
+                </div>
+            </div>
+        </div>
+        <div class="content__group">
+            <div class="content">
+                <div class="media">
+                    <img src="/img/implant__fixture__01.png" alt="">
+                </div>
+                <div class="text__group">
+                    <h5>임플란트 픽스쳐</h5>
+                    <h2>뿌리역할</h2>
+                    <p>치아의 뿌리부분 역할을 하는 가장 중요한 부위입니다.</p>
+                    <h2>25만원부터</h2>
+                </div>
+            </div>
+            <div class="content">
+                <div class="media">
+                    <img src="/img/implant__abutment__01.png" alt="">
+                </div>
+                <div class="text__group">
+                    <h5>임플란트 어버트먼트</h5>
+                    <h2>중간연결장치</h2>
+                    <p>치아의 뿌리와 인공치아의 연결하는 장치입니다.</p>
+                    <h2>맞춤형 무료제작</h2>
+                </div>
+            </div>
+            <div class="content">
+                <div class="media">
+                    <img src="/img/implant__zirconia__01.png" alt="">
+                </div>
+                <div class="text__group">
+                    <h5>임플란트 크라운</h5>
+                    <h2>씹는 인공치아</h2>
+                    <p>치아의 뿌리부분 역할을 하는 가장 중요한 부위입니다.</p>
+                    <h2>맞춤형 무료제작</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content__outer implant b4af">
+        <div class="content__group title">
+            <div class="content">
+                <div class="text__group">
+                    <h1>모든 구성요소를 최고의 재료로<br>정성을 다합니다.</h1>
+                    <p>본원은 임플란트를 구성하는 모든 요소에 정성을 다해 치아의 원래 기능을 회복시키는데 최선을 다합니다.</p>
+                </div>
+            </div>
+        </div>
         <ul class="content__group">
             <li>
                 <?php
