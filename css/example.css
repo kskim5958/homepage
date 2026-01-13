@@ -27,6 +27,7 @@ img {width: 100%;}
 }
 
 .content__outer:nth-of-type(2) {padding-top: 10rem;}
+.content__outer:nth-of-type(3) {padding: 5rem 0;}
 
 .content__outer {
     padding-top: 5rem;
@@ -38,7 +39,21 @@ img {width: 100%;}
 }
 
 .main__title h1 {font-size: 5em;}
-.main__title h2 {font-size: 3em;}
+.main__title h2 {font-size: 3em; width: fit-content; margin: auto; position: relative;}
+.main__title .text__group h2::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -50%;
+    transform: translate(0, -50%);
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    background-image: url(/img/implant__osstem__mark__01.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+}
 
 .dentist .content__group {background-color: #1d4746; color: #fff;}
 .dentist .content {
@@ -59,5 +74,31 @@ img {width: 100%;}
 .dentist .group:nth-of-type(2) {display: flex; flex-direction: row; gap: 1rem; justify-content: space-between; text-align: center; padding-top: 5rem;}
 .dentist .group:nth-of-type(2) .group__sub {border-right: 3px solid #2f5756; padding-right: 2rem; box-sizing: border-box;}
 .dentist .group:nth-of-type(2) .group__sub:last-of-type {border: none; padding: 0;}
-.dentist .group:nth-of-type(2) h2 {font-size: 2em; color: #faebd7; font-family: var(--font-type-4)}
+.dentist .group:nth-of-type(2) h2 {font-size: 2em; font-family: var(--font-type-4); font-weight: lighter; color: #faebd7;}
 .dentist .group:nth-of-type(2) p {padding: 0; font-size: 0.9em;}
+
+.type {background-color: #253b3a;}
+.type .content__group {width: 400px; margin: auto; position: relative;}
+.type .content {width: 100%;}
+.type .label {display: flex; flex-direction: column; gap: 3rem; position: absolute; top: 50%; left: 50%; transform: translate(0, -50%);}
+.type .label .text__group {width: 100%; position: relative;}
+.type .label .text__group:nth-of-type(2) {position: relative; left: -100%; text-align: right;}
+.type .label h1 {font-size: 1.6em; font-weight: 500; color: #fff;}
+.type .label h5 {color: #afcfce}
+.type .label p {color: #faebd7}
+.type .label .text__group::after {
+    content: "";
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgb(255, 255, 255, 0.5);
+    position: absolute;
+    top: 50%;
+    left: -10%;
+    transform: translate(0, -50%);
+}
+
+.type .label .text__group:nth-of-type(2)::after {
+    left: unset;
+    right: -10%;
+}
