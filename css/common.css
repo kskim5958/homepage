@@ -334,6 +334,9 @@
     box-shadow: -1207px 0 0 1200px #f50;
 }
 
+.b4af .title h1 {font-size: 2.5em; line-height: 1.4;}
+.b4af .title p {font-size: 1.4em;}
+
 .materials .swiper {
     width: 1200px;
 }
