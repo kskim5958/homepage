@@ -388,8 +388,10 @@
 }
 .user__information input::placeholder {font-size: 0.6em; font-weight: 400; color: var(--color-gray-2);}
 .submit__btn button {
+    font-size: 0.9em;
+    font-weight: 500;
     padding: 10px 15px;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     border: none;
     background-color: var(--color-orange-1);
     color: var(--color-white-1);
