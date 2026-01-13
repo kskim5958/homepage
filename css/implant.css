@@ -51,18 +51,18 @@
 .dentist .group:nth-of-type(2) {display: flex; flex-direction: row; justify-content: space-between; text-align: center; padding-top: 5rem;}
 .dentist .group:nth-of-type(2) .group__sub {flex: 1; border-right: 3px solid #2f5756; box-sizing: border-box;}
 .dentist .group:nth-of-type(2) .group__sub:last-of-type {border: none;}
-.dentist .group:nth-of-type(2) h2 {font-size: 2em; font-family: var(--font-type-jua); font-weight: lighter; color: #faebd7;}
+.dentist .group:nth-of-type(2) h2 {font-size: 2em; font-family: var(--font-type-jua); font-weight: lighter; color: var(--color-ivory-1);}
 .dentist .group:nth-of-type(2) p {padding: 0; font-size: 0.9em;}
 
 .type {background-color: #253b3a;}
 .type .content__group {width: 400px; margin: auto; position: relative;}
 .type .content {width: 100%;}
-.type .label {display: flex; flex-direction: column; gap: 3rem; position: absolute; top: 50%; left: 50%; transform: translate(0, -50%);}
+.type .label {display: flex; flex-direction: column; gap: 5rem; position: absolute; top: 50%; left: 50%; transform: translate(0, -50%);}
 .type .label .text__group {width: 100%; position: relative;}
 .type .label .text__group:nth-of-type(2) {position: relative; left: -100%; text-align: right;}
 .type .label h1 {font-size: 1.6em; font-weight: 500; color: #fff;}
-.type .label h5 {color: #afcfce}
-.type .label p {color: #faebd7}
+.type .label h5 {color: var(--color-green-2)}
+.type .label p {color: var(--color-ivory-1);}
 .type .label .text__group::after {
     content: "";
     width: 20px;
@@ -89,6 +89,8 @@
 .composition .content .text__group h2:nth-of-type(2) {font-weight: 500;}
 .composition .content .text__group p {padding: 0.5rem 0;}
 
-.composition .content__group.title {display: block; padding-bottom: 5rem;}
-.composition .content__group.title h1 {font-size: 2.5em; line-height: 1.4;}
-.composition .content__group.title p {font-size: 1.4em; width: 50%; padding: 0; padding: 1rem 0 0 0;}
+.composition .title {display: block; padding-bottom: 5rem;}
+.composition .title .content {display: block;}
+.composition .title .text__group {width: 500px;}
+.composition .title h1 {font-size: 2.5em; line-height: 1.4;}
+.composition .title p {font-size: 1.4em; padding: 0; padding: 1rem 0 0 0;}

@@ -70,7 +70,7 @@
         <div class="content__group title">
             <div class="content">
                 <div class="text__group">
-                    <h1>모든 구성요소를 최고의 재료로<br>정성을 다합니다.</h1>
+                    <h1>모든 구성요소를 최고의 재료로 정성을 다합니다.</h1>
                     <p>본원은 임플란트를 구성하는 모든 요소에 정성을 다해 치아의 원래 기능을 회복시키는데 최선을 다합니다.</p>
                 </div>
             </div>
@@ -115,7 +115,7 @@
         <div class="content__group title">
             <div class="content">
                 <div class="text__group">
-                    <h1>모든 구성요소를 최고의 재료로<br>정성을 다합니다.</h1>
+                    <h1>모든 구성요소를 최고의 재료로 정성을 다합니다.</h1>
                     <p>본원은 임플란트를 구성하는 모든 요소에 정성을 다해 치아의 원래 기능을 회복시키는데 최선을 다합니다.</p>
                 </div>
             </div>
@@ -208,7 +208,14 @@
         </ul>
     </section>
     <section class="content__outer implant materials">
-        <!-- Swiper -->
+        <div class="content__group title">
+            <div class="content">
+                <div class="text__group">
+                    <h1>모든 구성요소를 최고의 재료로 정성을 다합니다.</h1>
+                    <p>본원은 임플란트를 구성하는 모든 요소에 정성을 다해 치아의 원래 기능을 회복시키는데 최선을 다합니다.</p>
+                </div>
+            </div>
+        </div>
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
@@ -263,5 +270,20 @@
             <div class="swiper-pagination"></div>
         </div>
     </section>
+</div>
+<div id="user__form">
+    <div class="user__information">
+        <div class="user__name">
+            <label for="user-name">이름</label>
+            <input type="text" id="user-name">
+        </div>
+        <div class="user__phone">
+            <label for="user-phone">연락처</label>
+            <input type="text" id="user-phone">
+        </div>
+        <div class="submit__btn">
+            <button type="button">무료상담신청</button>
+        </div>
+    </div>
 </div>
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/footer.php'; ?>

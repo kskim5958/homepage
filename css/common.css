@@ -258,13 +258,17 @@
     gap: 5em 3em;
 }
 
-.b4af .title {display: block; width: 1200px; padding-bottom: 5rem;}
+.b4af .title {width: 1200px; display: block; padding-bottom: 5rem;}
+.b4af .title .text__group {width: 500px;}
 .b4af .title h1 {font-size: 2.5em; line-height: 1.4;}
-.b4af .title p {font-size: 1.4em; width: 50%; padding-top: 1rem;}
+.b4af .title p {font-size: 1.4em; padding-top: 1rem; color: var(--color-green-2);}
 
 .b4af .list .text__group {
-    padding-top: 1em;
     width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 0 0 1rem 1rem;
+    background-color: var(--color-black-4);
 }
 
 .b4af .list h5 {font-size: 0.9em; font-weight: 500; color: var(--color-orange-1);}
@@ -272,7 +276,7 @@
 
 .b4af .list .media {
     width: 100%;
-    border-radius: 1rem;
+    border-radius: 1rem 1rem 0 0;
     overflow: hidden;
     position: relative;
 }
@@ -341,22 +345,20 @@
     box-shadow: -1207px 0 0 1200px #f50;
 }
 
-.materials .swiper {
-    width: 1200px;
-}
-
-.materials .swiper-slide {
-    width: 40%;
-}
-
+.materials .title {width: 1200px; margin: auto; padding-bottom: 5rem;}
+.materials .title .text__group {width: 500px; background-color: unset;}
+.materials .title h1 {font-size: 2.5em; line-height: 1.4;}
+.materials .title p {font-size: 1.4em; padding-top: 1rem;}
+.materials .swiper {width: 1200px;}
+.materials .swiper-slide {width: 40%;}
 .materials .swiper-slide .media,
-.materials .swiper-slide .text__group {
-    width: 100%;
-}
+.materials .swiper-slide .text__group {width: 100%;}
 .materials .swiper-slide .media {border-radius: 1rem 1rem 0 0; overflow: hidden;}
 .materials .text__group {padding: 1rem; box-sizing: border-box; border-radius: 0 0 1rem 1rem; background-color: var(--color-gray-1);}
 .materials h5 {font-size: 0.9em; font-weight: 500; color: var(--color-orange-1);}
 .materials h1 {font-size: 1.6em; font-weight: 700;}
+
+#user__form {width: 80%; border-radius: 1rem 1rem 0 0; position: fixed; bottom: 0; left: 0;}
 
 @media (max-width : 1600px) {}
 
