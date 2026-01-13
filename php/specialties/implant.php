@@ -6,6 +6,7 @@
                 <div class="text__group">
                     <h2>오스템임플란트</h2>
                     <h1>단, 25만원</h1>
+                    <p>본원은 오스템정품만 사용합니다. 이 외 임플란트 시술에 필요한 모든 제품 및 구성요소 또한 최고의 브랜드만 사용합니다.</p>
                 </div>
             </div>
         </div>
@@ -119,7 +120,7 @@
                 </div>
             </div>
         </div>
-        <ul class="content__group">
+        <ul class="content__group list">
             <li>
                 <?php
                 $croot = $_SERVER["DOCUMENT_ROOT"];
@@ -136,9 +137,9 @@
                     <input type="range" min="0" max="100" value="50">
                 </div>
                 <div class="text__group">
-                    <div class="text--small text--bold text--orange">임플란트</div>
-                    <div class="text--large text--bold">당일 임플란트</div>
-                    <div class="text--medium text--gray">더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</div>
+                    <h5>임플란트 BEFORE/AFTER</h5>
+                    <h1>앞니전체임플란트</h1>
+                    <p>더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</p>
                 </div>
             </li>
             <li>
@@ -157,9 +158,9 @@
                     <input type="range" min="0" max="100" value="50">
                 </div>
                 <div class="text__group">
-                    <div class="text--small text--bold text--orange">임플란트</div>
-                    <div class="text--large text--bold">당일 임플란트</div>
-                    <div class="text--medium text--gray">더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</div>
+                    <h5>임플란트 BEFORE/AFTER</h5>
+                    <h1>앞니전체임플란트</h1>
+                    <p>더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</p>
                 </div>
             </li>
             <li>
@@ -178,9 +179,9 @@
                     <input type="range" min="0" max="100" value="50">
                 </div>
                 <div class="text__group">
-                    <div class="text--small text--bold text--orange">임플란트</div>
-                    <div class="text--large text--bold">당일 임플란트</div>
-                    <div class="text--medium text--gray">더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</div>
+                    <h5>임플란트 BEFORE/AFTER</h5>
+                    <h1>앞니전체임플란트</h1>
+                    <p>더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</p>
                 </div>
             </li>
             <li>
@@ -199,14 +200,14 @@
                     <input type="range" min="0" max="100" value="50">
                 </div>
                 <div class="text__group">
-                    <div class="text--small text--bold text--orange">임플란트</div>
-                    <div class="text--large text--bold">당일 임플란트</div>
-                    <div class="text--medium text--gray">더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</div>
+                    <h5>임플란트 BEFORE/AFTER</h5>
+                    <h1>앞니전체임플란트</h1>
+                    <p>더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</p>
                 </div>
             </li>
         </ul>
     </section>
-    <section class="content implant materials">
+    <section class="content__outer implant materials">
         <!-- Swiper -->
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
@@ -217,9 +218,9 @@
                         </video>
                     </div>
                     <div class="text__group">
-                        <div class="text--small text--bold text--orange">임플란트</div>
-                        <div class="text--large text--bold">당일 임플란트</div>
-                        <div class="text--medium text--gray">더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</div>
+                        <h5>임플란트</h5>
+                        <h1>당일 임플란트</h1>
+                        <p>더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</p>
                     </div>
                 </div>
                 <div class="swiper-slide">
@@ -229,9 +230,9 @@
                         </video>
                     </div>
                     <div class="text__group">
-                        <div class="text--small text--bold text--orange">임플란트</div>
-                        <div class="text--large text--bold">당일 임플란트</div>
-                        <div class="text--medium text--gray">더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</div>
+                        <h5>임플란트</h5>
+                        <h1>당일 임플란트</h1>
+                        <p>더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</p>
                     </div>
                 </div>
                 <div class="swiper-slide">
@@ -241,9 +242,9 @@
                         </video>
                     </div>
                     <div class="text__group">
-                        <div class="text--small text--bold text--orange">임플란트</div>
-                        <div class="text--large text--bold">당일 임플란트</div>
-                        <div class="text--medium text--gray">더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</div>
+                        <h5>임플란트</h5>
+                        <h1>당일 임플란트</h1>
+                        <p>더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</p>
                     </div>
                 </div>
                 <div class="swiper-slide">
@@ -253,9 +254,9 @@
                         </video>
                     </div>
                     <div class="text__group">
-                        <div class="text--small text--bold text--orange">임플란트</div>
-                        <div class="text--large text--bold">당일 임플란트</div>
-                        <div class="text--medium text--gray">더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</div>
+                        <h5>임플란트</h5>
+                        <h1>당일 임플란트</h1>
+                        <p>더 빠른 속도(가장 빠른 Intel 기반 MacBook Air 대비)</p>
                     </div>
                 </div>
             </div>

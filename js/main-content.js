@@ -42,7 +42,7 @@ $(document).ready(function () {
             element.find('.media').css('height', (element.find('li').width() * 9) / 16 + 'px');
             break;
         case 'implant':
-            element = $('.b4af .content__group');
+            element = $('.b4af .list');
             if (displayWidth <= 400) {
                 element.find('li').css('width', '100%');
             } else {

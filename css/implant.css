@@ -1,6 +1,8 @@
 .content__outer.dentist {padding-top: 10rem;}
 .content__outer.type {padding: 5rem 0;}
 .content__outer.composition {padding: 5rem 0; background-color: var(--color-gray-1);}
+.content__outer.b4af {padding: 5rem 0; background-color: var(--color-black-2); color: var(--color-white-1);}
+.content__outer.materials {padding: 5rem 0;}
 
 .content__outer {
     padding-top: 5rem;
@@ -14,6 +16,7 @@
 .main__title {text-align: center; font-family: var(--font-type-gowun);}
 .main__title h1 {font-size: 5em;}
 .main__title h2 {font-size: 3em; width: fit-content; margin: auto; position: relative;}
+.main__title p {font-size: 1.4em; width: 500px; margin: auto; padding-top: 1rem;}
 .main__title .text__group h2::after {
     content: "";
     position: absolute;
@@ -45,9 +48,9 @@
 .dentist .media img {width: 140%; position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 0);}
 .dentist .text__group {height: auto;}
 .dentist .text__group p {padding-top: 1rem; color: #96b5b5;}
-.dentist .group:nth-of-type(2) {display: flex; flex-direction: row; gap: 1rem; justify-content: space-between; text-align: center; padding-top: 5rem;}
-.dentist .group:nth-of-type(2) .group__sub {border-right: 3px solid #2f5756; padding-right: 2rem; box-sizing: border-box;}
-.dentist .group:nth-of-type(2) .group__sub:last-of-type {border: none; padding: 0;}
+.dentist .group:nth-of-type(2) {display: flex; flex-direction: row; justify-content: space-between; text-align: center; padding-top: 5rem;}
+.dentist .group:nth-of-type(2) .group__sub {flex: 1; border-right: 3px solid #2f5756; box-sizing: border-box;}
+.dentist .group:nth-of-type(2) .group__sub:last-of-type {border: none;}
 .dentist .group:nth-of-type(2) h2 {font-size: 2em; font-family: var(--font-type-jua); font-weight: lighter; color: #faebd7;}
 .dentist .group:nth-of-type(2) p {padding: 0; font-size: 0.9em;}
 
@@ -82,7 +85,7 @@
 .composition .content .media {flex: 1; transform: scaleX(-1);}
 .composition .content .text__group {flex: 2;}
 .composition .content .text__group h5 {font-size: 0.9em; font-weight: 500; color: var(--color-orange-1);}
-.composition .content .text__group h2 {font-weight: 600;}
+.composition .content .text__group h2 {font-weight: 700;}
 .composition .content .text__group h2:nth-of-type(2) {font-weight: 500;}
 .composition .content .text__group p {padding: 0.5rem 0;}
 
