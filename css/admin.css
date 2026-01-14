@@ -2,12 +2,16 @@
 
 
 .user__table tbody {font-size: 0.9em;}
-.user__table thead th,
-.user__table tbody td {padding: 5px 10px; box-sizing: border-box;}
-.user__table thead th {background-color: var(--color-black-4); color: var(--color-white-1); border-right: 1px solid var(--color-white-1); font-weight: 500;}
-.user__table thead th:last-of-type {border-right: none;}
-.user__table tbody td {border-left: 1px solid var(--color-black-4); border-bottom: 1px solid var(--color-black-4);}
-.user__table tbody td:last-of-type {border-right: 1px solid var(--color-black-4);}
-
-.user__table .insert__form {text-align: right;}
-.user__table select, .user__table input, .user__table button {padding: 5px 10px;}
+.user__table th,
+.user__table td {padding: 5px 10px; box-sizing: border-box; text-align: center;}
+.user__table th {background-color: var(--color-black-4); color: var(--color-white-1); border-right: 1px solid var(--color-white-1); font-weight: 500;}
+.user__table th:last-of-type {border-right: none;}
+.user__table td {border-left: 1px solid var(--color-black-4); border-bottom: 1px solid var(--color-black-4);}
+.user__table td:last-of-type {border-right: 1px solid var(--color-black-4);}
+.user__table td.recall__column {text-align: left;}
+.user__table .form_open {cursor: pointer;}
+.user__table .recall__row {display: none;}
+.user__table .recall__row td {border-left: none; border-right: none;}
+.user__table .recall__form {display: flex; flex-direction: row; gap: 0.5em; align-items: center; justify-content: end;}
+.recall__form select, .recall__form input, .recall__form button {padding: 5px 10px;}
+.recall__form input {width: 300px;}
