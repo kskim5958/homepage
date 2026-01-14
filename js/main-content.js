@@ -8,6 +8,10 @@ $(document).ready(function () {
 
     let element;
     let other_element;
+    let top_spacing;
+    let left_spacing;
+    let right_spacing;
+    let bottom_spacing;
     // if(typeof imgPath == "undefined" || imgPath == null || imgPath == "") alert(1);
 
     // 공통부분 start
@@ -17,9 +21,14 @@ $(document).ready(function () {
         console.log('메뉴(nav) PHP에서 logoWidth, logoPath 초기화 : success');
         element = $('#navigation');
         other_element = $('#user__form');
-        other_element.css('right', element.outerWidth() + extractOnlyNumbers(element.css('right')) + 16 + 'px');
+        right_spacing = element.outerWidth() + extractOnlyNumbers(element.css('right')) + 16;
+        bottom_spacing = element.css('bottom');
+        other_element.css('right', right_spacing + 'px');
+        other_element.css('bottom', bottom_spacing);
+        console.log('user__form 위치 : ' + right_spacing + 'px');
     } catch (error) {
         console.log('메뉴(nav) PHP에서 logoWidth, logoPath 초기화 : ' + error);
+        console.log('user__form 위치 : ' + error);
     }
     $('#content__list').css('margin-top', navHeight + 'px');
     // 공통부분 end

@@ -360,8 +360,8 @@
 
 #navigation {
     position: fixed;
-    bottom: 1rem;
-    right: 1rem;
+    bottom: 3rem;
+    right: 3rem;
     z-index: 1;
     width: 90px;
     padding: 3rem 1rem;

@@ -9,7 +9,7 @@
         <h3>문의전화 : 1899-2854 / 카카오채널 : 미니쉬치과병원</h3>
     </div>
     <div class="user__information">
-        <input type="text" id="user-name" placeholder="성명">
+        <input type="text" id="user-name" placeholder="성명 (한글만)">
         <input type="text" id="user-phone" placeholder="연락처 (-없이 숫자만)">
         <button type="button">무료상담신청</button>
     </div>

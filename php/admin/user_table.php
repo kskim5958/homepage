@@ -1,6 +1,6 @@
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/herder.php'; ?>
 <div id="content__list">
-    <section class="content user__table">
+    <section class="content__outer user__table">
         <table>
             <thead>
                 <tr>

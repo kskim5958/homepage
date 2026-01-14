@@ -1,46 +1,13 @@
-.user__table table {
-    width: 1400px;
-    margin: auto;
-    border-spacing: unset;
-}
+.user__table table {width: 1400px; margin: auto; border-spacing: unset;}
 
-.user__table thead {
-    background-color: var(--basic-black);
-    color: var(--basic-white);
-}
 
-.user__table tbody {
-    font-size: 0.9em;
-}
-
+.user__table tbody {font-size: 0.9em;}
 .user__table thead th,
-.user__table tbody td {
-    padding: 5px 10px;
-    box-sizing: border-box;
-}
-
-.user__table thead th {
-    font-weight: 400;
-    border-right: 1px solid var(--basic-white);
-}
-
-.user__table thead th:last-of-type {
-    border-right: none;
-}
-
-.user__table tbody td:first-of-type {
-    border-left: 1px solid var(--dark-gray-1);
-}
-
-.user__table tbody td {
-    border-right: 1px solid var(--dark-gray-1);
-    border-bottom: 1px solid var(--dark-gray-1);
-}
+.user__table tbody td {padding: 5px 10px; box-sizing: border-box;}
+.user__table thead th {background-color: var(--color-black-4); color: var(--color-white-1); border-right: 1px solid var(--color-white-1); font-weight: 500;}
+.user__table thead th:last-of-type {border-right: none;}
+.user__table tbody td {border-left: 1px solid var(--color-black-4); border-bottom: 1px solid var(--color-black-4);}
+.user__table tbody td:last-of-type {border-right: 1px solid var(--color-black-4);}
 
 .user__table .insert__form {text-align: right;}
-
-.user__table select,
-.user__table input,
-.user__table button {
-    padding: 5px 10px;
-}
+.user__table select, .user__table input, .user__table button {padding: 5px 10px;}
