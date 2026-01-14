@@ -8,7 +8,7 @@
 .user__table th:last-of-type {border-right: none;}
 .user__table td {border-left: 1px solid var(--color-black-4); border-bottom: 1px solid var(--color-black-4);}
 .user__table td:last-of-type {border-right: 1px solid var(--color-black-4);}
-.user__table td.recall__column {text-align: left;}
+.user__table .recall__column {text-align: left;}
 .user__table .form_open {cursor: pointer;}
 .user__table .recall__row {display: none;}
 .user__table .recall__row td {border-left: none; border-right: none;}
