@@ -271,19 +271,6 @@
         </div>
     </section>
 </div>
-<div id="user__form">
-    <div class="user__information">
-        <div class="user__name">
-            <label for="user-name">이름을 입력하세요.</label>
-            <input type="text" id="user-name" placeholder="한글을입력하세요.">
-        </div>
-        <div class="user__phone">
-            <label for="user-phone">연락처를 입력하세요.</label>
-            <input type="text" id="user-phone" placeholder="숫자를입력하세요.">
-        </div>
-        <div class="submit__btn">
-            <button type="button">무료상담신청</button>
-        </div>
-    </div>
-</div>
+<?php include $_SERVER["DOCUMENT_ROOT"] . '/php/form/navigation.php'; ?>
+<?php include $_SERVER["DOCUMENT_ROOT"] . '/php/form/user_popup_form.php'; ?>
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/footer.php'; ?>

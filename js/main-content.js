@@ -6,6 +6,8 @@ $(document).ready(function () {
     console.log('화면 Width : ' + displayWidth);
     console.log('화면 Height : ' + displayHeight);
 
+    let element;
+    let other_element;
     // if(typeof imgPath == "undefined" || imgPath == null || imgPath == "") alert(1);
 
     // 공통부분 start
@@ -13,13 +15,15 @@ $(document).ready(function () {
         $('nav .logo').css('width', (logoWidth * $('nav').height()) / logoHeight + 'px');
         $('nav .logo img').attr('src', logoPath);
         console.log('메뉴(nav) PHP에서 logoWidth, logoPath 초기화 : success');
+        element = $('#navigation');
+        other_element = $('#user__form');
+        other_element.css('right', element.outerWidth() + extractOnlyNumbers(element.css('right')) + 16 + 'px');
     } catch (error) {
         console.log('메뉴(nav) PHP에서 logoWidth, logoPath 초기화 : ' + error);
     }
     $('#content__list').css('margin-top', navHeight + 'px');
     // 공통부분 end
 
-    let element;
     switch (pathName) {
         case 'map':
             $('.information .hours li').each(function (index) {

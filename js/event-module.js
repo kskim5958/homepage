@@ -7,3 +7,12 @@ $('.b4af input[type="range"]').on('input', function () {
     const currentValue = $(this).val(); // 현재 슬라이더 값
     $(this).parent().find('.media__bc').css('width', currentValue + '%');
 });
+
+$('#navigation .user__form').on('click', function () {
+    $('#user__form').toggle();
+});
+
+$('#user__form .close').on('click', function () {
+    const element_str = '#' + $(this).attr('data-id');
+    $(element_str).hide();
+});
