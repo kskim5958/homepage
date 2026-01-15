@@ -34,4 +34,5 @@
     console.log(arrJson.in1);
     console.log(arrJson.in2);
     console.log(arrJson.in3);
+    console.log(arrJson.in4);
 </script>
