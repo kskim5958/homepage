@@ -53,7 +53,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_connect.php';
                     echo '</ul></td></tr>';
                     echo '<tr class="recall__row" data-id="' . $row['no'] . '">';
                     echo '<td colspan="8">';
-                    echo '<div class="recall__form">';
+                    echo '<div class="recall__form" data-id="' . $row['no'] . '">';
                     echo '<select name="status">';
                     $sql ='SELECT * FROM RECALL_STATUS ORDER BY no ASC';
                     $result_r_s = mysqli_query($conn, $sql);
