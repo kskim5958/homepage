@@ -8,9 +8,19 @@ $('.recall__column .recall_list_open').on('click', function() {
 });
 
 $('.recall__form .insert').on('click', function() {
-    let user_id = $(this).attr('data-id');
-    let element = $('.recall__form[data-id="' + user_id + '"]');
-    let status = element.find('select[name="status"] option:selected').val();
-    let comment = element.find('input[name="comment"]').val();
-    if (comment != '') status = 999;
+    // let user_id = $(this).attr('data-id');
+    // let element = $('.recall__form[data-id="' + user_id + '"]');
+    // let status = element.find('select[name="status"] option:selected').val();
+    // let comment = element.find('input[name="comment"]').val();
+    // if (comment != '') status = 999;
+    $.ajax({
+        url: "/php/controller/db_module.php",
+        type: "post",
+        data: {
+            value : 'ajax'
+        }
+    }).done(function (data) {
+        data = JSON.parse(data);
+        console.log(data.value);
+    });
 });
