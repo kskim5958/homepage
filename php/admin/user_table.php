@@ -1,6 +1,6 @@
 <?php
 include $_SERVER["DOCUMENT_ROOT"] . '/php/main/herder.php';
-include 'db_connect.php';
+include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_connect.php';
 ?>
 <div id="content__list">
     <section class="content__outer user__table">
