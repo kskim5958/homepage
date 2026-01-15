@@ -23,7 +23,6 @@
     $arr['in1'] = array('index1' => 'value1');
     $arr['in2'] = array('index2' => 'value2');
     $arr['in3'] = array('index3' => 'value3');
-    $arr['in4'] = array('index4' => 'value4');
 ?>
 
 <script>
