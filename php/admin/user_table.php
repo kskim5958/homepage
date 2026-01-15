@@ -33,25 +33,28 @@ include 'db_connect.php';
                     . '<td name="ip">' . $row['ip'] . '</td>'
                     . '<td>'
                     . '<ul class="recall__column">';
-                    // . '<li class="form_open" data-id="' . $row['no'] . '">리콜추가</li>';
-                    // $sql = 'SELECT  * FROM RECALL WHERE status = 0 AND userNo = ' . $row['no'] . ' ORDER BY recallDate DESC;';
-                    // $result_r = mysqli_query($conn, $sql);
-                    // $count_r = mysqli_num_rows($result_r);
-                    // if ($count_r != 0) {
-                    //     $index = 1;
-                    //     while ($row_r = mysqli_fetch_array($result_r)) {
-                    //         $index > 3 ? $class_r = 'class="hide"' : $class_r = '';
-                    //         echo '<li ' . $class_r . '>'
-                    //         . $row_r['recallDate'] . '&nbsp;'
-                    //         . $row_r['comment'] . '&nbsp;'
-                    //         .'<span class="del" data-id="' . $row_r['no'] . '" data-userid="' . $row_r['userNo'] . '">삭제</span>'
-                    //         .'</li>';
-                    //         $index++;
-                    //     }
-                    //     if ($count_r > 3) echo '<li class="recall_list_open" data-id="' . $row['no'] . '">더보기</li>';
-                    // }
+                    echo '<li class="form_open" data-id="' . $row['no'] . '">리콜추가</li>';
+                    $sql = 'SELECT  * FROM RECALL WHERE status = 0 AND userNo = ' . $row['no'] . ' ORDER BY recallDate DESC;';
+                    $result_r = mysqli_query($conn, $sql);
+                    $count_r = mysqli_num_rows($result_r);
+                    if ($count_r != 0) {
+                        $index = 1;
+                        while ($row_r = mysqli_fetch_array($result_r)) {
+                            $index > 3 ? $class_r = 'class="hide"' : $class_r = '';
+                            echo '<li ' . $class_r . '>'
+                            . $row_r['recallDate'] . '&nbsp;'
+                            . $row_r['comment'] . '&nbsp;'
+                            .'<span class="del" data-id="' . $row_r['no'] . '" data-userid="' . $row_r['userNo'] . '">삭제</span>'
+                            .'</li>';
+                            $index++;
+                        }
+                        if ($count_r > 3) echo '<li class="recall_list_open" data-id="' . $row['no'] . '">더보기</li>';
+                    }
                     echo '</ul></td></tr>';
-                    echo '<tr><td colspan="8"><div><select>';
+                    echo '<tr class="recall__row" data-id="' . $row['no'] . '">';
+                    echo '<td colspan="8">';
+                    echo '<div class="recall__form">';
+                    echo '<select name="status">';
                     $sql ='SELECT * FROM RECALL_STATUS ORDER BY no ASC';
                     $result_r_s = mysqli_query($conn, $sql);
                     while ($row_r_s = mysqli_fetch_array($result_r_s)) {
@@ -61,23 +64,11 @@ include 'db_connect.php';
                     . '<input name="comment" type="text" placeholder="기타 : 내용">'
                     . '<button type="button" class="insert" data-id="' . $row['no'] . '">추가하기</button>'
                     . '<button type="button" class="close" data-id="' . $row['no'] . '">닫기</button>'
-                    . '</div>'
-                    . '</td>'
-                    . '</tr>';
-                }
-                $recallArr = array();
-                $sql = 'SELECT  * FROM RECALL ORDER BY recallDate DESC;';
-                $result = mysqli_query($conn, $sql);
-                while ($row = mysqli_fetch_array($result)) {
-                    $recallArr[] = [$row['no'] => array('userNo' => $row['userNo'], 'recallDate' => $row['recallDate']), 'comment' => $row['comment']];
+                    . '</div></td></tr>';
                 }
                 ?>
             </tbody>
         </table>
     </section>
 </div>
-<script>
-    var recallArr = '<?php echo json_encode($recallArr); ?>';
-    console.log('recallArr : ' + recallArr);
-</script>
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/footer.php'; ?>

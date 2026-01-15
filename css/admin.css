@@ -8,13 +8,15 @@
 .user__table th:last-of-type {border-right: none;}
 .user__table td {border-left: 1px solid var(--color-black-4); border-bottom: 1px solid var(--color-black-4);}
 .user__table td:last-of-type {border-right: 1px solid var(--color-black-4);}
+
 .user__table .recall__column {text-align: left;}
+.user__table .recall__column .form_open,
+.user__table .recall__column .del,
+.user__table .recall__column .recall_list_open {color: var(--color-orange-1); cursor: pointer; width: fit-content;}
+.user__table .recall__column .hide {display: none;}
+
 .user__table .recall__row {display: none;}
 .user__table .recall__row td {border-left: none; border-right: none;}
 .user__table .recall__form {display: flex; flex-direction: row; gap: 0.5em; align-items: center; justify-content: end;}
-.recall__form select, .recall__form input, .recall__form button {padding: 5px 10px;}
-.recall__form input {width: 300px;}
-.recall__column .form_open,
-.recall__column .del,
-.recall__column .recall_list_open {color: var(--color-orange-1); cursor: pointer; width: fit-content;}
-.recall__column .hide {display: none;}
+.user__table .recall__form select, .recall__form input, .recall__form button {padding: 5px 10px;}
+.user__table .recall__form input {width: 300px;}
