@@ -9,6 +9,10 @@
 .user__table td {border-left: 1px solid var(--color-black-4); border-bottom: 1px solid var(--color-black-4);}
 .user__table td:last-of-type {border-right: 1px solid var(--color-black-4);}
 .user__table .recall__column {text-align: left;}
+<<<<<<< HEAD
+=======
+.user__table .form_open {cursor: pointer;}
+>>>>>>> 044ad721d923d168cd20cbf6174b53fc94e8f365
 .user__table .recall__row {display: none;}
 .user__table .recall__row td {border-left: none; border-right: none;}
 .user__table .recall__form {display: flex; flex-direction: row; gap: 0.5em; align-items: center; justify-content: end;}

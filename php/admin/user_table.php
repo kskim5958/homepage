@@ -32,6 +32,7 @@ include 'db_connect.php';
                     . '<td name="path">' . $row['path'] . '</td>'
                     . '<td name="ip">' . $row['ip'] . '</td>'
                     . '<td>'
+<<<<<<< HEAD
                     . '<ul class="recall__column">';
                     // . '<li class="form_open" data-id="' . $row['no'] . '">리콜추가</li>';
                     // $sql = 'SELECT  * FROM RECALL WHERE status = 0 AND userNo = ' . $row['no'] . ' ORDER BY recallDate DESC;';
@@ -52,6 +53,17 @@ include 'db_connect.php';
                     // }
                     echo '</ul></td></tr>';
                     echo '<tr class="recall__row" data-id="' . $row['no'] . '">'
+=======
+                    . '<ul class="recall__column">'
+                    . '<li class="form_open" data-id="' . $row['no'] . '">리콜추가</li>'
+                    . '<li>2026-01-08 12:56 카카오톡 발송&nbsp;<span class="text--small text--orange">삭제</span></li>'
+                    . '<li>2026-01-08 12:56 카카오톡 발송&nbsp;<span class="text--small text--orange">삭제</span></li>'
+                    . '<li>2026-01-08 12:56 카카오톡 발송&nbsp;<span class="text--small text--orange">삭제</span></li>'
+                    . '</ul>'
+                    . '</td>'
+                    . '</tr>'
+                    . '<tr class="recall__row" data-id="' . $row['no'] . '">'
+>>>>>>> 044ad721d923d168cd20cbf6174b53fc94e8f365
                     . '<td colspan="8">'
                     . '<div class="recall__form" data-id="' . $row['no'] . '">'
                     . '<select name="status">';
