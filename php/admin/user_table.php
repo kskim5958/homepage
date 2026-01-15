@@ -51,19 +51,7 @@ include 'db_connect.php';
                     //     if ($count_r > 3) echo '<li class="recall_list_open" data-id="' . $row['no'] . '">더보기</li>';
                     // }
                     echo '</ul></td></tr>';
-                    echo '<tr class="recall__row" data-id="' . $row['no'] . '">'
-                    . '<ul class="recall__column">'
-                    . '<li class="form_open" data-id="' . $row['no'] . '">리콜추가</li>'
-                    . '<li>2026-01-08 12:56 카카오톡 발송&nbsp;<span class="text--small text--orange">삭제</span></li>'
-                    . '<li>2026-01-08 12:56 카카오톡 발송&nbsp;<span class="text--small text--orange">삭제</span></li>'
-                    . '<li>2026-01-08 12:56 카카오톡 발송&nbsp;<span class="text--small text--orange">삭제</span></li>'
-                    . '</ul>'
-                    . '</td>'
-                    . '</tr>'
-                    . '<tr class="recall__row" data-id="' . $row['no'] . '">'
-                    . '<td colspan="8">'
-                    . '<div class="recall__form" data-id="' . $row['no'] . '">'
-                    . '<select name="status">';
+                    echo '<tr><td colspan="8"><div><select>';
                     $sql ='SELECT * FROM RECALL_STATUS ORDER BY no ASC';
                     $result_r_s = mysqli_query($conn, $sql);
                     while ($row_r_s = mysqli_fetch_array($result_r_s)) {
