@@ -29,7 +29,7 @@ function recall_insert() {
 
 function recall_list($userNo) {
     global $mysqli;
-    $sql = "SELECT * FROM RECALL WHERE userNo = $userNo;";
+    $sql = "SELECT * FROM RECALL WHERE userNo = $userNo ORDER BY recallDate DESC;";
     $result = $mysqli->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $list[] = [
