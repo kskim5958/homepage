@@ -24,6 +24,17 @@ $('.recall__form .insert').on('click', function() {
         }
     }).done(function (data) {
         data = JSON.parse(data);
-        console.log(data.userNo);
+        if (data.result) {
+            let elementStr = '';
+            data.list.forEach(list => {
+                elementStr = '<li class="form_open" data-id="'+list.userNo+'">리콜추가</li>'
+                + '<li>'
+                + list.recallDate + '&nbsp;&nbsp;'
+                + '<span class="del" data-id="'+list.no+'" data-userid="'+list.userNo+'">삭제</span>'
+                + '</li>';
+            });
+        } else {
+        }
+        
     });
 });

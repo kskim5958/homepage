@@ -1,11 +1,8 @@
 <?php
-$host = 'yeppeum.kr';
-// $host = 'localhost';
-$username = 'kskim5958';
-$password = 'rhkdtjr77';
-$database = 'kskim5958';
-$conn = mysqli_connect($host, $username, $password, $database);
-
-if (mysqli_connect_errno()) {
-    echo '서버와 연결실패 : ' . mysqli_connect_error();
+$mysqli = @new mysqli('yeppeum.kr', 'kskim5958', 'rhkdtjr77', 'kskim5958');
+if($mysqli->connect_errno) {
+    echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+    exit();
 }
+$sql = 'SELECT * FROM  VISIT ORDER BY no DESC;';
+$result = $mysqli->query($sql, MYSQLI_STORE_RESULT);

@@ -21,8 +21,8 @@ include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_connect.php';
                 <?php
                 // no visitDate userName userPhone device ip path status cost
                 $sql = 'SELECT * FROM  VISIT ORDER BY no DESC;';
-                $result = mysqli_query($conn, $sql);
-                while ($row = mysqli_fetch_array($result)) {
+                $result = $mysqli->query($sql);
+                while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
                     echo '<tr id="' . $row['no'] . '">'
                     . '<td name="no">' . $row['no'] . '</td>'
                     . '<td name="visitDate">' . $row['visitDate'] . '</td>'
@@ -31,15 +31,15 @@ include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_connect.php';
                     . '<td name="userPhone">' . $row['userPhone'] . '</td>'
                     . '<td name="path">' . $row['path'] . '</td>'
                     . '<td name="ip">' . $row['ip'] . '</td>'
-                    . '<td>'
-                    . '<ul class="recall__column">';
+                    . '<td class="recall__column">'
+                    . '<ul>';
                     echo '<li class="form_open" data-id="' . $row['no'] . '">리콜추가</li>';
-                    $sql = 'SELECT  * FROM RECALL WHERE status = 0 AND userNo = ' . $row['no'] . ' ORDER BY recallDate DESC;';
-                    $result_r = mysqli_query($conn, $sql);
-                    $count_r = mysqli_num_rows($result_r);
+                    $sql = 'SELECT  * FROM RECALL WHERE userNo = ' . $row['no'] . ' ORDER BY recallDate DESC;';
+                    $result_r = $mysqli->query($sql);
+                    $count_r = $result_r->num_rows;
                     if ($count_r != 0) {
                         $index = 1;
-                        while ($row_r = mysqli_fetch_array($result_r)) {
+                        while ($row_r = $result_r->fetch_array(MYSQLI_ASSOC)) {
                             $index > 3 ? $class_r = 'class="hide"' : $class_r = '';
                             echo '<li ' . $class_r . '>'
                             . $row_r['recallDate'] . '&nbsp;'
@@ -56,8 +56,8 @@ include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_connect.php';
                     echo '<div class="recall__form" data-id="' . $row['no'] . '">';
                     echo '<select name="status">';
                     $sql ='SELECT * FROM RECALL_STATUS ORDER BY no ASC';
-                    $result_r_s = mysqli_query($conn, $sql);
-                    while ($row_r_s = mysqli_fetch_array($result_r_s)) {
+                    $result_r_s = $mysqli->query($sql);
+                    while ($row_r_s = $result_r_s->fetch_array(MYSQLI_ASSOC)) {
                         echo '<option value="' . $row_r_s['no'] . '">' . $row_r_s['comment'] . '</option>';
                     }
                     echo '</select>'
