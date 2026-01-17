@@ -6,3 +6,6 @@ if($mysqli->connect_errno) {
 }
 $sql = 'SELECT * FROM  VISIT ORDER BY no DESC;';
 $result = $mysqli->query($sql, MYSQLI_STORE_RESULT);
+
+# mysql query example
+# ALTER TABLE COMMENT_TYPE MODIFY COLUMN no INT NOT NULL AUTO_INCREMENT PRIMARY KEY;
