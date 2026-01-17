@@ -42,10 +42,10 @@ function member_update() {
     echo $json;
 }
 
-function member_list() {
+function member_list($start, $list_num) {
     global $mysqli;
     $list = [];
-    $sql = "SELECT * FROM  VISIT ORDER BY no DESC;";
+    $sql = "SELECT * FROM  VISIT ORDER BY no DESC LIMIT $start, $list_num;";
     $result = $mysqli->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $list[] = [

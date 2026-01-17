@@ -21,3 +21,5 @@
 .user__table .recall__form select, .recall__form input, .recall__form button {padding: 5px 10px;}
 .user__table .recall__form input {width: 300px;}
 .user__table .recall__form button {cursor: pointer;}
+
+#pager {padding-top: 1rem; text-align: center;}
