@@ -21,10 +21,10 @@ include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_module.php';
                 <?php
                 $member_list = member_list();
                 foreach ($member_list as $member) {
-                    echo '<tr id="' . $member['no'] . '">'
+                    echo '<tr class="user__information" id="' . $member['no'] . '">'
                     . '<td name="no">' . $member['no'] . '</td>'
                     . '<td name="visitDate">' . $member['visitDate'] . '</td>'
-                    . '<td name="status">' . $member['status'] . '</td>'
+                    . '<td name="status" ' . $member['style'] . '>' . $member['status'] . '</td>'
                     . '<td name="userName">' . $member['userName'] . '</td>'
                     . '<td name="userPhone">' . $member['userPhone'] . '</td>'
                     . '<td name="path">' . $member['path'] . '</td>'

@@ -6,6 +6,10 @@ if($mysqli->connect_errno) {
 }
 $sql = 'SELECT * FROM  VISIT ORDER BY no DESC;';
 $result = $mysqli->query($sql, MYSQLI_STORE_RESULT);
+
+$result->free_result();
+$mysqli->close();
+
 # key value 형태
 // while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
 //     printf ("%s (%s)\n", $row["no"], $row["userName"]);
@@ -15,5 +19,3 @@ $result = $mysqli->query($sql, MYSQLI_STORE_RESULT);
 //     printf ("%s (%s)\n", $row[0], $row[1]);
 // }
 // echo "Affected rows: " . $mysqli -> affected_rows;
-$result->free_result();
-$mysqli->close();
