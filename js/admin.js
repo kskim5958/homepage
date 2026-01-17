@@ -1,8 +1,26 @@
 $(document).on('change', '.user__information [name="member-type"]', function() {
     const userNo = $(this).attr('data-id');
-    console.log("🚀 ~ userNo:", userNo)
     const status = $(this).children('option:selected').val();
-    console.log("🚀 ~ status:", status)
+
+    $.ajax({
+        url: "/php/controller/db_module.php",
+        type: "post",
+        data: {
+            functionName : 'member_update',
+            userNo : userNo,
+            status : status
+        }
+    }).done(function (data) {
+        data = JSON.parse(data);
+        if (data.result) {
+            const userName = data.list.userName;
+            const status = data.list.status;
+            const commentType = $('#' + data.list.no).find('[name="member-type"] option[value="' + data.list.status + '"]').text();
+            alert(`${userName}님의 상태를 [${commentType}]로/으로 변경하였습니다!`);
+        } else {
+            console.log(data.error);
+        }
+    });
 });
 
 $(document).on('click', '.user__table .form_open, .recall__form .close', function() {
@@ -37,7 +55,7 @@ $(document).on('click', '.recall__form .insert', function() {
             $('#' + userNo).find('.recall__column ul').empty();
             $('#' + userNo).find('.recall__column ul').append(html);
         } else {
-            console.log(data.list.error);
+            console.log(data.error);
         }
     });
 });
@@ -62,7 +80,7 @@ $(document).on('click', '.recall__column .del', function() {
             $('#' + userNo).find('.recall__column ul').empty();
             $('#' + userNo).find('.recall__column ul').append(html);
         } else {
-            console.log(data.list.error);
+            console.log(data.error);
         }
     });
 });
