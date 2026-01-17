@@ -1,3 +1,10 @@
+$(document).on('change', '.user__information [name="member-type"]', function() {
+    const userNo = $(this).attr('data-id');
+    console.log("🚀 ~ userNo:", userNo)
+    const status = $(this).children('option:selected').val();
+    console.log("🚀 ~ status:", status)
+});
+
 $(document).on('click', '.user__table .form_open, .recall__form .close', function() {
     const user_id = $(this).attr('data-id');
     $('.recall__row[data-id="' + user_id + '"]').toggle();

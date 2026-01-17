@@ -24,28 +24,14 @@ function member_list() {
     $sql = 'SELECT * FROM  VISIT ORDER BY no DESC;';
     $result = $mysqli->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-        $status = $row['status'];
-        $style = "";
-        $recallCnt = count(recall_list($row['no']));
-        if ($recallCnt != 0 && $status == 1) {
-            $status = '예약완료';
-            $style = 'class="color--green"';
-        } elseif ($recallCnt != 0 && $status == 0) {
-            $status = '진행중';
-            $style = 'class="color--orange"';
-        } else {
-            $status = '미처리';
-            $style = 'class="color--red"';
-        }
         $list[] = [
             'no'=>$row['no']
             ,'visitDate'=>$row['visitDate']
-            ,'status'=>$status
+            ,'status'=>$row['status']
             ,'userName'=>$row['userName']
             ,'userPhone'=>$row['userPhone']
             ,'path'=>$row['path']
             ,'ip'=>$row['ip']
-            ,'style'=>$style
         ];
     }
     return $list;
@@ -102,6 +88,19 @@ function comment_type_list() {
     global $mysqli;
     $list = [];
     $sql ='SELECT * FROM COMMENT_TYPE ORDER BY no ASC';
+    $result = $mysqli->query($sql);
+    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+        $list[] = [
+            'no'=>$row['no']
+            ,'comment'=>$row['comment']
+        ];
+    }
+    return $list;
+}
+function member_type_list() {
+    global $mysqli;
+    $list = [];
+    $sql ='SELECT * FROM MEMBER_TYPE ORDER BY no ASC';
     $result = $mysqli->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $list[] = [

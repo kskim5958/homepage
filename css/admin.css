@@ -3,15 +3,13 @@
 
 .user__table tbody {font-size: 0.9em;}
 .user__table .user__information {width: auto; display: table-row;}
+.user__information select[name="member-type"] {padding: 5px 10px; border: none; outline: none; border-left: 4px solid var(--color-gray-3);}
 .user__table th,
 .user__table td {padding: 5px 10px; box-sizing: border-box; text-align: center;}
 .user__table th {background-color: var(--color-black-4); color: var(--color-white-1); border-right: 1px solid var(--color-white-1); font-weight: 500;}
 .user__table th:last-of-type {border-right: none;}
 .user__table td {border-left: 1px solid var(--color-black-4); border-bottom: 1px solid var(--color-black-4);}
 .user__table td:last-of-type {border-right: 1px solid var(--color-black-4);}
-.user__table .color--red {color: var(--color-red-1);}
-.user__table .color--green {color: var(--color-green-3);}
-.user__table .color--orange {color: var(--color-orange-1);}
 
 .user__table .recall__column {text-align: left;}
 .user__table .recall__column .form_open,
