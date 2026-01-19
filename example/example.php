@@ -1,19 +1,49 @@
 <?php
-function fn_example($arr=[]) {
-    $cnt = count($arr);
-    $str = '';
-    if ($cnt != 0) {
-        $index = 1;
-        foreach ($arr as $key => $value) {
-            $str .= " $key = $value ";
-            $str .= ($cnt > 1 && $cnt != $index) ? "AND" : "";
-            $index++;
-        }
+// $str = "?page=1&userName=kim&userPhone=010";
+
+$str = "";
+if (count($_GET) == 0) {
+    $str .= "?page=1";
+} elseif (count($_GET) == 1 && array_key_exists("page", $_GET)) {
+    $str .= "?page={$_GET["page"]}";
+} else {
+    foreach ($_GET as $key => $value) {
+        $str .= "&$key=$value";
     }
-    return $str;
+    $str = substr_replace($str, "?", 0, 1);
 }
-$arr = ['no'=>1000, 'userName'=>'kim', 'comment'=>'content comment'];
-echo fn_example($arr);
+$str = str_replace("?", "", $str);
+parse_str($str, $param);
+$cnt = count($param);
+$index = 1;
+$search = "";
+foreach ($param as $key => $value) {
+    if ($key == 'page') {
+        $start = $value;
+    } else {
+        $search .= "$key = $value";
+        $search .= ($cnt > 1 && $cnt != $index) ? " AND " : "";
+    }
+    $index++;
+}
+$sql = "SELECT * FROM VISIT $search LIMIT $start, 10";
+echo $sql;
+
+// function fn_example($arr=[]) {
+//     $cnt = count($arr);
+//     $str = '';
+//     if ($cnt != 0) {
+//         $index = 1;
+//         foreach ($arr as $key => $value) {
+//             $str .= " $key = $value ";
+//             $str .= ($cnt > 1 && $cnt != $index) ? "AND" : "";
+//             $index++;
+//         }
+//     }
+//     return $str;
+// }
+// $arr = ['no'=>1000, 'userName'=>'kim', 'comment'=>'content comment'];
+// echo fn_example($arr);
 
 # mysqli 예제
 // $mysqli = new mysqli('yeppeum.kr', 'kskim5958', 'rhkdtjr77', 'kskim5958');
