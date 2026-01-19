@@ -1,7 +1,5 @@
 <?php
 include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_connect.php';
-$result = $mysqli->query("SELECT * FROM VISIT");
-$totalCnt = $result->num_rows;
 
 $params = $_GET; // 현재 GET 파라미터 복사
 unset($params['page']); // 'page' 파라미터 제거
@@ -17,6 +15,12 @@ $page_num = 5;
 
 /* paging : 현재 페이지 */
 $page = isset($_GET["page"]) ? $_GET["page"] : 1;
+
+/* paging : 시작 번호 = (현재 페이지 번호 - 1) * 페이지 당 보여질 데이터 수 */
+$start = ($page - 1) * $list_num;
+
+$result = $mysqli->query("SELECT * FROM VISIT");
+$totalCnt = $result->num_rows;
 
 /* paging : 전체 페이지 수 = 전체 데이터 / 페이지당 데이터 개수, ceil : 올림값, floor : 내림값, round : 반올림 */
 $total_page = ceil($totalCnt / $list_num);
@@ -41,6 +45,3 @@ $e_pageNum = $now_block * $page_num;
 if($e_pageNum > $total_page){
     $e_pageNum = $total_page;
 };
-
-/* paging : 시작 번호 = (현재 페이지 번호 - 1) * 페이지 당 보여질 데이터 수 */
-$start = ($page - 1) * $list_num;
