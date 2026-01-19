@@ -8,6 +8,18 @@ $userName = isset($_GET['userName']) ? $_GET['userName'] : "";
 $pagin_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $search = ($userName != "") ? "&userName=$userName" : "";
 
+# 검색과 페이징
+// if (count($_GET) == 0) {
+//     $search .= "?page=1";
+// } elseif (count($_GET) == 1 && array_key_exists("page", $_GET)) {
+//     $search .= "?page={$_GET["page"]}";
+// } else {
+//     foreach ($_GET as $key => $value) {
+//         $search .= "&$key=$value";
+//     }
+//     $search = substr_replace($search, "?", 0, 1);
+// }
+
 /* paging : 한 페이지 당 데이터 개수 */
 $list_num = 10;
 
