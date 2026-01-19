@@ -58,6 +58,8 @@ function member_update() {
 }
 
 function member_list($start=0, $list_num=0, $userName="") {
+    // $userName = str_replace("?", "", $userName);
+    // parse_str($userName, $param);
     global $mysqli;
     $limit =  ($start==0 && $list_num==0) ? "" : "LIMIT $start, $list_num";
     $userName = ($userName != "") ? "WHERE userName = \"$userName\"" : "";
