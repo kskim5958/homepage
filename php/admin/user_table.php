@@ -5,6 +5,17 @@ include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_paging.php';
 ?>
 <div id="content__list">
     <section class="content__outer user__table">
+        <div class="content__group form">
+            <div class="user__search__form">
+                <input type="text" name="userName" placeholder="성명(한글만)">
+                <button type="button" class="insert">찾기</button>
+            </div>
+            <div class="user__form">
+                <input type="text" name="userName" placeholder="성명(한글만)">
+                <input type="text" name="userPhone" placeholder="연락처(-없이 숫자만)">
+                <button type="button" class="insert">추가하기</button>
+            </div>
+        </div>
         <table>
             <thead>
                 <tr>

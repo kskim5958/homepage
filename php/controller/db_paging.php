@@ -6,10 +6,10 @@ $totalCnt = $result->num_rows;
 $pagin_url = strtok($_SERVER['REQUEST_URI'], '?');
 
 /* paging : 한 페이지 당 데이터 개수 */
-$list_num = 5;
+$list_num = 10;
 
 /* paging : 한 블럭 당 페이지 수 */
-$page_num = 3;
+$page_num = 5;
 
 /* paging : 현재 페이지 */
 $page = isset($_GET["page"]) ? $_GET["page"] : 1;
