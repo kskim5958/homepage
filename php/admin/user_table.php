@@ -17,8 +17,7 @@ $page_num = 5;
 /* paging : 시작 번호 = (현재 페이지 번호 - 1) * 페이지 당 보여질 데이터 수 */
 $start = ($page - 1) * $list_num;
 
-$result = $mysqli->query("SELECT * FROM VISIT");
-$totalCnt = $result->num_rows;
+$totalCnt = count(member_list(0, 0, $userName));
 
 /* paging : 전체 페이지 수 = 전체 데이터 / 페이지당 데이터 개수, ceil : 올림값, floor : 내림값, round : 반올림 */
 $total_page = ceil($totalCnt / $list_num);
@@ -130,7 +129,7 @@ if($e_pageNum > $total_page){
                 /* paging : 이전 페이지 */
                 if ($page <= 1) {
                 ?>
-                    <a href="<?php echo $pagin_url ?>?page=1"<?php echo $search; ?>>이전</a>
+                    <a href="<?php echo $pagin_url ?>?page=1<?php echo $search; ?>">이전</a>
                 <?php } else { ?>
                     <a href="<?php echo $pagin_url ?>?page=<?php echo ($page - 1); ?><?php echo $search; ?>">이전</a>
                 <?php }; ?>
