@@ -2,8 +2,12 @@
 include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_connect.php';
 $result = $mysqli->query("SELECT * FROM VISIT");
 $totalCnt = $result->num_rows;
-// paging url
-$pagin_url = strtok($_SERVER['REQUEST_URI'], '?');
+
+$params = $_GET; // 현재 GET 파라미터 복사
+unset($params['page']); // 'page' 파라미터 제거
+$new_query_string = http_build_query($params);
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$pagin_url = $path . ($new_query_string ? "?$new_query_string" : '');
 
 /* paging : 한 페이지 당 데이터 개수 */
 $list_num = 10;

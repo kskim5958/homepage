@@ -1,8 +1,12 @@
 <?php
 include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_connect.php';
+include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/common_module.php';
 
 if (isset($_POST['functionName'])) {
     switch ($_POST['functionName']) {
+        case 'user_insert':
+            user_insert();
+            break;
         case 'member_update':
             member_update();
             break;
@@ -17,9 +21,20 @@ if (isset($_POST['functionName'])) {
     }
 }
 
+function user_insert() {
+    global $mysqli;
+    $userName = $_POST['userName'];
+    $userPhone = $_POST['userPhone'];
+    $sql = "INSERT INTO VISIT (userName, userPhone, visitDate) VALUES (\"$userName\", \"$userPhone\", CURRENT_TIMESTAMP);";
+    if ($mysqli->query($sql)) {
+        echo json_encode(['result'=>true, 'url'=>http_path(), 'arr'=>member_select($mysqli->insert_id)]);
+    } else {
+        echo json_encode(['result'=>false, 'error'=> "user insert 에러 : $mysqli->error"]);
+    }
+}
+
 function member_select($userNo) {
     global $mysqli;
-    /** @var mysqli $mysqli */
     $sql = "SELECT * FROM  VISIT WHERE no = $userNo;";
     $result = $mysqli->query($sql);
     $row = $result->fetch_assoc();
@@ -42,10 +57,11 @@ function member_update() {
     echo $json;
 }
 
-function member_list($start, $list_num) {
+function member_list($start, $list_num, $userName="") {
     global $mysqli;
+    $userName = ($userName != "") ? "WHERE userName = \"$userName\"" : "";
     $list = [];
-    $sql = "SELECT * FROM  VISIT ORDER BY no DESC LIMIT $start, $list_num;";
+    $sql = "SELECT * FROM  VISIT $userName ORDER BY no DESC LIMIT $start, $list_num;";
     $result = $mysqli->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $list[] = [

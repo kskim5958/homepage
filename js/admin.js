@@ -1,3 +1,33 @@
+$(document).on('keyup', '.user__search__form input[name="userName"], .user__form input[name="userName"]', function() {
+    $(this).val($(this).val().replace(/[^ㄱ-ㅣ가-힣]/g, ""));
+});
+
+$(document).on('keyup', '.user__form input[name="userPhone"]', function() {
+    $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+});
+
+$(document).on('click', '.user__search__form button.search', function() {
+    const userName = $(this).parent().children('[name="userName"]').val();
+    window.location.href = window.location.pathname + "?userName=" + userName;
+});
+
+$(document).on('click', '.user__form button.insert', function() {
+    const userName = $(this).parent().children('[name="userName"]').val();
+    const userPhone = $(this).parent().children('[name="userPhone"]').val();
+    $.ajax({
+        url: "/php/controller/db_module.php",
+        type: "post",
+        data: {
+            functionName : 'user_insert',
+            userName : userName,
+            userPhone : userPhone
+        }
+    }).done(function (data) {
+        data = JSON.parse(data);
+        window.location.href = data.url;
+    });
+});
+
 $(document).on('change', '.user__information [name="member-type"]', function() {
     const userNo = $(this).attr('data-id');
     const status = $(this).children('option:selected').val();

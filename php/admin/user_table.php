@@ -8,7 +8,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_paging.php';
         <div class="content__group form">
             <div class="user__search__form">
                 <input type="text" name="userName" placeholder="성명(한글만)">
-                <button type="button" class="insert">찾기</button>
+                <button type="button" class="search">찾기</button>
             </div>
             <div class="user__form">
                 <input type="text" name="userName" placeholder="성명(한글만)">
@@ -31,7 +31,8 @@ include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_paging.php';
             </thead>
             <tbody>
                 <?php
-                $member_list = member_list($start, $list_num);
+                $userName = isset($_GET['userName']) ? $_GET['userName'] : "";
+                $member_list = member_list($start, $list_num, $userName);
                 $member_type_list = member_type_list();
                 foreach ($member_list as $member) {
                     echo '<tr class="user__information" id="' . $member['no'] . '">'
