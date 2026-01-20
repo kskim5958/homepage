@@ -77,7 +77,11 @@ if($e_pageNum > $total_page){
     <section class="content__outer user__table">
         <div class="content__group form">
             <div class="user__search__form">
-                <input type="text" name="userName" placeholder="성명(한글만)">
+                <select name="search-type">
+                    <option value="0">전화번호검색</option>
+                    <option value="1">이름검색</option>
+                </select>
+                <input type="text" name="search-text" placeholder="">
                 <button type="button" class="search">찾기</button>
             </div>
             <div class="user__form">

@@ -68,7 +68,7 @@ function member_list($start=0, $list_num=0, $params=[]) {
             $param_str = "$param_str $key = \"$value\"";
         }
     }
-    $sql = "SELECT * FROM  VISIT $param_str ORDER BY no DESC $limit;";
+    $sql = "SELECT * FROM  VISIT $param_str ORDER BY visitDate DESC $limit;";
     $result = $mysqli->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $list[] = [
