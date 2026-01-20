@@ -57,14 +57,18 @@ function member_update() {
     echo $json;
 }
 
-function member_list($start=0, $list_num=0, $userName="") {
-    // $userName = str_replace("?", "", $userName);
-    // parse_str($userName, $param);
+function member_list($start=0, $list_num=0, $params=[]) {
     global $mysqli;
-    $limit =  ($start==0 && $list_num==0) ? "" : "LIMIT $start, $list_num";
-    $userName = ($userName != "") ? "WHERE userName = \"$userName\"" : "";
+    $param_str = "";
     $list = [];
-    $sql = "SELECT * FROM  VISIT $userName ORDER BY no DESC $limit;";
+    $limit =  ($start==0 && $list_num==0) ? "" : "LIMIT $start, $list_num";
+    if (count($params) != 0) {
+        $param_str .= "WHERE";
+        foreach ($params as $key => $value) {
+            $param_str = "$param_str $key = \"$value\"";
+        }
+    }
+    $sql = "SELECT * FROM  VISIT $param_str ORDER BY no DESC $limit;";
     $result = $mysqli->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $list[] = [

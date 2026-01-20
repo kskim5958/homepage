@@ -2,11 +2,38 @@
 include $_SERVER["DOCUMENT_ROOT"] . '/php/main/herder.php';
 include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_module.php';
 
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+/* paging : 한 페이지 당 데이터 개수 */
+$list_num = 10;
+
+/* paging : 한 블럭 당 페이지 수 */
+$page_num = 5;
+
+/* paging : 시작 번호 = (현재 페이지 번호 - 1) * 페이지 당 보여질 데이터 수 */
+$start = ($page - 1) * $list_num;
+
+$url = $_SERVER['REQUEST_URI'];
+$param_to_remove = "page";
+$parts = parse_url($url);
+$path = $parts['path'];
+$test = "";
+$new_query = "";
+if (isset($parts['query'])) {
+    parse_str($parts['query'], $params);
+    if (isset($params[$param_to_remove])) {
+        unset($params[$param_to_remove]);
+    }
+    if (count($params) != 0) {
+        $new_query = "&".http_build_query($params);
+    }
+}
+
 # 현재 페이지
-$page = isset($_GET["page"]) ? $_GET["page"] : 1;
-$userName = isset($_GET['userName']) ? $_GET['userName'] : "";
-$pagin_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$search = ($userName != "") ? "&userName=$userName" : "";
+// $page = isset($_GET["page"]) ? $_GET["page"] : 1;
+// $userName = isset($_GET['userName']) ? $_GET['userName'] : "";
+// $pagin_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+// $search = ($userName != "") ? "&userName=$userName" : "";
 
 # 검색과 페이징
 // if (count($_GET) == 0) {
@@ -20,16 +47,7 @@ $search = ($userName != "") ? "&userName=$userName" : "";
 //     $search = substr_replace($search, "?", 0, 1);
 // }
 
-/* paging : 한 페이지 당 데이터 개수 */
-$list_num = 10;
-
-/* paging : 한 블럭 당 페이지 수 */
-$page_num = 5;
-
-/* paging : 시작 번호 = (현재 페이지 번호 - 1) * 페이지 당 보여질 데이터 수 */
-$start = ($page - 1) * $list_num;
-
-$totalCnt = count(member_list(0, 0, $userName));
+$totalCnt = count(member_list(0, 0, isset($params) ? $params : []));
 
 /* paging : 전체 페이지 수 = 전체 데이터 / 페이지당 데이터 개수, ceil : 올림값, floor : 내림값, round : 반올림 */
 $total_page = ceil($totalCnt / $list_num);
@@ -83,7 +101,7 @@ if($e_pageNum > $total_page){
             </thead>
             <tbody>
                 <?php
-                $member_list = member_list($start, $list_num, $userName);
+                $member_list = member_list($start, $list_num, isset($params) ? $params : []);
                 $member_type_list = member_type_list();
                 foreach ($member_list as $member) {
                     echo '<tr class="user__information" id="' . $member['no'] . '">'
@@ -141,25 +159,25 @@ if($e_pageNum > $total_page){
                 /* paging : 이전 페이지 */
                 if ($page <= 1) {
                 ?>
-                    <a href="<?php echo $pagin_url ?>?page=1<?php echo $search; ?>">이전</a>
+                    <a href="<?php echo $path;?>?page=1<?php echo $new_query; ?>">이전</a>
                 <?php } else { ?>
-                    <a href="<?php echo $pagin_url ?>?page=<?php echo ($page - 1); ?><?php echo $search; ?>">이전</a>
+                    <a href="<?php echo $path;?>?page=<?php echo ($page - 1); echo $new_query;?>">이전</a>
                 <?php }; ?>
 
                 <?php
                 /* pager : 페이지 번호 출력 */
                 for ($print_page = $s_pageNum; $print_page <= $e_pageNum; $print_page++) {
                 ?>
-                    <a href="<?php echo $pagin_url ?>?page=<?php echo $print_page; ?><?php echo $search; ?>"><?php echo $print_page; ?></a>
+                    <a href="<?php echo $path;?>?page=<?php echo $print_page; echo $new_query;?>"><?php echo $print_page; ?></a>
                 <?php }; ?>
 
                 <?php
                 /* paging : 다음 페이지 */
                 if ($page >= $total_page) {
                 ?>
-                    <a href="<?php echo $pagin_url ?>?page=<?php echo $total_page; ?><?php echo $search; ?>">다음</a>
+                    <a href="<?php echo $path;?>?page=<?php echo $total_page; echo $new_query;?>">다음</a>
                 <?php } else { ?>
-                    <a href="<?php echo $pagin_url ?>?page=<?php echo ($page + 1); ?><?php echo $search; ?>">다음</a>
+                    <a href="<?php echo $path;?>?page=<?php echo ($page + 1); echo $new_query;?>">다음</a>
                 <?php }; ?>
 
             </p>

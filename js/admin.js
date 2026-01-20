@@ -8,7 +8,7 @@ $(document).on('keyup', '.user__form input[name="userPhone"]', function() {
 
 $(document).on('click', '.user__search__form button.search', function() {
     const userName = $(this).parent().children('[name="userName"]').val();
-    window.location.href = window.location.pathname + "?userName=" + userName;
+    window.location.href = window.location.pathname + "?page=1&userName=" + userName;
 });
 
 $(document).on('click', '.user__form button.insert', function() {

@@ -1,49 +1,26 @@
 <?php
-// $str = "?page=1&userName=kim&userPhone=010";
+$url = $_SERVER["REQUEST_URI"]."?filter=active";
+$param_to_remove = "filter"; // 삭제할 파라미터
 
-$str = "";
-if (count($_GET) == 0) {
-    $str .= "?page=1";
-} elseif (count($_GET) == 1 && array_key_exists("page", $_GET)) {
-    $str .= "?page={$_GET["page"]}";
+// 1. URL을 구조별로 분해
+$parts = parse_url($url);
+// $parts = [ 'scheme' => 'https', 'host' => 'example.com', 'path' => '/page.php', 'query' => 'id=123&sort=asc&filter=active' ];
+
+// 2. 쿼리 문자열을 배열로 변환
+if (isset($parts['query'])) {
+    parse_str($parts['query'], $params);
+    if (isset($params[$param_to_remove])) {
+        unset($params[$param_to_remove]);
+    }
+    $new_query = http_build_query($params);
+    $new_url = $parts['path'] . ($new_query ? '?' . $new_query : '');
 } else {
-    foreach ($_GET as $key => $value) {
-        $str .= "&$key=$value";
-    }
-    $str = substr_replace($str, "?", 0, 1);
+    $new_url = $url;
 }
-$str = str_replace("?", "", $str);
-parse_str($str, $param);
-$cnt = count($param);
-$index = 1;
-$search = "";
-foreach ($param as $key => $value) {
-    if ($key == 'page') {
-        $start = $value;
-    } else {
-        $search .= "$key = $value";
-        $search .= ($cnt > 1 && $cnt != $index) ? " AND " : "";
-    }
-    $index++;
-}
-$sql = "SELECT * FROM VISIT $search LIMIT $start, 10";
-echo $sql;
 
-// function fn_example($arr=[]) {
-//     $cnt = count($arr);
-//     $str = '';
-//     if ($cnt != 0) {
-//         $index = 1;
-//         foreach ($arr as $key => $value) {
-//             $str .= " $key = $value ";
-//             $str .= ($cnt > 1 && $cnt != $index) ? "AND" : "";
-//             $index++;
-//         }
-//     }
-//     return $str;
-// }
-// $arr = ['no'=>1000, 'userName'=>'kim', 'comment'=>'content comment'];
-// echo fn_example($arr);
+echo $new_url;
+
+// 출력: 수정 URL: https://example.com/page.php?id=123&sort=asc
 
 # mysqli 예제
 // $mysqli = new mysqli('yeppeum.kr', 'kskim5958', 'rhkdtjr77', 'kskim5958');
