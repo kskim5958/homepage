@@ -3,23 +3,30 @@ $(document).on('keyup', '.user__search__form input[name="userName"], .user__form
 });
 
 $(document).on('keyup', '.user__form input[name="userPhone"]', function() {
-    $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+    const number = $(this).val();
+    $(this).val(fn_phone_format(number)); 
 });
 
 $(document).on('keyup', '.user__search__form input[name="search-text"]', function() {
     const element = $(this).parent().find('select[name="search-type"] option:selected');
-    if (element.val() == 0) {
-        $(this).val($(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-")); 
+    if (element.val() == 1) {
+        const number = $(this).val();
+        $(this).val(fn_phone_format(number)); 
     }
 });
 
 $(document).on('click', '.user__search__form button.search', function() {
     const search_type = $(this).parent().find('select[name="search-type"] option:selected').val();
     const search_text = $(this).parent().find('input[name="search-text"]').val();
-    if (search_type == 0) {
-        window.location.href = window.location.pathname + "?page=1&userPhone=" + search_text;
+
+    if (search_type == 1) {
+        window.location.href = 
+        window.location.pathname + "?page=1&userPhone=" + search_text + "&search_type=" + search_type + "&search_text=" + search_text;
+    } else if(search_type == 2) {
+        window.location.href = 
+        window.location.pathname + "?page=1&userName=" + search_text + "&search_type=" + search_type + "&search_text=" + search_text;
     } else {
-        window.location.href = window.location.pathname + "?page=1&userName=" + search_text;
+        window.location.href = window.location.pathname;
     }
 });
 
@@ -140,4 +147,11 @@ const fn_html = (userNo, data)=>{
     });
     if (dataCnt > 3) html += '<li class="recall_list_open" data-id="' + userNo + '">더보기</li>';
     return html;
+}
+
+const fn_phone_format = (str)=>{
+    str = str.replace(/[^0-9]/g, "");
+    str = str.replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3");
+    str = str.replace("--", "-");
+    return str;
 }

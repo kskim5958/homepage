@@ -65,7 +65,10 @@ function member_list($start=0, $list_num=0, $params=[]) {
     if (count($params) != 0) {
         $param_str .= "WHERE";
         foreach ($params as $key => $value) {
-            $param_str = "$param_str $key = \"$value\"";
+            if ($key == 'search_type' || $key == 'search_text') {
+                continue;
+            }
+            $param_str = "$param_str $key LIKE \"%$value%\"";
         }
     }
     $sql = "SELECT * FROM  VISIT $param_str ORDER BY visitDate DESC $limit;";

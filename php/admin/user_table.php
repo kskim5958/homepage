@@ -3,6 +3,8 @@ include $_SERVER["DOCUMENT_ROOT"] . '/php/main/herder.php';
 include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_module.php';
 
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
+$search_type = isset($_GET['search_type']) ? $_GET['search_type'] : "";
+$search_text = isset($_GET['search_text']) ? $_GET['search_text'] : "";
 
 /* paging : 한 페이지 당 데이터 개수 */
 $list_num = 10;
@@ -14,15 +16,13 @@ $page_num = 5;
 $start = ($page - 1) * $list_num;
 
 $url = $_SERVER['REQUEST_URI'];
-$param_to_remove = "page";
 $parts = parse_url($url);
 $path = $parts['path'];
-$test = "";
 $new_query = "";
 if (isset($parts['query'])) {
     parse_str($parts['query'], $params);
-    if (isset($params[$param_to_remove])) {
-        unset($params[$param_to_remove]);
+    if (isset($params['page'])) {
+        unset($params['page']);
     }
     if (count($params) != 0) {
         $new_query = "&".http_build_query($params);
@@ -78,10 +78,11 @@ if($e_pageNum > $total_page){
         <div class="content__group form">
             <div class="user__search__form">
                 <select name="search-type">
-                    <option value="0">전화번호검색</option>
-                    <option value="1">이름검색</option>
+                    <option value="0" <?php echo ($search_type == 0) ? "selected" : ""; ?>>전체</option>
+                    <option value="1" <?php echo ($search_type == 1) ? "selected" : ""; ?>>전화번호</option>
+                    <option value="2" <?php echo ($search_type == 2) ? "selected" : ""; ?>>이름</option>
                 </select>
-                <input type="text" name="search-text" placeholder="">
+                <input type="text" name="search-text" placeholder="" value="<?php echo $search_text; ?>">
                 <button type="button" class="search">찾기</button>
             </div>
             <div class="user__form">
@@ -119,7 +120,10 @@ if($e_pageNum > $total_page){
                     }
                     echo '</select>'
                         . '</td>'
-                        . '<td name="userName">' . $member['userName'] . '</td>'
+                        . '<td name="userName">'
+                        . '<input type="text" value="' . $member['userName'] . '">'
+                        . '<span>수정</span>'
+                        . '<span>취소</span>'
                         . '<td name="userPhone">' . $member['userPhone'] . '</td>'
                         . '<td name="path">' . $member['path'] . '</td>'
                         . '<td name="ip">' . $member['ip'] . '</td>'
