@@ -7,19 +7,19 @@ $(document).on('keyup', '.user__form input[name="userPhone"]', function() {
 });
 
 $(document).on('keyup', '.user__search__form input[name="search-text"]', function() {
-    const element = $('.user__search__form');
-    console.log(element.find('select[name="search-type"] option:selected').val());
-    if (element.find('select[name="search-type"] option:selected').val() == 0) {
+    const element = $(this).parent().find('select[name="search-type"] option:selected');
+    if (element.val() == 0) {
         $(this).val($(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-")); 
     }
 });
 
 $(document).on('click', '.user__search__form button.search', function() {
     const search_type = $(this).parent().find('select[name="search-type"] option:selected').val();
+    const search_text = $(this).parent().find('input[name="search-text"]').val();
     if (search_type == 0) {
-        // window.location.href = window.location.pathname + "?page=1&userPhone=" + userPhone;
+        window.location.href = window.location.pathname + "?page=1&userPhone=" + search_text;
     } else {
-        // window.location.href = window.location.pathname + "?page=1&userName=" + userName;
+        window.location.href = window.location.pathname + "?page=1&userName=" + search_text;
     }
 });
 
