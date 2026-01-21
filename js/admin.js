@@ -7,6 +7,23 @@ $(document).on('keyup', '.user__form input[name="userPhone"]', function() {
     $(this).val(fn_phone_format(number)); 
 });
 
+$(document).on('click', '.user__information td[name="userName"] .btn--update', function() {
+    const userNo = $(this).attr('data-id');
+    const element = $('#' + userNo).find('td[name="userName"]');
+    element.find('.btn--close').toggle();
+    element.find('input').prop('disabled', false);
+    element.find('input').focus();
+    element.find('input')
+    .css('padding', '5px 10px')
+    .css('box-sizing', 'border-box')
+    .css('background-color', 'var(--color-gray-1)')
+    .css('border-radius', '5px');
+});
+
+$(document).on('click', '.user__information td[name="userName"] .btn--close', function() {
+    $(this).toggle();
+});
+
 $(document).on('keyup', '.user__search__form input[name="search-text"]', function() {
     const element = $(this).parent().find('select[name="search-type"] option:selected');
     if (element.val() == 1) {
@@ -82,11 +99,11 @@ $(document).on('click', '.recall__column .recall_list_open', function() {
 });
 
 $(document).on('click', '.recall__form .insert', function() {
-    let userNo = $(this).attr('data-id');
-    let element = $('.recall__form[data-id="' + userNo + '"]');
-    let comment_type = element.find('select[name="comment-type"] option:selected').text();
-    let comment_text = element.find('input[name="comment-text"]').val();
-    let comment = comment_text == '' ? comment_type : comment_text;
+    const userNo = $(this).attr('data-id');
+    const element = $('.recall__form[data-id="' + userNo + '"]');
+    const comment_type = element.find('select[name="comment-type"] option:selected').text();
+    const comment_text = element.find('input[name="comment-text"]').val();
+    const comment = comment_text == '' ? comment_type : comment_text;
     
     $.ajax({
         url: "/php/controller/db_module.php",
