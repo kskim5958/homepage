@@ -29,24 +29,6 @@ if (isset($parts['query'])) {
     }
 }
 
-# 현재 페이지
-// $page = isset($_GET["page"]) ? $_GET["page"] : 1;
-// $userName = isset($_GET['userName']) ? $_GET['userName'] : "";
-// $pagin_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-// $search = ($userName != "") ? "&userName=$userName" : "";
-
-# 검색과 페이징
-// if (count($_GET) == 0) {
-//     $search .= "?page=1";
-// } elseif (count($_GET) == 1 && array_key_exists("page", $_GET)) {
-//     $search .= "?page={$_GET["page"]}";
-// } else {
-//     foreach ($_GET as $key => $value) {
-//         $search .= "&$key=$value";
-//     }
-//     $search = substr_replace($search, "?", 0, 1);
-// }
-
 $totalCnt = count(member_list(0, 0, isset($params) ? $params : []));
 
 /* paging : 전체 페이지 수 = 전체 데이터 / 페이지당 데이터 개수, ceil : 올림값, floor : 내림값, round : 반올림 */
@@ -74,6 +56,51 @@ if($e_pageNum > $total_page){
 };
 ?>
 <div id="content__list">
+    <section class="content__outer user__statistics__table">
+        <table>
+            <thead>
+                <tr>
+                    <th>전체</th>
+                    <th>빅크통계</th>
+                    <th>빅크) 아웃콜</th>
+                    <th>빅크) 예약완료</th>
+                    <th>빅크) 동의/진행</th>
+                    <th>빅크) 미진행</th>
+                    <th>빅크) 예약취소</th>
+                    <th>원내) 소개</th>
+                    <th>원내) 인터넷</th>
+                    <th>원내) 기타</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $row = user_statistics(); ?>
+                <tr>
+                    <td><?php echo number_format($row['total']) ?>&nbsp;명</td>
+                    <td><?php echo number_format($row['big_total']) ?>&nbsp;명</td>
+                    <td><?php echo number_format($row['big_qutcall']) ?>&nbsp;명</td>
+                    <td><?php echo number_format($row['big_completed']) ?>&nbsp;명</td>
+                    <td><?php echo number_format($row['big_agree']) ?>&nbsp;명</td>
+                    <td><?php echo number_format($row['big_cancel']) ?>&nbsp;명</td>
+                    <td><?php echo number_format($row['big_introduction']) ?>&nbsp;명</td>
+                    <td><?php echo number_format($row['in_introduction']) ?>&nbsp;명</td>
+                    <td><?php echo number_format($row['in_internet']) ?>&nbsp;명</td>
+                    <td><?php echo number_format($row['in_other']) ?>&nbsp;명</td>
+                </tr>
+                <tr>
+                    <td><?php echo number_format($row['total_cost']) ?>&nbsp;원</td>
+                    <td><?php echo number_format($row['big_total_cost']) ?>&nbsp;원</td>
+                    <td><?php echo number_format($row['big_qutcall_cost']) ?>&nbsp;원</td>
+                    <td><?php echo number_format($row['big_completed_cost']) ?>&nbsp;원</td>
+                    <td><?php echo number_format($row['big_agree_cost']) ?>&nbsp;원</td>
+                    <td><?php echo number_format($row['big_cancel_cost']) ?>&nbsp;원</td>
+                    <td><?php echo number_format($row['big_introduction_cost']) ?>&nbsp;원</td>
+                    <td><?php echo number_format($row['in_introduction_cost']) ?>&nbsp;원</td>
+                    <td><?php echo number_format($row['in_internet_cost']) ?>&nbsp;원</td>
+                    <td><?php echo number_format($row['in_other_cost']) ?>&nbsp;원</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
     <section class="content__outer user__table">
         <div class="content__group form">
             <div class="user__search__form">
@@ -99,6 +126,7 @@ if($e_pageNum > $total_page){
                     <th>상태</th>
                     <th>이름</th>
                     <th>연락처</th>
+                    <th>진행금액</th>
                     <th>유입경로</th>
                     <th>유입위치</th>
                     <th>리콜상태</th>
@@ -124,10 +152,19 @@ if($e_pageNum > $total_page){
                         . '<div class="update">'
                         . '<input data-id="' . $member['no'] . '" type="text" value="' . $member['userName'] . '" disabled>'
                         . '<span data-id="' . $member['no'] . '" class="btn btn--update">수정</span>'
+                        . '<span data-id="' . $member['no'] . '" class="btn btn--update--action">수정하기</span>'
                         . '<span data-id="' . $member['no'] . '" class="btn btn--close">취소</span>'
                         . '</div>'
                         . '</td>'
                         . '<td name="userPhone">' . $member['userPhone'] . '</td>'
+                        . '<td name="cost">'
+                        . '<div class="update">'
+                        . '<input data-id="' . $member['no'] . '" type="text" value="' . number_format($member['cost']) . '" disabled>'
+                        . '<span data-id="' . $member['no'] . '" class="btn btn--update">수정</span>'
+                        . '<span data-id="' . $member['no'] . '" class="btn btn--update--action">수정하기</span>'
+                        . '<span data-id="' . $member['no'] . '" class="btn btn--close">취소</span>'
+                        . '</div>'
+                        . '</td>'
                         . '<td name="path">' . $member['path'] . '</td>'
                         . '<td name="ip">' . $member['ip'] . '</td>'
                         . '<td class="recall__column">'
@@ -148,7 +185,7 @@ if($e_pageNum > $total_page){
                     }
                     echo '</ul></td></tr>';
                     echo '<tr class="recall__row" data-id="' . $member['no'] . '">';
-                    echo '<td colspan="8">';
+                    echo '<td colspan="9">';
                     echo '<div class="recall__form" data-id="' . $member['no'] . '">';
                     echo '<select name="comment-type">';
                     $comment_type_list = comment_type_list();
