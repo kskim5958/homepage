@@ -62,7 +62,7 @@ if($e_pageNum > $total_page){
                 <tr>
                     <th>전체</th>
                     <th>빅크통계</th>
-                    <th>빅크) 아웃콜</th>
+                    <th>빅크) 리콜</th>
                     <th>빅크) 예약완료</th>
                     <th>빅크) 동의/진행</th>
                     <th>빅크) 미진행</th>
@@ -80,8 +80,8 @@ if($e_pageNum > $total_page){
                     <td><?php echo number_format($row['big_qutcall']) ?>&nbsp;명</td>
                     <td><?php echo number_format($row['big_completed']) ?>&nbsp;명</td>
                     <td><?php echo number_format($row['big_agree']) ?>&nbsp;명</td>
+                    <td><?php echo number_format($row['big_not_agree']) ?>&nbsp;명</td>
                     <td><?php echo number_format($row['big_cancel']) ?>&nbsp;명</td>
-                    <td><?php echo number_format($row['big_introduction']) ?>&nbsp;명</td>
                     <td><?php echo number_format($row['in_introduction']) ?>&nbsp;명</td>
                     <td><?php echo number_format($row['in_internet']) ?>&nbsp;명</td>
                     <td><?php echo number_format($row['in_other']) ?>&nbsp;명</td>
@@ -89,11 +89,11 @@ if($e_pageNum > $total_page){
                 <tr>
                     <td><?php echo number_format($row['total_cost']) ?>&nbsp;원</td>
                     <td><?php echo number_format($row['big_total_cost']) ?>&nbsp;원</td>
-                    <td><?php echo number_format($row['big_qutcall_cost']) ?>&nbsp;원</td>
+                    <td><?php echo number_format($row['big_outcall_cost']) ?>&nbsp;원</td>
                     <td><?php echo number_format($row['big_completed_cost']) ?>&nbsp;원</td>
                     <td><?php echo number_format($row['big_agree_cost']) ?>&nbsp;원</td>
+                    <td><?php echo number_format($row['big_not_agree_cost']) ?>&nbsp;원</td>
                     <td><?php echo number_format($row['big_cancel_cost']) ?>&nbsp;원</td>
-                    <td><?php echo number_format($row['big_introduction_cost']) ?>&nbsp;원</td>
                     <td><?php echo number_format($row['in_introduction_cost']) ?>&nbsp;원</td>
                     <td><?php echo number_format($row['in_internet_cost']) ?>&nbsp;원</td>
                     <td><?php echo number_format($row['in_other_cost']) ?>&nbsp;원</td>
@@ -127,6 +127,7 @@ if($e_pageNum > $total_page){
                     <th>이름</th>
                     <th>연락처</th>
                     <th>진행금액</th>
+                    <th>견적금액</th>
                     <th>유입경로</th>
                     <th>유입위치</th>
                     <th>리콜상태</th>
@@ -165,6 +166,7 @@ if($e_pageNum > $total_page){
                         . '<span data-id="' . $member['no'] . '" class="btn btn--close">취소</span>'
                         . '</div>'
                         . '</td>'
+                        . '<td name=not_decided>' . $member['not_decided'] . '</td>'
                         . '<td name="path">' . $member['path'] . '</td>'
                         . '<td name="ip">' . $member['ip'] . '</td>'
                         . '<td class="recall__column">'
