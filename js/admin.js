@@ -1,5 +1,10 @@
 let Glover_userName = "";
 let Glover_cost = "";
+let Glover_not_decided = "";
+
+$(document).ready(function () {
+    $(".user__table tbody .user__information:odd").css("background-color", "var(--color-white-1)");
+});
 
 $(document).on('keyup', '.user__search__form input[name="userName"], .user__form input[name="userName"]', function() {
     $(this).val($(this).val().replace(/[^ㄱ-ㅣ가-힣]/g, ""));
@@ -10,7 +15,7 @@ $(document).on('keyup', '.user__form input[name="userPhone"]', function() {
     $(this).val(fn_phone_format(number)); 
 });
 
-$(document).on('keyup', '.user__information td[name="cost"] input', function() {
+$(document).on('keyup', '.user__information td[name="cost"] input, .user__information td[name="not_decided"] input', function() {
     const number = $(this).val();
     $(this).val(fn_phone_format(number)); 
     $(this).val($(this).val().replace(/\,/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
@@ -39,7 +44,6 @@ $(document).on('click', '.user__information td[name="cost"] .btn--update--action
     const userNo = $(this).attr('data-id');
     const element = $('#' + userNo).find('td[name="cost"]');
     let cost = element.find('input').val().replace(/,/g, '');
-    console.log("🚀 ~ cost:", cost)
     $(this).toggle();
     element.find('.btn--close').toggle();
     element.find('.btn--update').toggle();
@@ -69,6 +73,67 @@ $(document).on('click', '.user__information td[name="cost"] .btn--update--action
 $(document).on('click', '.user__information td[name="cost"] .btn--close', function() {
     const userNo = $(this).attr('data-id');
     const element = $('#' + userNo).find('td[name="cost"]');
+    element.find('input').prop('disabled', true);
+    element.find('input').css('background-color', 'transparent');
+    element.find('input').val(Glover_cost);
+    $(this).toggle();
+    element.find('.btn--update').toggle();
+    element.find('.btn--update--action').toggle();
+});
+
+// 유저 진행 예정금액 업데이트(수정버튼 활성화)
+$(document).on('click', '.user__information td[name="not_decided"] .btn--update', function() {
+    const userNo = $(this).attr('data-id');
+    const element = $('#' + userNo).find('td[name="not_decided"]');
+    const not_decided = element.find('input').val();
+    Glover_not_decided = not_decided;
+    $(this).toggle();
+    element.find('.btn--close').toggle();
+    element.find('.btn--update--action').toggle();
+    element.find('input').prop('disabled', false);
+    element.find('input')
+    .css('padding', '5px 10px')
+    .css('box-sizing', 'border-box')
+    .css('background-color', 'var(--color-gray-1)')
+    .css('border-radius', '5px');
+    element.find('input').focus().val("").val(not_decided.replace(/\,/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+});
+
+// 유저 진행 예정금액 업데이트(수정하기 버튼 활성화/액션)
+$(document).on('click', '.user__information td[name="not_decided"] .btn--update--action', function() {
+    const userNo = $(this).attr('data-id');
+    const element = $('#' + userNo).find('td[name="not_decided"]');
+    let not_decided = element.find('input').val().replace(/,/g, '');
+    console.log("🚀 ~ not_decided:", not_decided)
+    $(this).toggle();
+    element.find('.btn--close').toggle();
+    element.find('.btn--update').toggle();
+    element.find('input').prop('disabled', true);
+    element.find('input').css('background-color', 'transparent');
+
+    $.ajax({
+        url: "/php/controller/db_module.php",
+        type: "post",
+        data: {
+            functionName: 'member_update',
+            userNo: userNo,
+            not_decided: not_decided
+        }
+    }).done(function (data) {
+        data = JSON.parse(data);
+        if (data.result) {
+            const new_not_decided = data.list.not_decided;
+            alert(`[${Glover_not_decided}원] 에서 [${new_not_decided.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')}원]으로 변경하였습니다!`);
+        } else {
+            console.log(data.error);
+        }
+    });
+});
+
+// 유저 진행금액 업데이트(수정취소 버튼 활성화)
+$(document).on('click', '.user__information td[name="not_decided"] .btn--close', function() {
+    const userNo = $(this).attr('data-id');
+    const element = $('#' + userNo).find('td[name="not_decided"]');
     element.find('input').prop('disabled', true);
     element.find('input').css('background-color', 'transparent');
     element.find('input').val(Glover_cost);

@@ -65,7 +65,7 @@ if($e_pageNum > $total_page){
                     <th>빅크) 리콜</th>
                     <th>빅크) 예약완료</th>
                     <th>빅크) 동의/진행</th>
-                    <th>빅크) 미진행</th>
+                    <th>빅크) 미동의</th>
                     <th>빅크) 예약취소</th>
                     <th>원내) 소개</th>
                     <th>원내) 인터넷</th>
@@ -166,7 +166,14 @@ if($e_pageNum > $total_page){
                         . '<span data-id="' . $member['no'] . '" class="btn btn--close">취소</span>'
                         . '</div>'
                         . '</td>'
-                        . '<td name=not_decided>' . $member['not_decided'] . '</td>'
+                        . '<td name="not_decided">'
+                        . '<div class="update">'
+                        . '<input data-id="' . $member['no'] . '" type="text" value="' . number_format($member['not_decided']) . '" disabled>'
+                        . '<span data-id="' . $member['no'] . '" class="btn btn--update">수정</span>'
+                        . '<span data-id="' . $member['no'] . '" class="btn btn--update--action">수정하기</span>'
+                        . '<span data-id="' . $member['no'] . '" class="btn btn--close">취소</span>'
+                        . '</div>'
+                        . '</td>'
                         . '<td name="path">' . $member['path'] . '</td>'
                         . '<td name="ip">' . $member['ip'] . '</td>'
                         . '<td class="recall__column">'
@@ -187,7 +194,7 @@ if($e_pageNum > $total_page){
                     }
                     echo '</ul></td></tr>';
                     echo '<tr class="recall__row" data-id="' . $member['no'] . '">';
-                    echo '<td colspan="9">';
+                    echo '<td colspan="10">';
                     echo '<div class="recall__form" data-id="' . $member['no'] . '">';
                     echo '<select name="comment-type">';
                     $comment_type_list = comment_type_list();

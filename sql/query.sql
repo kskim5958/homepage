@@ -21,5 +21,11 @@ SELECT
     SUM(CASE WHEN status = 8 THEN cost ELSE 0 END) as in_other_cost
 FROM (SELECT *, COUNT(userPhone) FROM VISIT GROUP BY userPhone HAVING COUNT(userPhone) >= 1 ORDER BY cost DESC) NEW_VISIT;
 
-SELECT SUM(NEW_VISIT.d_count)-COUNT(NEW_VISIT.no) as '중복수' FROM 
+SELECT SUM(NEW_VISIT.d_count) as '중복포함', COUNT(NEW_VISIT.no) as '중복제외', SUM(NEW_VISIT.d_count)-COUNT(NEW_VISIT.no) as '중복수' FROM 
 (SELECT *, COUNT(userPhone) AS d_count FROM VISIT GROUP BY userPhone HAVING COUNT(userPhone) >= 1 ORDER BY cost DESC) NEW_VISIT;
+
+SELECT `visitDate` AS '날짜', `userName` AS '이름', `userPhone` AS '연락처', COUNT(userPhone) AS '중복수' FROM VISIT GROUP BY userPhone HAVING COUNT(userPhone) >= 2 ORDER BY `visitDate` DESC;
+
+SELECT `visitDate`, `userName`, `userPhone`, COUNT(userPhone) AS d_count FROM VISIT WHERE CHARACTER_LENGTH(`userName`) < 2 GROUP BY userPhone HAVING COUNT(userPhone) >= 1 ORDER BY `visitDate` DESC;
+
+SELECT * FROM VISIT WHERE CHARACTER_LENGTH(`userName`) > 3;

@@ -40,7 +40,7 @@ function user_statistics() {
         SUM(CASE WHEN status = 1 THEN cost ELSE 0 END) as big_outcall_cost,
         SUM(CASE WHEN status = 2 THEN cost ELSE 0 END) as big_completed_cost,
         SUM(CASE WHEN status = 3 THEN cost ELSE 0 END) as big_agree_cost,
-        SUM(CASE WHEN status = 4 THEN cost ELSE 0 END) as big_not_agree_cost,
+        SUM(CASE WHEN status = 4 THEN not_decided ELSE 0 END) as big_not_agree_cost,
         SUM(CASE WHEN status = 5 THEN cost ELSE 0 END) as big_cancel_cost,
         SUM(CASE WHEN status = 6 THEN cost ELSE 0 END) as in_introduction_cost,
         SUM(CASE WHEN status = 7 THEN cost ELSE 0 END) as in_internet_cost,
@@ -84,6 +84,9 @@ function member_update() {
     } elseif (isset($_POST['cost'])) {
         $cost = $_POST['cost'];
         $sql = "UPDATE VISIT SET cost = $cost WHERE no = $userNo";
+    } elseif (isset($_POST['not_decided'])) {
+        $not_decided = $_POST['not_decided'];
+        $sql = "UPDATE VISIT SET not_decided = $not_decided WHERE no = $userNo";
     } else {
         return;
     }
