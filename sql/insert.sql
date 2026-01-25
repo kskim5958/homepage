@@ -1,5 +1,8 @@
-INSERT INTO `USERS` (user_name, user_phone) VALUES ("깅광석", "010");
-SELECT * FROM `USERS`;
+SET NAMES 'utf8mb4';
+
+DELETE FROM `USERS';
+
+
 
 INSERT INTO VISIT (userName, userPhone, visitDate) VALUES ("김정한",	"010-7689-8128",	"2026-01-22 12:03");
 INSERT INTO VISIT (userName, userPhone, visitDate) VALUES ("허성자",	"010-3729-5199",	"2026-01-22 10:58");
