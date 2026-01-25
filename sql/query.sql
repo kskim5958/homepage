@@ -1,3 +1,13 @@
+-- 초기화
+ALTER TABLE "테이블명" AUTO_INCREMENT=1;
+-- 오토넘버 추가
+ALTER TABLE AMOUNT MODIFY no INT NOT NULL AUTO_INCREMENT PRIMARY KEY;
+
+-- 테이블데이터 삭제
+DELETE FROM `AMOUNT`
+
+
+
 SELECT 
     COUNT(*) as total,
     COUNT(IF(status = 1 OR status = 2 OR status = 3 OR status = 4 OR status = 5 , 1, NULL)) as big_total,
@@ -29,3 +39,38 @@ SELECT `visitDate` AS '날짜', `userName` AS '이름', `userPhone` AS '연락�
 SELECT `visitDate`, `userName`, `userPhone`, COUNT(userPhone) AS d_count FROM VISIT WHERE CHARACTER_LENGTH(`userName`) < 2 GROUP BY userPhone HAVING COUNT(userPhone) >= 1 ORDER BY `visitDate` DESC;
 
 SELECT * FROM VISIT WHERE CHARACTER_LENGTH(`userName`) > 3;
+
+
+SELECT COUNT(*) AS cnt FROM `VISIT`;
+SELECT
+r_VISIT.no AS no,
+r_VISIT.visitDate AS visitDate,
+r_VISIT.userName AS userName,
+r_VISIT.userPhone AS userPhone,
+r_VISIT.device AS device,
+r_VISIT.ip AS ip,
+r_VISIT.path AS path,
+r_VISIT.status AS status,
+IFNULL(r_AMOUNT.estimate, 0) AS estimate,
+IFNULL(r_AMOUNT.payment, 0) AS payment
+FROM
+(SELECT * FROM `VISIT` GROUP BY `userPhone` ORDER BY `visitDate` DESC) AS r_VISIT
+LEFT JOIN
+(SELECT
+userNo,
+SUM(estimate) AS estimate,
+SUM(payment) AS payment
+FROM
+AMOUNT GROUP BY `userNo`) AS r_AMOUNT
+ON r_VISIT.no = r_AMOUNT.userNo WHERE `no` = 1;
+
+SELECT
+userNo,
+SUM(estimate) AS estimate,
+SUM(payment) AS payment
+FROM
+AMOUNT GROUP BY `userNo`
+
+SELECT * FROM `VISIT`
+SELECT * FROM `RECALL`
+SELECT * comment
