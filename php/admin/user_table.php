@@ -29,7 +29,7 @@ if (isset($parts['query'])) {
     }
 }
 
-$totalCnt = count(member_list(0, 0, isset($params) ? $params : []));
+$totalCnt = count(users(0, 0, isset($params) ? $params : []));
 
 /* paging : 전체 페이지 수 = 전체 데이터 / 페이지당 데이터 개수, ceil : 올림값, floor : 내림값, round : 반올림 */
 $total_page = ceil($totalCnt / $list_num);
@@ -61,15 +61,16 @@ if($e_pageNum > $total_page){
             <thead>
                 <tr>
                     <th>전체</th>
-                    <th>빅크통계</th>
-                    <th>빅크) 리콜</th>
-                    <th>빅크) 예약완료</th>
-                    <th>빅크) 동의/진행</th>
-                    <th>빅크) 미동의</th>
-                    <th>빅크) 예약취소</th>
-                    <th>원내) 소개</th>
-                    <th>원내) 인터넷</th>
-                    <th>원내) 기타</th>
+                    <th>빅: 전체</th>
+                    <th>빅: 중복</th>
+                    <th>빅: DB</th>
+                    <th>빅: 예약지연</th>
+                    <th>빅: 동의</th>
+                    <th>빅: 미동의</th>
+                    <th>빅: 예약취소</th>
+                    <th>원내: 소개</th>
+                    <th>원내: 인터넷</th>
+                    <th>원내: 기타</th>
                 </tr>
             </thead>
             <tbody>
@@ -135,51 +136,51 @@ if($e_pageNum > $total_page){
             </thead>
             <tbody>
                 <?php
-                $member_list = member_list($start, $list_num, isset($params) ? $params : []);
-                $member_type_list = member_type_list();
-                foreach ($member_list as $member) {
-                    echo '<tr class="user__information" id="' . $member['no'] . '">'
-                        . '<td name="no">' . $member['no'] . '</td>'
-                        . '<td name="visitDate">' . $member['visitDate'] . '</td>'
+                $users = users($start, $list_num, isset($params) ? $params : []);
+                $user_type_list = user_type_list();
+                foreach ($users as $user) {
+                    echo '<tr class="user__information" id="' . $user['user_no'] . '">'
+                        . '<td name="no">' . $user['user_no'] . '</td>'
+                        . '<td name="visitDate">' . $user['reg_dt'] . '</td>'
                         . '<td name="status">'
-                        . '<select name="member-type" data-id="' . $member['no'] . '">';
-                    foreach ($member_type_list as $member_type) {
-                        $selected = ($member['status'] == $member_type['no']) ? 'selected' : '';
-                        echo "<option $selected value={$member_type["no"]}>{$member_type["comment"]}</option>";
+                        . '<select name="member-type" data-id="' . $user['user_no'] . '">';
+                    foreach ($user_type_list as $user_type) {
+                        $selected = ($user['status'] == $user_type['no']) ? 'selected' : '';
+                        echo "<option $selected value={$user_type["no"]}>{$user_type["comment"]}</option>";
                     }
                     echo '</select>'
                         . '</td>'
                         . '<td name="userName">'
                         . '<div class="update">'
-                        . '<input data-id="' . $member['no'] . '" type="text" value="' . $member['userName'] . '" disabled>'
-                        . '<span data-id="' . $member['no'] . '" class="btn btn--update">수정</span>'
-                        . '<span data-id="' . $member['no'] . '" class="btn btn--update--action">수정하기</span>'
-                        . '<span data-id="' . $member['no'] . '" class="btn btn--close">취소</span>'
+                        . '<input data-id="' . $user['user_no'] . '" type="text" value="' . $user['user_name'] . '" disabled>'
+                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--update">수정</span>'
+                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--update--action">수정하기</span>'
+                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--close">취소</span>'
                         . '</div>'
                         . '</td>'
-                        . '<td name="userPhone">' . $member['userPhone'] . '</td>'
+                        . '<td name="userPhone">' . $user['user_phone'] . '</td>'
                         . '<td name="cost">'
                         . '<div class="update">'
-                        . '<input data-id="' . $member['no'] . '" type="text" value="' . number_format($member['cost']) . '" disabled>'
-                        . '<span data-id="' . $member['no'] . '" class="btn btn--update">수정</span>'
-                        . '<span data-id="' . $member['no'] . '" class="btn btn--update--action">수정하기</span>'
-                        . '<span data-id="' . $member['no'] . '" class="btn btn--close">취소</span>'
+                        . '<input data-id="' . $user['user_no'] . '" type="text" value="' . number_format($user['payment']) . '" disabled>'
+                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--update">수정</span>'
+                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--update--action">수정하기</span>'
+                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--close">취소</span>'
                         . '</div>'
                         . '</td>'
                         . '<td name="not_decided">'
                         . '<div class="update">'
-                        . '<input data-id="' . $member['no'] . '" type="text" value="' . number_format($member['not_decided']) . '" disabled>'
-                        . '<span data-id="' . $member['no'] . '" class="btn btn--update">수정</span>'
-                        . '<span data-id="' . $member['no'] . '" class="btn btn--update--action">수정하기</span>'
-                        . '<span data-id="' . $member['no'] . '" class="btn btn--close">취소</span>'
+                        . '<input data-id="' . $user['user_no'] . '" type="text" value="' . number_format($user['estimate']) . '" disabled>'
+                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--update">수정</span>'
+                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--update--action">수정하기</span>'
+                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--close">취소</span>'
                         . '</div>'
                         . '</td>'
-                        . '<td name="path">' . $member['path'] . '</td>'
-                        . '<td name="ip">' . $member['ip'] . '</td>'
+                        . '<td name="path">' . $user['path'] . '</td>'
+                        . '<td name="ip">' . $user['ip'] . '</td>'
                         . '<td class="recall__column">'
                         . '<ul>';
-                    echo '<li class="form_open" data-id="' . $member['no'] . '">리콜추가</li>';
-                    $recall_list = recall_list($member['no']);
+                    echo '<li class="form_open" data-id="' . $user['user_no'] . '">리콜추가</li>';
+                    $recall_list = recall_list($user['user_no']);
                     $recallCnt = count($recall_list);
                     if ($recallCnt != 0) {
                         foreach ($recall_list as $index => $recall) {
@@ -190,12 +191,12 @@ if($e_pageNum > $total_page){
                                 . '<span class="del" data-id="' . $recall['no'] . '" data-userid="' . $recall['userNo'] . '">삭제</span>'
                                 . '</li>';
                         }
-                        if ($recallCnt > 3) echo '<li class="recall_list_open" data-id="' . $member['no'] . '">더보기</li>';
+                        if ($recallCnt > 3) echo '<li class="recall_list_open" data-id="' . $user['user_no'] . '">더보기</li>';
                     }
                     echo '</ul></td></tr>';
-                    echo '<tr class="recall__row" data-id="' . $member['no'] . '">';
+                    echo '<tr class="recall__row" data-id="' . $user['user_no'] . '">';
                     echo '<td colspan="10">';
-                    echo '<div class="recall__form" data-id="' . $member['no'] . '">';
+                    echo '<div class="recall__form" data-id="' . $user['user_no'] . '">';
                     echo '<select name="comment-type">';
                     $comment_type_list = comment_type_list();
                     foreach ($comment_type_list as $comment_type) {
@@ -203,8 +204,8 @@ if($e_pageNum > $total_page){
                     }
                     echo '</select>'
                         . '<input name="comment-text" type="text" placeholder="기타 : 내용">'
-                        . '<button type="button" class="insert" data-id="' . $member['no'] . '">추가하기</button>'
-                        . '<button type="button" class="close" data-id="' . $member['no'] . '">닫기</button>'
+                        . '<button type="button" class="insert" data-id="' . $user['user_no'] . '">추가하기</button>'
+                        . '<button type="button" class="close" data-id="' . $user['user_no'] . '">닫기</button>'
                         . '</div></td></tr>';
                 }
                 ?>

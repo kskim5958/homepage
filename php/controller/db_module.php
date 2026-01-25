@@ -101,7 +101,7 @@ function member_update() {
     echo $json;
 }
 
-function member_list($start=0, $list_num=0, $params=[]) {
+function users($start=0, $list_num=0, $params=[]) {
     global $mysqli;
     $param_str = "";
     $list = [];
@@ -115,19 +115,40 @@ function member_list($start=0, $list_num=0, $params=[]) {
             $param_str = "$param_str $key LIKE \"%$value%\"";
         }
     }
-    $sql = "SELECT * FROM  VISIT $param_str ORDER BY visitDate DESC $limit;";
+    $sql = "
+        SELECT
+        *
+        FROM
+        (SELECT
+        R_USERS.user_no AS user_no,
+        R_USERS.reg_dt AS reg_dt,
+        R_USERS.user_name AS user_name,
+        R_USERS.user_phone AS user_phone,
+        R_USERS.device AS device,
+        R_USERS.ip AS ip,
+        R_USERS.path AS path,
+        R_USERS.status AS status,
+        IFNULL(R_AMOUNT.estimate, 0) AS estimate,
+        IFNULL(R_AMOUNT.payment, 0) AS payment
+        FROM
+        (SELECT * FROM `USERS` GROUP BY `user_phone` ORDER BY reg_dt DESC) AS R_USERS
+        LEFT JOIN
+        (SELECT user_no, SUM(estimate) AS estimate, SUM(payment) AS payment FROM `AMOUNT` GROUP BY `user_no`) AS R_AMOUNT
+        ON R_USERS.user_no = R_AMOUNT.user_no) AS USERS $param_str ORDER BY reg_dt DESC $limit;
+    ";
     $result = $mysqli->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $list[] = [
-            'no'=>$row['no']
-            ,'visitDate'=>$row['visitDate']
-            ,'status'=>$row['status']
-            ,'userName'=>$row['userName']
-            ,'userPhone'=>$row['userPhone']
-            ,'path'=>$row['path']
-            ,'ip'=>$row['ip']
-            ,'cost'=>$row['cost']
-            ,'not_decided'=>$row['not_decided']
+            "user_no"=>$row["user_no"],
+            "reg_dt"=>$row["reg_dt"],
+            "user_name"=>$row["user_name"],
+            "user_phone"=>$row["user_phone"],
+            "device"=>$row["device"],
+            "ip"=>$row["ip"],
+            "path"=>$row["path"],
+            "status"=>$row["status"],
+            "estimate"=>$row["estimate"],
+            "payment"=>$row["payment"]
         ];
     }
     return $list;
@@ -193,7 +214,7 @@ function comment_type_list() {
     }
     return $list;
 }
-function member_type_list() {
+function user_type_list() {
     global $mysqli;
     $list = [];
     $sql ='SELECT * FROM MEMBER_TYPE ORDER BY no ASC';
