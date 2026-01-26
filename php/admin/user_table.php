@@ -79,12 +79,11 @@ if($e_pageNum > $total_page){
                     <th>순번</th>
                     <th>최근날짜</th>
                     <th>최초날짜</th>
+                    <th>상태</th>
                     <th>이름</th>
                     <th>연락처</th>
                     <th>진행금액</th>
                     <th>견적금액</th>
-                    <th>유입경로</th>
-                    <th>유입위치</th>
                     <th>리콜상태</th>
                 </tr>
             </thead>
@@ -97,10 +96,8 @@ if($e_pageNum > $total_page){
                         . "<td name=\"user_no\">{$user["user_no"]}</td>"
                         . "<td name=\"reg_dt\">{$user["reg_dt"]}</td>"
                         . "<td name=\"old_dt\">{$user["old_dt"]}</td>"
-                        . "<td name=\"estimate\">{$user["estimate"]}</td>"
-                        . "<td name=\"payment\">{$user["payment"]}</td>"
                         . '<td name="status">'
-                        . "<select name=\"user_type\" data-user-no=\"{$user["user_no"]}\">";
+                        . "<select name=\"user_type\" data-user--no=\"{$user["user_no"]}\">";
                         foreach ($user_type_list as $user_type) {
                             $selected = ($user['status'] == $user_type['no']) ? 'selected' : '';
                             echo "<option $selected value=\"{$user_type["no"]}\">{$user_type["user_type"]}</option>";
@@ -109,39 +106,39 @@ if($e_pageNum > $total_page){
                         . "</td>"
                         . "<td name=\"user_name\">"
                         . "<div class=\"update\">"
-                        . "<input data-user-no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["user_name"]}\" disabled>"
-                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
-                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
-                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
+                        . "<input data-user--no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["user_name"]}\" disabled>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
                         . "</div>"
                         . "</td>"
                         . "<td name=\"user_phone\">"
                         . "<div class=\"update\">"
-                        . "<input data-user-no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["user_phone"]}\" disabled>"
-                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
-                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
-                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
+                        . "<input data-user--no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["user_phone"]}\" disabled>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
                         . "</div>"
                         . "</td>"
                         . "<td name=\"estimate\">"
                         . "<div class=\"update\">"
-                        . "<input data-user-no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["estimate"]}\" disabled>"
-                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
-                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
-                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
+                        . "<input data-user--no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["estimate"]}\" disabled>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
                         . "</div>"
                         . "</td>"
                         . "<td name=\"payment\">"
                         . "<div class=\"update\">"
-                        . "<input data-user-no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["payment"]}\" disabled>"
-                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
-                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
-                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
+                        . "<input data-user--no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["payment"]}\" disabled>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
                         . "</div>"
                         . "</td>"
                         . "<td class=\"recall__column\">"
                         . "<ul>";
-                    echo "<li class=\"form_open\" data-user-no=\"{$user["user_no"]}\">리콜추가</li>";
+                    echo "<li class=\"form_open\" data-user--no=\"{$user["user_no"]}\">리콜추가</li>";
                     $recall_list = recall_list($user["user_no"]);
                     $recallCnt = count($recall_list);
                     if ($recallCnt != 0) {
@@ -150,15 +147,15 @@ if($e_pageNum > $total_page){
                             echo "<li $classAttribute>"
                                 . "{$recall["reg_dt"]}&nbsp;"
                                 . "{$recall["comment"]}&nbsp;"
-                                . "<span class=\"del\" data-recall-no=\"{$recall["no"]}\" data-user-no=\"{$recall["userNo"]}\">삭제</span>"
+                                . "<span class=\"del\" data-recall--no=\"{$recall["no"]}\" data-user--no=\"{$recall["userNo"]}\">삭제</span>"
                                 . "</li>";
                         }
-                        if ($recallCnt > 3) echo "<li class=\"recall__list__open\" data-user-no=\"{$user["user_no"]}\">더보기</li>";
+                        if ($recallCnt > 3) echo "<li class=\"recall__list__open\" data-user--no=\"{$user["user_no"]}\">더보기</li>";
                     }
                     echo "</ul></td></tr>";
-                    echo "<tr class=\"recall__row\" data-user-no=\"{$user["user_no"]}\">";
+                    echo "<tr class=\"recall__row\" data-user--no=\"{$user["user_no"]}\">";
                     echo "<td colspan=\"10\">";
-                    echo "<div class=\"recall__form\" data-user-no=\"{$user["user_no"]}\">";
+                    echo "<div class=\"recall__form\" data-user--no=\"{$user["user_no"]}\">";
                     echo "<select name=\"recall_type\">";
                     $recall_type_list = recall_type_list();
                     foreach ($recall_type_list as $recall_type) {
@@ -166,8 +163,8 @@ if($e_pageNum > $total_page){
                     }
                     echo "</select>"
                         . "<input name=\"comment_text\" type=\"text\" placeholder=\"기타 : 내용\">"
-                        . "<button type=\"button\" class=\"insert\" data-user-no=\"{$user["user_no"]}\">추가하기</button>"
-                        . "<button type=\"button\" class=\"close\" data-user-no=\"{$user["user_no"]}\">닫기</button>"
+                        . "<button type=\"button\" class=\"insert\" data-user--no=\"{$user["user_no"]}\">추가하기</button>"
+                        . "<button type=\"button\" class=\"close\" data-user--no=\"{$user["user_no"]}\">닫기</button>"
                         . "</div></td></tr>";
                 }
                 ?>

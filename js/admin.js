@@ -1,7 +1,3 @@
-let Glover_userName = "";
-let Glover_cost = "";
-let Glover_not_decided = "";
-
 $(document).ready(function () {
     $(".user__table tbody .user__information:odd").css("background-color", "var(--color-white-1)");
 });
@@ -104,7 +100,6 @@ $(document).on('click', '.user__information td[name="not_decided"] .btn--update-
     const userNo = $(this).attr('data-id');
     const element = $('#' + userNo).find('td[name="not_decided"]');
     let not_decided = element.find('input').val().replace(/,/g, '');
-    console.log("🚀 ~ not_decided:", not_decided)
     $(this).toggle();
     element.find('.btn--close').toggle();
     element.find('.btn--update').toggle();
@@ -242,29 +237,29 @@ $(document).on('click', '.user__form button.insert', function() {
     });
 });
 
-$(document).on('change', '.user__information [name="member-type"]', function() {
-    const userNo = $(this).attr('data-id');
+$(document).on('change', 'select[name="user_type"]', function() {
+    const user_no = $(this).data('user--no');
     const status = $(this).children('option:selected').val();
 
-    $.ajax({
-        url: "/php/controller/db_module.php",
-        type: "post",
-        data: {
-            functionName : 'member_update',
-            userNo : userNo,
-            status : status
-        }
-    }).done(function (data) {
-        data = JSON.parse(data);
-        if (data.result) {
-            const userName = data.list.userName;
-            const status = data.list.status;
-            const commentType = $('#' + data.list.no).find('[name="member-type"] option[value="' + data.list.status + '"]').text();
-            alert(`${userName}님의 상태를 [${commentType}]로/으로 변경하였습니다!`);
-        } else {
-            console.log(data.error);
-        }
-    });
+    // $.ajax({
+    //     url: "/php/controller/db_module.php",
+    //     type: "post",
+    //     data: {
+    //         functionName : 'member_update',
+    //         userNo : userNo,
+    //         status : status
+    //     }
+    // }).done(function (data) {
+    //     data = JSON.parse(data);
+    //     if (data.result) {
+    //         const userName = data.list.userName;
+    //         const status = data.list.status;
+    //         const commentType = $('#' + data.list.no).find('[name="member-type"] option[value="' + data.list.status + '"]').text();
+    //         alert(`${userName}님의 상태를 [${commentType}]로/으로 변경하였습니다!`);
+    //     } else {
+    //         console.log(data.error);
+    //     }
+    // });
 });
 
 $(document).on('click', '.user__table .form_open, .recall__form .close', function() {
