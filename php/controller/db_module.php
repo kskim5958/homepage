@@ -21,37 +21,6 @@ if (isset($_POST['functionName'])) {
     }
 }
 
-function user_statistics() {
-    global $mysqli;
-    $sql = "
-    SELECT 
-        COUNT(*) as total,
-        COUNT(IF(status = 1 OR status = 2 OR status = 3 OR status = 4 OR status = 5 , 1, NULL)) as big_total,
-        COUNT(IF(status = 1, 1, NULL)) as big_qutcall,
-        COUNT(IF(status = 2, 1, NULL)) as big_completed,
-        COUNT(IF(status = 3, 1, NULL)) as big_agree,
-        COUNT(IF(status = 4, 1, NULL)) as big_not_agree,
-        COUNT(IF(status = 5, 1, NULL)) as big_cancel,
-        COUNT(IF(status = 6, 1, NULL)) as in_introduction,
-        COUNT(IF(status = 7, 1, NULL)) as in_internet,
-        COUNT(IF(status = 8, 1, NULL)) as in_other,
-        SUM(cost) as total_cost,
-        SUM(IF(status = 1 OR status = 2 OR status = 3 OR status = 4 OR status = 5 , cost, 0)) as big_total_cost,
-        SUM(CASE WHEN status = 1 THEN cost ELSE 0 END) as big_outcall_cost,
-        SUM(CASE WHEN status = 2 THEN cost ELSE 0 END) as big_completed_cost,
-        SUM(CASE WHEN status = 3 THEN cost ELSE 0 END) as big_agree_cost,
-        SUM(CASE WHEN status = 4 THEN not_decided ELSE 0 END) as big_not_agree_cost,
-        SUM(CASE WHEN status = 5 THEN cost ELSE 0 END) as big_cancel_cost,
-        SUM(CASE WHEN status = 6 THEN cost ELSE 0 END) as in_introduction_cost,
-        SUM(CASE WHEN status = 7 THEN cost ELSE 0 END) as in_internet_cost,
-        SUM(CASE WHEN status = 8 THEN cost ELSE 0 END) as in_other_cost
-    FROM (SELECT *, COUNT(userPhone) FROM VISIT GROUP BY userPhone HAVING COUNT(userPhone) >= 1 ORDER BY cost DESC) NEW_VISIT;
-    ";
-    $result = $mysqli->query($sql);
-    $row = $result->fetch_assoc();
-    return $row;
-}
-
 function user_insert() {
     global $mysqli;
     $userName = $_POST['userName'];
@@ -120,35 +89,55 @@ function users($start=0, $list_num=0, $params=[]) {
         *
         FROM
         (SELECT
-        R_USERS.user_no AS user_no,
-        R_USERS.reg_dt AS reg_dt,
-        R_USERS.user_name AS user_name,
-        R_USERS.user_phone AS user_phone,
-        R_USERS.device AS device,
-        R_USERS.ip AS ip,
-        R_USERS.path AS path,
-        R_USERS.status AS status,
-        IFNULL(R_AMOUNT.estimate, 0) AS estimate,
-        IFNULL(R_AMOUNT.payment, 0) AS payment
+        N_USERS.user_no AS user_no,
+        N_USERS.reg_dt AS reg_dt,
+        N_USERS.old_dt AS old_dt,
+        N_USERS.user_name AS user_name,
+        N_USERS.user_phone AS user_phone,
+        N_USERS.user_path AS user_path,
+        N_USERS.user_ip AS user_ip,
+        N_USERS.user_device AS user_device,
+        N_USERS.status AS status,
+        N_USERS.overlap AS overlap,
+        AMOUNT.estimate AS estimate,
+        AMOUNT.payment AS payment
         FROM
-        (SELECT * FROM `USERS` GROUP BY `user_phone` ORDER BY reg_dt DESC) AS R_USERS
+        (SELECT 
+        OLD_USERS.user_no AS user_no,
+        OLD_USERS.reg_dt AS old_dt,
+        REM_USERS.reg_dt AS reg_dt,
+        OLD_USERS.user_name AS user_name,
+        OLD_USERS.user_phone AS user_phone,
+        OLD_USERS.user_path AS user_path,
+        OLD_USERS.user_ip AS user_ip,
+        OLD_USERS.user_device AS user_device,
+        OLD_USERS.status AS status,
+        OLD_USERS.overlap AS overlap
+        FROM
+        (SELECT *, COUNT(T1.user_phone) AS overlap FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY user_phone ORDER BY reg_dt ASC) as rn FROM `USERS`) AS T1 GROUP BY T1.user_phone) AS OLD_USERS
         LEFT JOIN
-        (SELECT user_no, SUM(estimate) AS estimate, SUM(payment) AS payment FROM `AMOUNT` GROUP BY `user_no`) AS R_AMOUNT
-        ON R_USERS.user_no = R_AMOUNT.user_no) AS USERS $param_str ORDER BY reg_dt DESC $limit;
+        (SELECT T2.reg_dt, T2.user_phone FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY user_phone ORDER BY reg_dt DESC) as rn FROM `USERS`) AS T2 WHERE T2.rn = 1) AS REM_USERS
+        ON OLD_USERS.user_phone = REM_USERS.user_phone ORDER BY reg_dt DESC) AS N_USERS
+        LEFT JOIN
+        (SELECT user_no, SUM(estimate) AS estimate, SUM(payment) AS payment FROM `AMOUNT` GROUP BY user_no) AS AMOUNT
+        ON N_USERS.user_no = AMOUNT.user_no) AS USERS 
+        $param_str ORDER BY reg_dt DESC $limit;
     ";
     $result = $mysqli->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $list[] = [
-            "user_no"=>$row["user_no"],
-            "reg_dt"=>$row["reg_dt"],
-            "user_name"=>$row["user_name"],
-            "user_phone"=>$row["user_phone"],
-            "device"=>$row["device"],
-            "ip"=>$row["ip"],
-            "path"=>$row["path"],
-            "status"=>$row["status"],
-            "estimate"=>$row["estimate"],
-            "payment"=>$row["payment"]
+        "user_no" =>$row["user_no"],
+        "reg_dt" =>$row["reg_dt"],
+        "old_dt" =>$row["old_dt"],
+        "user_name" =>$row["user_name"],
+        "user_phone" =>$row["user_phone"],
+        "user_path" =>$row["user_path"],
+        "user_ip" =>$row["user_ip"],
+        "user_device" =>$row["user_device"],
+        "status" =>$row["status"],
+        "overlap" =>$row["overlap"],
+        "estimate" =>$row["estimate"],
+        "payment" =>$row["payment"]
         ];
     }
     return $list;
@@ -157,15 +146,15 @@ function users($start=0, $list_num=0, $params=[]) {
 function recall_list($userNo) {
     global $mysqli;
     $list = [];
-    $sql = "SELECT * FROM RECALL WHERE status = 0 AND userNo = $userNo ORDER BY recallDate DESC;";
+    $sql = "SELECT * FROM `RECALL` WHERE update_no = 0 AND user_no = $userNo ORDER BY reg_dt DESC;";
     $result = $mysqli->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $list[] = [
             'no'=>$row['no']
-            ,'userNo'=>$row['userNo']
-            ,'recallDate'=>$row['recallDate']
-            ,'status'=>$row['status']
+            ,'user_no'=>$row['user_no']
+            ,'reg_dt'=>$row['reg_dt']
             ,'comment'=>$row['comment']
+            ,'update_no'=>$row['update_no']
         ];
     }
     return $list;
@@ -201,15 +190,15 @@ function recall_update() {
     echo $json;
 }
 
-function comment_type_list() {
+function recall_type_list() {
     global $mysqli;
     $list = [];
-    $sql ='SELECT * FROM COMMENT_TYPE ORDER BY no ASC';
+    $sql ='SELECT * FROM RECALL_TYPE ORDER BY no ASC';
     $result = $mysqli->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $list[] = [
             'no'=>$row['no']
-            ,'comment'=>$row['comment']
+            ,'recall_type'=>$row['recall_type']
         ];
     }
     return $list;
@@ -217,12 +206,12 @@ function comment_type_list() {
 function user_type_list() {
     global $mysqli;
     $list = [];
-    $sql ='SELECT * FROM MEMBER_TYPE ORDER BY no ASC';
+    $sql ="SELECT * FROM `USER_TYPE` ORDER BY no ASC;";
     $result = $mysqli->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $list[] = [
             'no'=>$row['no']
-            ,'comment'=>$row['comment']
+            ,'user_type'=>$row['user_type']
         ];
     }
     return $list;

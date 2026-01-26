@@ -56,52 +56,6 @@ if($e_pageNum > $total_page){
 };
 ?>
 <div id="content__list">
-    <section class="content__outer user__statistics__table">
-        <table>
-            <thead>
-                <tr>
-                    <th>전체</th>
-                    <th>빅: 전체</th>
-                    <th>빅: 중복</th>
-                    <th>빅: DB</th>
-                    <th>빅: 예약지연</th>
-                    <th>빅: 동의</th>
-                    <th>빅: 미동의</th>
-                    <th>빅: 예약취소</th>
-                    <th>원내: 소개</th>
-                    <th>원내: 인터넷</th>
-                    <th>원내: 기타</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php $row = user_statistics(); ?>
-                <tr>
-                    <td><?php echo number_format($row['total']) ?>&nbsp;명</td>
-                    <td><?php echo number_format($row['big_total']) ?>&nbsp;명</td>
-                    <td><?php echo number_format($row['big_qutcall']) ?>&nbsp;명</td>
-                    <td><?php echo number_format($row['big_completed']) ?>&nbsp;명</td>
-                    <td><?php echo number_format($row['big_agree']) ?>&nbsp;명</td>
-                    <td><?php echo number_format($row['big_not_agree']) ?>&nbsp;명</td>
-                    <td><?php echo number_format($row['big_cancel']) ?>&nbsp;명</td>
-                    <td><?php echo number_format($row['in_introduction']) ?>&nbsp;명</td>
-                    <td><?php echo number_format($row['in_internet']) ?>&nbsp;명</td>
-                    <td><?php echo number_format($row['in_other']) ?>&nbsp;명</td>
-                </tr>
-                <tr>
-                    <td><?php echo number_format($row['total_cost']) ?>&nbsp;원</td>
-                    <td><?php echo number_format($row['big_total_cost']) ?>&nbsp;원</td>
-                    <td><?php echo number_format($row['big_outcall_cost']) ?>&nbsp;원</td>
-                    <td><?php echo number_format($row['big_completed_cost']) ?>&nbsp;원</td>
-                    <td><?php echo number_format($row['big_agree_cost']) ?>&nbsp;원</td>
-                    <td><?php echo number_format($row['big_not_agree_cost']) ?>&nbsp;원</td>
-                    <td><?php echo number_format($row['big_cancel_cost']) ?>&nbsp;원</td>
-                    <td><?php echo number_format($row['in_introduction_cost']) ?>&nbsp;원</td>
-                    <td><?php echo number_format($row['in_internet_cost']) ?>&nbsp;원</td>
-                    <td><?php echo number_format($row['in_other_cost']) ?>&nbsp;원</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
     <section class="content__outer user__table">
         <div class="content__group form">
             <div class="user__search__form">
@@ -123,8 +77,8 @@ if($e_pageNum > $total_page){
             <thead>
                 <tr>
                     <th>순번</th>
-                    <th>날짜</th>
-                    <th>상태</th>
+                    <th>최근날짜</th>
+                    <th>최초날짜</th>
                     <th>이름</th>
                     <th>연락처</th>
                     <th>진행금액</th>
@@ -139,74 +93,82 @@ if($e_pageNum > $total_page){
                 $users = users($start, $list_num, isset($params) ? $params : []);
                 $user_type_list = user_type_list();
                 foreach ($users as $user) {
-                    echo '<tr class="user__information" id="' . $user['user_no'] . '">'
-                        . '<td name="no">' . $user['user_no'] . '</td>'
-                        . '<td name="visitDate">' . $user['reg_dt'] . '</td>'
+                    echo "<tr class=\"user__information\" id=\"{$user["user_no"]}\">"
+                        . "<td name=\"user_no\">{$user["user_no"]}</td>"
+                        . "<td name=\"reg_dt\">{$user["reg_dt"]}</td>"
+                        . "<td name=\"old_dt\">{$user["old_dt"]}</td>"
+                        . "<td name=\"estimate\">{$user["estimate"]}</td>"
+                        . "<td name=\"payment\">{$user["payment"]}</td>"
                         . '<td name="status">'
-                        . '<select name="member-type" data-id="' . $user['user_no'] . '">';
-                    foreach ($user_type_list as $user_type) {
-                        $selected = ($user['status'] == $user_type['no']) ? 'selected' : '';
-                        echo "<option $selected value={$user_type["no"]}>{$user_type["comment"]}</option>";
-                    }
-                    echo '</select>'
-                        . '</td>'
-                        . '<td name="userName">'
-                        . '<div class="update">'
-                        . '<input data-id="' . $user['user_no'] . '" type="text" value="' . $user['user_name'] . '" disabled>'
-                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--update">수정</span>'
-                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--update--action">수정하기</span>'
-                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--close">취소</span>'
-                        . '</div>'
-                        . '</td>'
-                        . '<td name="userPhone">' . $user['user_phone'] . '</td>'
-                        . '<td name="cost">'
-                        . '<div class="update">'
-                        . '<input data-id="' . $user['user_no'] . '" type="text" value="' . number_format($user['payment']) . '" disabled>'
-                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--update">수정</span>'
-                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--update--action">수정하기</span>'
-                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--close">취소</span>'
-                        . '</div>'
-                        . '</td>'
-                        . '<td name="not_decided">'
-                        . '<div class="update">'
-                        . '<input data-id="' . $user['user_no'] . '" type="text" value="' . number_format($user['estimate']) . '" disabled>'
-                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--update">수정</span>'
-                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--update--action">수정하기</span>'
-                        . '<span data-id="' . $user['user_no'] . '" class="btn btn--close">취소</span>'
-                        . '</div>'
-                        . '</td>'
-                        . '<td name="path">' . $user['path'] . '</td>'
-                        . '<td name="ip">' . $user['ip'] . '</td>'
-                        . '<td class="recall__column">'
-                        . '<ul>';
-                    echo '<li class="form_open" data-id="' . $user['user_no'] . '">리콜추가</li>';
-                    $recall_list = recall_list($user['user_no']);
+                        . "<select name=\"user_type\" data-user-no=\"{$user["user_no"]}\">";
+                        foreach ($user_type_list as $user_type) {
+                            $selected = ($user['status'] == $user_type['no']) ? 'selected' : '';
+                            echo "<option $selected value=\"{$user_type["no"]}\">{$user_type["user_type"]}</option>";
+                        }
+                    echo "</select>"
+                        . "</td>"
+                        . "<td name=\"user_name\">"
+                        . "<div class=\"update\">"
+                        . "<input data-user-no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["user_name"]}\" disabled>"
+                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
+                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
+                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
+                        . "</div>"
+                        . "</td>"
+                        . "<td name=\"user_phone\">"
+                        . "<div class=\"update\">"
+                        . "<input data-user-no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["user_phone"]}\" disabled>"
+                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
+                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
+                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
+                        . "</div>"
+                        . "</td>"
+                        . "<td name=\"estimate\">"
+                        . "<div class=\"update\">"
+                        . "<input data-user-no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["estimate"]}\" disabled>"
+                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
+                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
+                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
+                        . "</div>"
+                        . "</td>"
+                        . "<td name=\"payment\">"
+                        . "<div class=\"update\">"
+                        . "<input data-user-no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["payment"]}\" disabled>"
+                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
+                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
+                        . "<span data-user-no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
+                        . "</div>"
+                        . "</td>"
+                        . "<td class=\"recall__column\">"
+                        . "<ul>";
+                    echo "<li class=\"form_open\" data-user-no=\"{$user["user_no"]}\">리콜추가</li>";
+                    $recall_list = recall_list($user["user_no"]);
                     $recallCnt = count($recall_list);
                     if ($recallCnt != 0) {
                         foreach ($recall_list as $index => $recall) {
-                            $index > 2 ? $classAttribute = 'class="hide"' : $classAttribute = '';
-                            echo '<li ' . $classAttribute . '>'
-                                . $recall['recallDate'] . '&nbsp;'
-                                . $recall['comment'] . '&nbsp;'
-                                . '<span class="del" data-id="' . $recall['no'] . '" data-userid="' . $recall['userNo'] . '">삭제</span>'
-                                . '</li>';
+                            $index > 2 ? $classAttribute = "class=\"hide\"" : $classAttribute = "";
+                            echo "<li $classAttribute>"
+                                . "{$recall["reg_dt"]}&nbsp;"
+                                . "{$recall["comment"]}&nbsp;"
+                                . "<span class=\"del\" data-recall-no=\"{$recall["no"]}\" data-user-no=\"{$recall["userNo"]}\">삭제</span>"
+                                . "</li>";
                         }
-                        if ($recallCnt > 3) echo '<li class="recall_list_open" data-id="' . $user['user_no'] . '">더보기</li>';
+                        if ($recallCnt > 3) echo "<li class=\"recall__list__open\" data-user-no=\"{$user["user_no"]}\">더보기</li>";
                     }
-                    echo '</ul></td></tr>';
-                    echo '<tr class="recall__row" data-id="' . $user['user_no'] . '">';
-                    echo '<td colspan="10">';
-                    echo '<div class="recall__form" data-id="' . $user['user_no'] . '">';
-                    echo '<select name="comment-type">';
-                    $comment_type_list = comment_type_list();
-                    foreach ($comment_type_list as $comment_type) {
-                        echo '<option value="' . $comment_type['no'] . '">' . $comment_type['comment'] . '</option>';
+                    echo "</ul></td></tr>";
+                    echo "<tr class=\"recall__row\" data-user-no=\"{$user["user_no"]}\">";
+                    echo "<td colspan=\"10\">";
+                    echo "<div class=\"recall__form\" data-user-no=\"{$user["user_no"]}\">";
+                    echo "<select name=\"recall_type\">";
+                    $recall_type_list = recall_type_list();
+                    foreach ($recall_type_list as $recall_type) {
+                        echo "<option value=\"{$recall_type["no"]}\">{$recall_type["recall_type"]}</option>";
                     }
-                    echo '</select>'
-                        . '<input name="comment-text" type="text" placeholder="기타 : 내용">'
-                        . '<button type="button" class="insert" data-id="' . $user['user_no'] . '">추가하기</button>'
-                        . '<button type="button" class="close" data-id="' . $user['user_no'] . '">닫기</button>'
-                        . '</div></td></tr>';
+                    echo "</select>"
+                        . "<input name=\"comment_text\" type=\"text\" placeholder=\"기타 : 내용\">"
+                        . "<button type=\"button\" class=\"insert\" data-user-no=\"{$user["user_no"]}\">추가하기</button>"
+                        . "<button type=\"button\" class=\"close\" data-user-no=\"{$user["user_no"]}\">닫기</button>"
+                        . "</div></td></tr>";
                 }
                 ?>
             </tbody>
