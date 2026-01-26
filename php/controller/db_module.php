@@ -99,8 +99,8 @@ function users($start=0, $list_num=0, $params=[]) {
         N_USERS.user_device AS user_device,
         N_USERS.status AS status,
         N_USERS.overlap AS overlap,
-        AMOUNT.estimate AS estimate,
-        AMOUNT.payment AS payment
+        IFNULL(AMOUNT.estimate, 0) AS estimate,
+        IFNULL(AMOUNT.payment, 0) AS payment
         FROM
         (SELECT 
         OLD_USERS.user_no AS user_no,
