@@ -1,5 +1,11 @@
 $(document).ready(function () {
-    $(".user__table tbody .user__information:odd").css("background-color", "var(--color-white-1)");
+    let elements = $(".user__information input");
+    $(".user__information:odd").css("background-color", "var(--color-white-1)");
+    elements.each(function(index, item) {
+        let input_val = $(this).val();
+        let len = (input_val.length > 9) ? 9 : input_val.length;
+        $(this).css("width", len + "em");
+    });
 });
 
 $(document).on('keyup', '.user__search__form input[name="userName"], .user__form input[name="userName"]', function() {
@@ -15,6 +21,90 @@ $(document).on('keyup', '.user__information td[name="cost"] input, .user__inform
     const number = $(this).val();
     $(this).val(fn_phone_format(number)); 
     $(this).val($(this).val().replace(/\,/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+});
+
+// user 상태 업데이트
+const element_str = ".user__information";
+$(document).on('change', `${element_str} select[name="user_type"]`, function() {
+    const user_no = $(this).data('user--no');
+    const status = $(this).children('option:selected').val();
+    const dataArr ={fn: 'user_update', user_no: user_no, status: status};
+
+    $.ajax({
+        url: "/php/controller/db_module.php",
+        type: "post",
+        data: {
+            dataArr: dataArr
+        }
+    }).done(function (data) {
+        data = JSON.parse(data);
+        const result = data.result;
+        const user_data = data.user_data;
+        if (result) {
+            alert(`${user_data.user_name}님의 상태를 [${user_data.user_comment}]로/으로 변경하였습니다!`);
+        } else {
+            alert(`${user_data.msg}`);
+        }
+    });
+});
+
+// 유저 이름 업데이트(수정버튼 활성화)
+$(document).on('click', `${element_str} [name="user_name"] .btn`, function() {
+    const user_no = $(this).data("user--no");
+    const element = $(`#${user_no} [name="user_name"]`);
+    const user_name = element.find('input').val();
+    $(this).toggle();
+    element.find('.btn--close').toggle();
+    element.find('.btn--update--action').toggle();
+    element.find('input').prop('disabled', false);
+    element.find('input')
+        .css('padding', '5px 10px')
+        .css('box-sizing', 'content-box')
+        .css('background-color', 'var(--color-gray-1)')
+        .css('border-radius', '5px');
+    element.find('input').focus().val("").val(user_name);
+});
+
+// 유저 이름 업데이트(수정하기 버튼 활성화/액션)
+$(document).on('click', '.user__information td[name="userName"] .btn--update--action', function() {
+    const userNo = $(this).attr('data-id');
+    const element = $('#' + userNo).find('td[name="userName"]');
+    const userName = element.find('input').val();
+    $(this).toggle();
+    element.find('.btn--close').toggle();
+    element.find('.btn--update').toggle();
+    element.find('input').prop('disabled', true);
+    element.find('input').css('background-color', 'transparent');
+
+    $.ajax({
+        url: "/php/controller/db_module.php",
+        type: "post",
+        data: {
+            functionName: 'member_update',
+            userNo: userNo,
+            userName: userName
+        }
+    }).done(function (data) {
+        data = JSON.parse(data);
+        if (data.result) {
+            const new_userName = data.list.userName;
+            alert(`[${Glover_userName}] 이름에서 [${new_userName}]로/으로 변경하였습니다!`);
+        } else {
+            console.log(data.error);
+        }
+    });
+});
+
+// 유저 이름 업데이트(수정취소 버튼 활성화)
+$(document).on('click', '.user__information td[name="userName"] .btn--close', function() {
+    const userNo = $(this).attr('data-id');
+    const element = $('#' + userNo).find('td[name="userName"]');
+    element.find('input').prop('disabled', true);
+    element.find('input').css('background-color', 'transparent');
+    element.find('input').val(Glover_userName);
+    $(this).toggle();
+    element.find('.btn--update').toggle();
+    element.find('.btn--update--action').toggle();
 });
 
 // 유저 진행금액 업데이트(수정버튼 활성화)
@@ -137,66 +227,6 @@ $(document).on('click', '.user__information td[name="not_decided"] .btn--close',
     element.find('.btn--update--action').toggle();
 });
 
-// 유저 이름 업데이트(수정버튼 활성화)
-$(document).on('click', '.user__information td[name="userName"] .btn--update', function() {
-    const userNo = $(this).attr('data-id');
-    const element = $('#' + userNo).find('td[name="userName"]');
-    const userName = element.find('input').val();
-    Glover_userName = userName;
-    $(this).toggle();
-    element.find('.btn--close').toggle();
-    element.find('.btn--update--action').toggle();
-    element.find('input').prop('disabled', false);
-    element.find('input')
-    .css('padding', '5px 10px')
-    .css('box-sizing', 'border-box')
-    .css('background-color', 'var(--color-gray-1)')
-    .css('border-radius', '5px');
-    element.find('input').focus().val("").val(userName);
-});
-
-// 유저 이름 업데이트(수정하기 버튼 활성화/액션)
-$(document).on('click', '.user__information td[name="userName"] .btn--update--action', function() {
-    const userNo = $(this).attr('data-id');
-    const element = $('#' + userNo).find('td[name="userName"]');
-    const userName = element.find('input').val();
-    $(this).toggle();
-    element.find('.btn--close').toggle();
-    element.find('.btn--update').toggle();
-    element.find('input').prop('disabled', true);
-    element.find('input').css('background-color', 'transparent');
-
-    $.ajax({
-        url: "/php/controller/db_module.php",
-        type: "post",
-        data: {
-            functionName: 'member_update',
-            userNo: userNo,
-            userName: userName
-        }
-    }).done(function (data) {
-        data = JSON.parse(data);
-        if (data.result) {
-            const new_userName = data.list.userName;
-            alert(`[${Glover_userName}] 이름에서 [${new_userName}]로/으로 변경하였습니다!`);
-        } else {
-            console.log(data.error);
-        }
-    });
-});
-
-// 유저 이름 업데이트(수정취소 버튼 활성화)
-$(document).on('click', '.user__information td[name="userName"] .btn--close', function() {
-    const userNo = $(this).attr('data-id');
-    const element = $('#' + userNo).find('td[name="userName"]');
-    element.find('input').prop('disabled', true);
-    element.find('input').css('background-color', 'transparent');
-    element.find('input').val(Glover_userName);
-    $(this).toggle();
-    element.find('.btn--update').toggle();
-    element.find('.btn--update--action').toggle();
-});
-
 $(document).on('keyup', '.user__search__form input[name="search-text"]', function() {
     const element = $(this).parent().find('select[name="search-type"] option:selected');
     if (element.val() == 1) {
@@ -235,31 +265,6 @@ $(document).on('click', '.user__form button.insert', function() {
         data = JSON.parse(data);
         window.location.href = data.url;
     });
-});
-
-$(document).on('change', 'select[name="user_type"]', function() {
-    const user_no = $(this).data('user--no');
-    const status = $(this).children('option:selected').val();
-
-    // $.ajax({
-    //     url: "/php/controller/db_module.php",
-    //     type: "post",
-    //     data: {
-    //         functionName : 'member_update',
-    //         userNo : userNo,
-    //         status : status
-    //     }
-    // }).done(function (data) {
-    //     data = JSON.parse(data);
-    //     if (data.result) {
-    //         const userName = data.list.userName;
-    //         const status = data.list.status;
-    //         const commentType = $('#' + data.list.no).find('[name="member-type"] option[value="' + data.list.status + '"]').text();
-    //         alert(`${userName}님의 상태를 [${commentType}]로/으로 변경하였습니다!`);
-    //     } else {
-    //         console.log(data.error);
-    //     }
-    // });
 });
 
 $(document).on('click', '.user__table .form_open, .recall__form .close', function() {

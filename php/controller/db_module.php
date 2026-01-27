@@ -2,70 +2,63 @@
 include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/db_connect.php';
 include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/common_module.php';
 
-if (isset($_POST['functionName'])) {
-    switch ($_POST['functionName']) {
-        case 'user_insert':
-            user_insert();
+if (isset($_POST["dataArr"])) {
+    $dataArr = $_POST["dataArr"];
+    $fn = $dataArr["fn"];
+    switch ($fn) {
+        case "user_update":
+            user_update($dataArr);
             break;
-        case 'member_update':
-            member_update();
-            break;
-        case 'recall_insert':
-            recall_insert();
-            break;
-        case 'recall_update':
-            recall_update();
-            break;
+        
         default:
+            # code...
             break;
     }
 }
 
-function user_insert() {
-    global $mysqli;
-    $userName = $_POST['userName'];
-    $userPhone = $_POST['userPhone'];
-    $sql = "INSERT INTO VISIT (userName, userPhone, visitDate) VALUES (\"$userName\", \"$userPhone\", CURRENT_TIMESTAMP);";
-    if ($mysqli->query($sql)) {
-        echo json_encode(['result'=>true, 'url'=>http_path(), 'arr'=>member_select($mysqli->insert_id)]);
-    } else {
-        echo json_encode(['result'=>false, 'error'=> "user insert 에러 : $mysqli->error"]);
-    }
-}
+// function user_insert() {
+//     global $mysqli;
+//     $userName = $_POST['userName'];
+//     $userPhone = $_POST['userPhone'];
+//     $sql = "INSERT INTO VISIT (userName, userPhone, visitDate) VALUES ($sql\"$userName\", \"$userPhone\", CURRENT_TIMESTAMP);";
+//     if ($mysqli->query($sql)) {
+//         echo json_encode(['result'=>true, 'url'=>http_path(), 'arr'=>user_select($mysqli->insert_id)]);
+//     } else {
+//         echo json_encode(['result'=>false, 'error'=> "user insert 에러 : $mysqli->error"]);
+//     }
+// }
 
-function member_select($userNo) {
+function user_select($user_no) {
     global $mysqli;
-    $sql = "SELECT * FROM  VISIT WHERE no = $userNo;";
+    $sql = "SELECT
+            *,
+            CASE 
+                WHEN EXISTS (SELECT * FROM `USER_TYPE` AS USER_TYPE WHERE USER_TYPE.no = USERS.status)
+                THEN (SELECT USER_TYPE.user_type FROM `USER_TYPE` AS USER_TYPE WHERE USER_TYPE.no = USERS.status LIMIT 1)
+                ELSE NULL
+            END AS user_comment
+            FROM `USERS` AS USERS WHERE user_no = $user_no;";
     $result = $mysqli->query($sql);
     $row = $result->fetch_assoc();
     return $row;
 }
 
-function member_update() {
-    global $mysqli;
-    $userNo = $_POST['userNo'];
-    if (isset($_POST['status'])) {
-        $status = $_POST['status'];
-        $sql = "UPDATE VISIT SET status = $status WHERE no = $userNo";
-    } elseif (isset($_POST['userName'])) {
-        $userName = $_POST['userName'];
-        $sql = "UPDATE VISIT SET userName = \"$userName\" WHERE no = $userNo";
-    } elseif (isset($_POST['cost'])) {
-        $cost = $_POST['cost'];
-        $sql = "UPDATE VISIT SET cost = $cost WHERE no = $userNo";
-    } elseif (isset($_POST['not_decided'])) {
-        $not_decided = $_POST['not_decided'];
-        $sql = "UPDATE VISIT SET not_decided = $not_decided WHERE no = $userNo";
-    } else {
-        return;
-    }
-
-    if ($mysqli->query($sql)) {
-        # 성공하면 리콜목록 가져오기
-        $json = json_encode(['result'=>true, 'list'=>member_select($userNo)]);
-    } else {
-        # 실패하면 자바스크립트에 알림
-        $json = json_encode(['error'=>"member select false: $mysqli->errno"]);
+function user_update($dataArr) {
+    try {
+        global $mysqli;
+        if (isset($dataArr["status"]))
+            $query = "UPDATE USERS SET status = {$dataArr["status"]} WHERE user_no = {$dataArr["user_no"]}";
+        if (isset($dataArr["user_name"]))
+            $query = "UPDATE USERS SET user_name = {$dataArr["user_name"]} WHERE user_no = {$dataArr["user_no"]}";
+        if (isset($dataArr["user_phone"]))
+            $query = "UPDATE USERS SET user_phone = {$dataArr["user_phone"]} WHERE user_no = {$dataArr["user_no"]}";
+        if ($mysqli->query($query)) {
+            $user_data = user_select($dataArr["user_no"]);
+            $json = json_encode(["result" => true, "user_data" => $user_data]);
+        }
+    } catch (Exception $e) {
+        $msg = "Exception {$e->getCode()} : {$e->getMessage()} in {$e->getFile()} on line {$e->getLine()}!";
+        $json = json_encode(["msg" => $msg]);
     }
     echo $json;
 }
