@@ -59,17 +59,22 @@ if($e_pageNum > $total_page){
     <section class="content__outer user__table">
         <div class="content__group form">
             <div class="user__search__form">
-                <select name="search-type">
-                    <option value="0" <?php echo ($search_type == 0) ? "selected" : ""; ?>>전체</option>
-                    <option value="1" <?php echo ($search_type == 1) ? "selected" : ""; ?>>전화번호</option>
-                    <option value="2" <?php echo ($search_type == 2) ? "selected" : ""; ?>>이름</option>
+                <select name="search_type">
+                    <option value="all" <?php echo ($search_type == "all") ? "selected" : ""; ?>>전체</option>
+                    <option value="user_phone" <?php echo ($search_type == "user_phone") ? "selected" : ""; ?>>전화번호</option>
+                    <option value="user_name" <?php echo ($search_type == "user_name") ? "selected" : ""; ?>>이름</option>
                 </select>
-                <input type="text" name="search-text" placeholder="" value="<?php echo $search_text; ?>">
-                <button type="button" class="search">찾기</button>
+                <input type="text" 
+                    name="search_text" 
+                    placeholder="검색할 문자입력" 
+                    value="<?php echo $search_text; ?>" 
+                    <?php echo ($search_type == "all" || $search_type == "") ? "disabled" : ""; ?>
+                >
+                <button type="button" name="search_btn" class="search">찾기</button>
             </div>
             <div class="user__form">
-                <input type="text" name="userName" placeholder="성명(한글만)">
-                <input type="text" name="userPhone" placeholder="연락처(-없이 숫자만)">
+                <input type="text" name="user_name" placeholder="성명(한글만)">
+                <input type="text" name="user_phone" placeholder="연락처(-없이 숫자만)">
                 <button type="button" class="insert">추가하기</button>
             </div>
         </div>
@@ -107,33 +112,33 @@ if($e_pageNum > $total_page){
                         . "<td name=\"user_name\">"
                         . "<div class=\"update\">"
                         . "<input data-user--no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["user_name"]}\" disabled>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"user_name\" class=\"btn update\">수정</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"user_name\" class=\"btn action\">수정하기</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"user_name\" class=\"btn close\">취소</span>"
                         . "</div>"
                         . "</td>"
                         . "<td name=\"user_phone\">"
                         . "<div class=\"update\">"
                         . "<input data-user--no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["user_phone"]}\" disabled>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"user_phone\" class=\"btn update\">수정</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"user_phone\" class=\"btn action\">수정하기</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"user_phone\" class=\"btn close\">취소</span>"
                         . "</div>"
                         . "</td>"
                         . "<td name=\"estimate\">"
                         . "<div class=\"update\">"
                         . "<input data-user--no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["estimate"]}\" disabled>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"estimate\" class=\"btn update\">수정</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"estimate\" class=\"btn action\">수정하기</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"estimate\" class=\"btn close\">취소</span>"
                         . "</div>"
                         . "</td>"
                         . "<td name=\"payment\">"
                         . "<div class=\"update\">"
                         . "<input data-user--no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["payment"]}\" disabled>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update\">수정</span>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--update--action\">수정하기</span>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" class=\"btn btn--close\">취소</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"payment\" class=\"btn update\">수정</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"payment\" class=\"btn action\">수정하기</span>"
+                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"payment\" class=\"btn close\">취소</span>"
                         . "</div>"
                         . "</td>"
                         . "<td class=\"recall__column\">"

@@ -20,8 +20,6 @@ if (isset($parts['query'])) {
 
 echo $new_url;
 
-// 출력: 수정 URL: https://example.com/page.php?id=123&sort=asc
-
 # mysqli 예제
 // $mysqli = new mysqli('yeppeum.kr', 'kskim5958', 'rhkdtjr77', 'kskim5958');
 // if($mysqli->connect_errno) {

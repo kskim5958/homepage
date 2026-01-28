@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html example go live</title>
+</head>
+<body>
+<section>
+    <select name="" id="">
+        <option value="0">0</option>
+        <option value="1">1</option>
+    </select>
+    <input type="text">
+</section>
+</body>
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script>
+    let element = $('section');
+    element.find('select').change(function (e) { 
+        // e.preventDefault();
+        const selected = $(this).val();
+        if (selected == 0) {
+            element.find('input').prop('disabled', false);
+        } else {
+            element.find('input').prop('disabled', true);
+        }
+    });
+</script>
+</html>

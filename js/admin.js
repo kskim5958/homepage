@@ -1,33 +1,69 @@
 $(document).ready(function () {
-    let elements = $(".user__information input");
     $(".user__information:odd").css("background-color", "var(--color-white-1)");
-    elements.each(function(index, item) {
+    $(".user__information input").each(function(index, item) {
         let input_val = $(this).val();
         let len = (input_val.length > 9) ? 9 : input_val.length;
         $(this).css("width", len + "em");
     });
 });
 
-$(document).on('keyup', '.user__search__form input[name="userName"], .user__form input[name="userName"]', function() {
-    $(this).val($(this).val().replace(/[^ㄱ-ㅣ가-힣]/g, ""));
+const sch_el = $('.user__search__form');
+const user_el = $('.user__information');
+
+const fn_kor_format = (char) => {
+    char = char.replace(/[^ㄱ-ㅣ가-힣]/g, "");
+    return char;
+}
+
+const fn_phone_format = (char) => {
+    char = char.replace(/[^0-9]/g, "");
+    char = char.replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3");
+    char = char.replace("--", "-");
+    return char;
+}
+
+const fn_update_input_css = (status, element)  =>{
+    if (status == "active") {
+        element.prop('disabled', false);
+        element.css('padding', '5px 10px')
+        .css('box-sizing', 'content-box')
+        .css('background-color', 'var(--color-gray-1)')
+        .css('border-radius', '5px');
+    } else {
+        element.prop('disabled', true);
+        element.css('padding', '0')
+        .css('box-sizing', 'unset')
+        .css('background-color', 'transparent')
+        .css('border-radius', 'unset');
+    }
+}
+
+// user search form 셀렉트 액션
+sch_el.find('select[name="search_type"]').change(function () {
+    const element = sch_el.find('input[name="search_text"]');
+    const selected = $(this).val();
+    (selected == "all") ? element.prop('disabled', true) : element.prop('disabled', false);
 });
 
-$(document).on('keyup', '.user__form input[name="userPhone"]', function() {
-    const number = $(this).val();
-    $(this).val(fn_phone_format(number)); 
+// user search form 키업 액션
+sch_el.find('input[name="search_text"]').keyup(function () {
+    let char = $(this).val();
+    const selected = sch_el.find('[name="search_type"]').val();
+    if (selected == 'user_phone') char = fn_phone_format(char);
+    if (selected == 'user_name') char = fn_kor_format(char);
+    $(this).val(char);
 });
 
-$(document).on('keyup', '.user__information td[name="cost"] input, .user__information td[name="not_decided"] input', function() {
-    const number = $(this).val();
-    $(this).val(fn_phone_format(number)); 
-    $(this).val($(this).val().replace(/\,/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+// user search form 버튼 액션
+sch_el.find('button[name="search_btn"]').click(function () {
+    const sch_type = sch_el.find('[name="search_type"]').val();
+    const sch_text = sch_el.find('[name="search_text"]').val();
 });
 
 // user 상태 업데이트
-const element_str = ".user__information";
-$(document).on('change', `${element_str} select[name="user_type"]`, function() {
+user_el.find('select[name="user_type"]').change(function (e) { 
     const user_no = $(this).data('user--no');
-    const status = $(this).children('option:selected').val();
+    const status = $(this).val();
     const dataArr ={fn: 'user_update', user_no: user_no, status: status};
 
     $.ajax({
@@ -48,206 +84,55 @@ $(document).on('change', `${element_str} select[name="user_type"]`, function() {
     });
 });
 
-// 유저 이름 업데이트(수정버튼 활성화)
-$(document).on('click', `${element_str} [name="user_name"] .btn`, function() {
-    const user_no = $(this).data("user--no");
-    const element = $(`#${user_no} [name="user_name"]`);
-    const user_name = element.find('input').val();
-    $(this).toggle();
-    element.find('.btn--close').toggle();
-    element.find('.btn--update--action').toggle();
-    element.find('input').prop('disabled', false);
-    element.find('input')
-        .css('padding', '5px 10px')
-        .css('box-sizing', 'content-box')
-        .css('background-color', 'var(--color-gray-1)')
-        .css('border-radius', '5px');
-    element.find('input').focus().val("").val(user_name);
-});
-
-// 유저 이름 업데이트(수정하기 버튼 활성화/액션)
-$(document).on('click', '.user__information td[name="userName"] .btn--update--action', function() {
-    const userNo = $(this).attr('data-id');
-    const element = $('#' + userNo).find('td[name="userName"]');
-    const userName = element.find('input').val();
-    $(this).toggle();
-    element.find('.btn--close').toggle();
-    element.find('.btn--update').toggle();
-    element.find('input').prop('disabled', true);
-    element.find('input').css('background-color', 'transparent');
-
-    $.ajax({
-        url: "/php/controller/db_module.php",
-        type: "post",
-        data: {
-            functionName: 'member_update',
-            userNo: userNo,
-            userName: userName
+// 유저 이름, 휴대폰번호, 견적금액, 납부금액 업데이트
+user_el.find('.btn').click(function (event) {
+    const target = $(event.target);
+    const user_no = target.data("user--no");;
+    const btn_name = target.data("btn--name");
+    const element = $(`#${user_no} [name="${btn_name}"]`);
+    const input_val = element.find("input").val();
+    let dataArr ={user_no: user_no};
+    element.find(".btn").toggle();
+    if (target.hasClass("update")) fn_update_input_css("active", element.find("input"));
+    if (target.hasClass("action") || target.hasClass("close")) fn_update_input_css("inactive", element.find("input"));
+    if (target.hasClass("action")) {
+        if (btn_name.includes("name")) {
+            dataArr.user_name = input_val;
+            dataArr.fn = "user_update";
         }
-    }).done(function (data) {
-        data = JSON.parse(data);
-        if (data.result) {
-            const new_userName = data.list.userName;
-            alert(`[${Glover_userName}] 이름에서 [${new_userName}]로/으로 변경하였습니다!`);
-        } else {
-            console.log(data.error);
+        if (btn_name.includes("phone")) {
+            dataArr.user_phone = input_val;
+            dataArr.fn = "user_update";
         }
-    });
-});
-
-// 유저 이름 업데이트(수정취소 버튼 활성화)
-$(document).on('click', '.user__information td[name="userName"] .btn--close', function() {
-    const userNo = $(this).attr('data-id');
-    const element = $('#' + userNo).find('td[name="userName"]');
-    element.find('input').prop('disabled', true);
-    element.find('input').css('background-color', 'transparent');
-    element.find('input').val(Glover_userName);
-    $(this).toggle();
-    element.find('.btn--update').toggle();
-    element.find('.btn--update--action').toggle();
-});
-
-// 유저 진행금액 업데이트(수정버튼 활성화)
-$(document).on('click', '.user__information td[name="cost"] .btn--update', function() {
-    const userNo = $(this).attr('data-id');
-    const element = $('#' + userNo).find('td[name="cost"]');
-    const cost = element.find('input').val();
-    Glover_cost = cost;
-    $(this).toggle();
-    element.find('.btn--close').toggle();
-    element.find('.btn--update--action').toggle();
-    element.find('input').prop('disabled', false);
-    element.find('input')
-    .css('padding', '5px 10px')
-    .css('box-sizing', 'border-box')
-    .css('background-color', 'var(--color-gray-1)')
-    .css('border-radius', '5px');
-    element.find('input').focus().val("").val(cost.replace(/\,/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
-});
-
-// 유저 진행금액 업데이트(수정하기 버튼 활성화/액션)
-$(document).on('click', '.user__information td[name="cost"] .btn--update--action', function() {
-    const userNo = $(this).attr('data-id');
-    const element = $('#' + userNo).find('td[name="cost"]');
-    let cost = element.find('input').val().replace(/,/g, '');
-    $(this).toggle();
-    element.find('.btn--close').toggle();
-    element.find('.btn--update').toggle();
-    element.find('input').prop('disabled', true);
-    element.find('input').css('background-color', 'transparent');
-
-    $.ajax({
-        url: "/php/controller/db_module.php",
-        type: "post",
-        data: {
-            functionName: 'member_update',
-            userNo: userNo,
-            cost: cost
+        if (btn_name.includes("estimate")) {
+            dataArr.estimate = input_val;
+            dataArr.fn = "amount_update";
         }
-    }).done(function (data) {
-        data = JSON.parse(data);
-        if (data.result) {
-            const new_cost = data.list.cost;
-            alert(`[${Glover_cost}원] 에서 [${new_cost.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')}원]으로 변경하였습니다!`);
-        } else {
-            console.log(data.error);
+        if (btn_name.includes("payment")) {
+            dataArr.payment = input_val;
+            dataArr.fn = "amount_update";
         }
-    });
-});
-
-// 유저 진행금액 업데이트(수정취소 버튼 활성화)
-$(document).on('click', '.user__information td[name="cost"] .btn--close', function() {
-    const userNo = $(this).attr('data-id');
-    const element = $('#' + userNo).find('td[name="cost"]');
-    element.find('input').prop('disabled', true);
-    element.find('input').css('background-color', 'transparent');
-    element.find('input').val(Glover_cost);
-    $(this).toggle();
-    element.find('.btn--update').toggle();
-    element.find('.btn--update--action').toggle();
-});
-
-// 유저 진행 예정금액 업데이트(수정버튼 활성화)
-$(document).on('click', '.user__information td[name="not_decided"] .btn--update', function() {
-    const userNo = $(this).attr('data-id');
-    const element = $('#' + userNo).find('td[name="not_decided"]');
-    const not_decided = element.find('input').val();
-    Glover_not_decided = not_decided;
-    $(this).toggle();
-    element.find('.btn--close').toggle();
-    element.find('.btn--update--action').toggle();
-    element.find('input').prop('disabled', false);
-    element.find('input')
-    .css('padding', '5px 10px')
-    .css('box-sizing', 'border-box')
-    .css('background-color', 'var(--color-gray-1)')
-    .css('border-radius', '5px');
-    element.find('input').focus().val("").val(not_decided.replace(/\,/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
-});
-
-// 유저 진행 예정금액 업데이트(수정하기 버튼 활성화/액션)
-$(document).on('click', '.user__information td[name="not_decided"] .btn--update--action', function() {
-    const userNo = $(this).attr('data-id');
-    const element = $('#' + userNo).find('td[name="not_decided"]');
-    let not_decided = element.find('input').val().replace(/,/g, '');
-    $(this).toggle();
-    element.find('.btn--close').toggle();
-    element.find('.btn--update').toggle();
-    element.find('input').prop('disabled', true);
-    element.find('input').css('background-color', 'transparent');
-
-    $.ajax({
-        url: "/php/controller/db_module.php",
-        type: "post",
-        data: {
-            functionName: 'member_update',
-            userNo: userNo,
-            not_decided: not_decided
-        }
-    }).done(function (data) {
-        data = JSON.parse(data);
-        if (data.result) {
-            const new_not_decided = data.list.not_decided;
-            alert(`[${Glover_not_decided}원] 에서 [${new_not_decided.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')}원]으로 변경하였습니다!`);
-        } else {
-            console.log(data.error);
-        }
-    });
-});
-
-// 유저 진행금액 업데이트(수정취소 버튼 활성화)
-$(document).on('click', '.user__information td[name="not_decided"] .btn--close', function() {
-    const userNo = $(this).attr('data-id');
-    const element = $('#' + userNo).find('td[name="not_decided"]');
-    element.find('input').prop('disabled', true);
-    element.find('input').css('background-color', 'transparent');
-    element.find('input').val(Glover_cost);
-    $(this).toggle();
-    element.find('.btn--update').toggle();
-    element.find('.btn--update--action').toggle();
-});
-
-$(document).on('keyup', '.user__search__form input[name="search-text"]', function() {
-    const element = $(this).parent().find('select[name="search-type"] option:selected');
-    if (element.val() == 1) {
-        const number = $(this).val();
-        $(this).val(fn_phone_format(number)); 
     }
-});
-
-$(document).on('click', '.user__search__form button.search', function() {
-    const search_type = $(this).parent().find('select[name="search-type"] option:selected').val();
-    const search_text = $(this).parent().find('input[name="search-text"]').val();
-
-    if (search_type == 1) {
-        window.location.href = 
-        window.location.pathname + "?page=1&userPhone=" + search_text + "&search_type=" + search_type + "&search_text=" + search_text;
-    } else if(search_type == 2) {
-        window.location.href = 
-        window.location.pathname + "?page=1&userName=" + search_text + "&search_type=" + search_type + "&search_text=" + search_text;
-    } else {
-        window.location.href = window.location.pathname;
-    }
+    
+    // if (target.hasClass("action")) {
+    //     $.ajax({
+    //         url: "/php/controller/db_module.php",
+    //         type: "post",
+    //         data: {
+    //         functionName: "member_update",
+    //         userNo: userNo,
+    //         userName: userName,
+    //     },
+    //     }).done(function (data) {
+    //         data = JSON.parse(data);
+    //         if (data.result) {
+    //             const new_userName = data.list.userName;
+    //             alert(`[${Glover_userName}] 이름에서 [${new_userName}]로/으로 변경하였습니다!`);
+    //         } else {
+    //             console.log(data.error);
+    //         }
+    //     });
+    // }
 });
 
 $(document).on('click', '.user__form button.insert', function() {
@@ -342,11 +227,4 @@ const fn_html = (userNo, data)=>{
     });
     if (dataCnt > 3) html += '<li class="recall_list_open" data-id="' + userNo + '">더보기</li>';
     return html;
-}
-
-const fn_phone_format = (str)=>{
-    str = str.replace(/[^0-9]/g, "");
-    str = str.replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3");
-    str = str.replace("--", "-");
-    return str;
 }
