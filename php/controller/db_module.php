@@ -4,29 +4,31 @@ include $_SERVER["DOCUMENT_ROOT"] . '/php/controller/common_module.php';
 
 if (isset($_POST["dataArr"])) {
     $dataArr = $_POST["dataArr"];
-    $fn = $dataArr["fn"];
+    $fn = isset($dataArr["fn"]) ? $dataArr["fn"] : "";
     switch ($fn) {
         case "user_update":
             user_update($dataArr);
-            break;
-        
+            break;        
+        case "new_user_insert":
+            new_user_insert($dataArr);
+            break;        
         default:
             # code...
             break;
     }
 }
 
-// function user_insert() {
-//     global $mysqli;
-//     $userName = $_POST['userName'];
-//     $userPhone = $_POST['userPhone'];
-//     $sql = "INSERT INTO VISIT (userName, userPhone, visitDate) VALUES ($sql\"$userName\", \"$userPhone\", CURRENT_TIMESTAMP);";
-//     if ($mysqli->query($sql)) {
-//         echo json_encode(['result'=>true, 'url'=>http_path(), 'arr'=>user_select($mysqli->insert_id)]);
-//     } else {
-//         echo json_encode(['result'=>false, 'error'=> "user insert 에러 : $mysqli->error"]);
-//     }
-// }
+function new_user_insert($dataArr) {
+    global $mysqli;
+    $user_name = $dataArr["user_name"];
+    $user_phone = $dataArr["user_phone"];
+    $sql = "INSERT INTO `USERS` (user_name, user_phone) VALUES (\"$user_name\", \"$user_phone\");";
+    if ($mysqli->query($sql)) {
+        echo json_encode(['result'=>true]);
+    } else {
+        echo json_encode(['result'=>false]);
+    }
+}
 
 function user_select($user_no) {
     global $mysqli;
@@ -44,6 +46,24 @@ function user_select($user_no) {
 }
 
 function user_update($dataArr) {
+    try {
+        global $mysqli;
+        if (isset($dataArr["status"]))
+            $query = "UPDATE USERS SET status = {$dataArr["status"]} WHERE user_no = {$dataArr["user_no"]}";
+        if (isset($dataArr["user_name"]))
+            $query = "UPDATE USERS SET user_name = \"{$dataArr["user_name"]}\" WHERE user_no = {$dataArr["user_no"]}";
+        if (isset($dataArr["user_phone"]))
+            $query = "UPDATE USERS SET user_phone = \"{$dataArr["user_phone"]}\" WHERE user_no = {$dataArr["user_no"]}";
+        if ($mysqli->query($query)) {
+            $json = json_encode(["result" => true]);
+        }
+    } catch (Exception $e) {
+        $msg = "Exception {$e->getCode()} : {$e->getMessage()} in {$e->getFile()} on line {$e->getLine()}!";
+        $json = json_encode(["msg" => $msg]);
+    }
+    echo $json;
+}
+function amount_update($dataArr) {
     try {
         global $mysqli;
         if (isset($dataArr["status"]))

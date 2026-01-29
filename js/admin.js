@@ -2,13 +2,16 @@ $(document).ready(function () {
     $(".user__information:odd").css("background-color", "var(--color-white-1)");
     $(".user__information input").each(function(index, item) {
         let input_val = $(this).val();
-        let len = (input_val.length > 9) ? 9 : input_val.length;
+        let len = (input_val.length > 9) ? 9 : 3;
         $(this).css("width", len + "em");
     });
 });
 
 const sch_el = $('.user__search__form');
+const user_fm_el = $('.user__form');
 const user_el = $('.user__information');
+
+var GLOBAL_ADMIN_INPUT_TEXT = "";
 
 const fn_kor_format = (char) => {
     char = char.replace(/[^ㄱ-ㅣ가-힣]/g, "");
@@ -58,6 +61,52 @@ sch_el.find('input[name="search_text"]').keyup(function () {
 sch_el.find('button[name="search_btn"]').click(function () {
     const sch_type = sch_el.find('[name="search_type"]').val();
     const sch_text = sch_el.find('[name="search_text"]').val();
+    const path = `${$(location).prop('pathname')}?`;
+    let params = {page: 1}
+    let queryString = "";
+    if (sch_type == "all") {
+        queryString = $.param(params);
+    } else {
+        params[sch_type] = sch_text;
+        params['search_type'] = sch_type;
+        params['search_text'] = sch_text;
+        queryString = $.param(params);
+    }
+    const url = path + queryString;
+        window.location.href = url;
+});
+
+// user insert form 키업 액션
+user_fm_el.find('input').keyup(function () {
+    let char = $(this).val();
+    const type = $(this).attr('name');
+    if (type.includes('name')) char = fn_kor_format(char);
+    if (type.includes('phone')) char = fn_phone_format(char);
+    $(this).val(char);
+});
+
+// new user insert 버튼 액션
+user_fm_el.find('button[name="insert_btn"]').click(function () {
+    const user_name = user_fm_el.find('input[name="user_name"]').val();
+    const user_phone = user_fm_el.find('input[name="user_phone"]').val();
+    const dataArr = {fn: 'new_user_insert', user_name: user_name, user_phone: user_phone};
+    const path = `${$(location).prop('pathname')}`;
+    $.ajax({
+        url: "/php/controller/db_module.php",
+        type: "post",
+        data: {
+            dataArr: dataArr
+        }
+    }).done(function (data) {
+        data = JSON.parse(data);
+        const result = data.result;
+        if (result) {
+            alert(`${user_name}님, ${user_phone} 연락처로 등록하였습니다!`);
+        } else {
+            alert('등록에 실패하였습니다!');
+        }
+    });
+    window.location.href = path;
 });
 
 // user 상태 업데이트
@@ -85,7 +134,7 @@ user_el.find('select[name="user_type"]').change(function (e) {
 });
 
 // 유저 이름, 휴대폰번호, 견적금액, 납부금액 업데이트
-user_el.find('.btn').click(function (event) {
+user_el.find('[name="user_name"] .btn, [name="user_phone"] .btn').click(function (event) {
     const target = $(event.target);
     const user_no = target.data("user--no");;
     const btn_name = target.data("btn--name");
@@ -93,63 +142,39 @@ user_el.find('.btn').click(function (event) {
     const input_val = element.find("input").val();
     let dataArr ={user_no: user_no};
     element.find(".btn").toggle();
-    if (target.hasClass("update")) fn_update_input_css("active", element.find("input"));
-    if (target.hasClass("action") || target.hasClass("close")) fn_update_input_css("inactive", element.find("input"));
+    if (target.hasClass("update")) {
+        GLOBAL_ADMIN_INPUT_TEXT = input_val;
+        fn_update_input_css("active", element.find("input"));
+    }
+    if (target.hasClass("close")) {
+        fn_update_input_css("inactive", element.find("input"));
+        element.find("input").val(GLOBAL_ADMIN_INPUT_TEXT);
+    }
     if (target.hasClass("action")) {
-        if (btn_name.includes("name")) {
+        fn_update_input_css("inactive", element.find("input"));
+        if (btn_name == "user_name") {
             dataArr.user_name = input_val;
             dataArr.fn = "user_update";
         }
-        if (btn_name.includes("phone")) {
+        if (btn_name == "user_phone") {
             dataArr.user_phone = input_val;
             dataArr.fn = "user_update";
         }
-        if (btn_name.includes("estimate")) {
-            dataArr.estimate = input_val;
-            dataArr.fn = "amount_update";
-        }
-        if (btn_name.includes("payment")) {
-            dataArr.payment = input_val;
-            dataArr.fn = "amount_update";
-        }
+        $.ajax({
+            url: "/php/controller/db_module.php",
+            type: "post",
+            data: {
+                dataArr: dataArr
+        },
+        }).done(function (data) {
+            data = JSON.parse(data);
+            if (data.result) {
+                alert(`[${GLOBAL_ADMIN_INPUT_TEXT}] 에서 [${input_val}]로/으로 변경하였습니다!`);
+            } else {
+                alert(`${user_data.msg}`);
+            }
+        });
     }
-    
-    // if (target.hasClass("action")) {
-    //     $.ajax({
-    //         url: "/php/controller/db_module.php",
-    //         type: "post",
-    //         data: {
-    //         functionName: "member_update",
-    //         userNo: userNo,
-    //         userName: userName,
-    //     },
-    //     }).done(function (data) {
-    //         data = JSON.parse(data);
-    //         if (data.result) {
-    //             const new_userName = data.list.userName;
-    //             alert(`[${Glover_userName}] 이름에서 [${new_userName}]로/으로 변경하였습니다!`);
-    //         } else {
-    //             console.log(data.error);
-    //         }
-    //     });
-    // }
-});
-
-$(document).on('click', '.user__form button.insert', function() {
-    const userName = $(this).parent().children('[name="userName"]').val();
-    const userPhone = $(this).parent().children('[name="userPhone"]').val();
-    $.ajax({
-        url: "/php/controller/db_module.php",
-        type: "post",
-        data: {
-            functionName : 'user_insert',
-            userName : userName,
-            userPhone : userPhone
-        }
-    }).done(function (data) {
-        data = JSON.parse(data);
-        window.location.href = data.url;
-    });
 });
 
 $(document).on('click', '.user__table .form_open, .recall__form .close', function() {

@@ -75,7 +75,7 @@ if($e_pageNum > $total_page){
             <div class="user__form">
                 <input type="text" name="user_name" placeholder="성명(한글만)">
                 <input type="text" name="user_phone" placeholder="연락처(-없이 숫자만)">
-                <button type="button" class="insert">추가하기</button>
+                <button type="button" name="insert_btn" class="insert">추가하기</button>
             </div>
         </div>
         <table>
@@ -126,20 +126,19 @@ if($e_pageNum > $total_page){
                         . "</div>"
                         . "</td>"
                         . "<td name=\"estimate\">"
-                        . "<div class=\"update\">"
-                        . "<input data-user--no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["estimate"]}\" disabled>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"estimate\" class=\"btn update\">수정</span>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"estimate\" class=\"btn action\">수정하기</span>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"estimate\" class=\"btn close\">취소</span>"
+                        . "<div class=\"btn\">"
+                        . "<span name=\"form\">추가</span>"
+                        . "<span name=\"list\">목록보기</span>"
                         . "</div>"
+                        . "<div name=\"sum\">{$user["estimate"]}</div>"
+                        . "<ul class=\"list\">"
+                        . "</ul>"
                         . "</td>"
                         . "<td name=\"payment\">"
-                        . "<div class=\"update\">"
-                        . "<input data-user--no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["payment"]}\" disabled>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"payment\" class=\"btn update\">수정</span>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"payment\" class=\"btn action\">수정하기</span>"
-                        . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"payment\" class=\"btn close\">취소</span>"
-                        . "</div>"
+                        . "<ul class=\"list\">"
+                        . "<li>추가하기</li>"
+                        . "<li>{$user["payment"]}</li>"
+                        . "</ul>"
                         . "</td>"
                         . "<td class=\"recall__column\">"
                         . "<ul>";

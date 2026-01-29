@@ -36,11 +36,14 @@
 .user__table td {border-left: 1px solid var(--color-black-4); border-bottom: 1px solid var(--color-black-4);}
 .user__table td:last-of-type {border-right: 1px solid var(--color-black-4);}
 .user__table td .update {display: flex; flex-direction: row; gap: 5px; justify-content: center; align-items: center;}
-.user__table td .update input {text-align: center; padding: 0; font-size: 1em; border: none;}
-.user__table td .update input:disabled {background-color: transparent; color: var(--color-black-1);}
-.user__table td .update .btn {font-size: 0.8em; font-weight: 500; color: var(--color-orange-1); cursor: pointer;}
-.user__table td .update .btn.close,
-.user__table td .update .btn.action {display: none;}
+.user__information td .update input {text-align: center; padding: 0; font-size: 1em; border: none;}
+.user__information td .update input:disabled {background-color: transparent; color: var(--color-black-1);}
+.user__information td .update .btn {font-size: 0.8em; font-weight: 500; color: var(--color-orange-1); cursor: pointer;}
+.user__information td .update .btn.close,
+.user__information td .update .btn.action {display: none;}
+.user__information td[name="estimate"] .btn {display: flex; flex-direction: row; gap: 5px; font-size: 0.8em; font-weight: 500; justify-content: baseline;}
+.user__information td[name="estimate"] .btn span {cursor: pointer; color: var(--color-orange-1);}
+.user__information [name="sum"] {text-align: left;}
 
 .user__table .recall__column {text-align: left;}
 .user__table .recall__column .form_open,
