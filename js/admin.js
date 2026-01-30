@@ -169,12 +169,12 @@ user_el.find('[name="user_name"] .btn, [name="user_phone"] .btn').click(function
 });
 
 // user 견적금액, 납부금액 추가 버튼
-user_el.find('.btn-group .btn').click(function () {
+$('.amount .btn-group .btn').click(function () {
     const user_no = $(this).data('user--no');
     const btn_type = $(this).data("type");
     const btn_name = $(this).attr('name');
     if (btn_name == "form") {
-        $(`#${user_no}`).find(`[name="${btn_type}"]`).find(`.${btn_name}.hidden`).toggleClass("flex");
+        $(`#${user_no}`).find(`[name="${btn_type}"]`).find(`.${btn_name}`).toggleClass("flex");
     }
     if ($(this).text() == '추가') {
         $(this).text('추가취소');
@@ -183,10 +183,11 @@ user_el.find('.btn-group .btn').click(function () {
     }
 });
 
-user_el.find('.form button').click(function () {
+$('.amount .form button').click(function () {
     const user_no = $(this).data("user--no");
     const btn_type = $(this).data("type");
     const val = $(`#${user_no}`).find(`[name="${btn_type}"]`).find('.form').find('input').val();
+    console.log("🚀 ~ btn_type:", btn_type)
     console.log("🚀 ~ val:", val)
 });
 
