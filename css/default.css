@@ -19,6 +19,7 @@
     --color-gray-1: #f5f5f7;
     --color-gray-2: #86868b;
     --color-gray-3: #c5c5c5;
+    --color-gray-4: #e2e2e2;
     
     --color-black-1: #222222;
     --color-black-2: #222425;
@@ -31,6 +32,7 @@
     --color-green-1: #96b5b5;
     --color-green-2: #afcfce;
     --color-green-3: #398342;
+    --color-green-4: #09a33a;
 }
 
 * {

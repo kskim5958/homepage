@@ -1,12 +1,3 @@
-$(document).ready(function () {
-    $(".user__information:odd").css("background-color", "var(--color-white-1)");
-    $(".user__information input").each(function(index, item) {
-        let input_val = $(this).val();
-        let len = (input_val.length > 9) ? 9 : 3;
-        $(this).css("width", len + "em");
-    });
-});
-
 const sch_el = $('.user__search__form');
 const user_fm_el = $('.user__form');
 const user_el = $('.user__information');
@@ -175,6 +166,28 @@ user_el.find('[name="user_name"] .btn, [name="user_phone"] .btn').click(function
             }
         });
     }
+});
+
+// user 견적금액, 납부금액 추가 버튼
+user_el.find('.btn-group .btn').click(function () {
+    const user_no = $(this).data('user--no');
+    const btn_type = $(this).data("type");
+    const btn_name = $(this).attr('name');
+    if (btn_name == "form") {
+        $(`#${user_no}`).find(`[name="${btn_type}"]`).find(`.${btn_name}.hidden`).toggleClass("flex");
+    }
+    if ($(this).text() == '추가') {
+        $(this).text('추가취소');
+    } else {
+        $(this).text('추가');
+    }
+});
+
+user_el.find('.form button').click(function () {
+    const user_no = $(this).data("user--no");
+    const btn_type = $(this).data("type");
+    const val = $(`#${user_no}`).find(`[name="${btn_type}"]`).find('.form').find('input').val();
+    console.log("🚀 ~ val:", val)
 });
 
 $(document).on('click', '.user__table .form_open, .recall__form .close', function() {
