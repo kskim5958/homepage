@@ -8,10 +8,13 @@ if (isset($_POST["dataArr"])) {
     switch ($fn) {
         case "user_update":
             user_update($dataArr);
-            break;        
+            break;
         case "new_user_insert":
             new_user_insert($dataArr);
-            break;        
+            break;
+        case "amount_insert":
+            amount_insert($dataArr);
+            break;
         default:
             # code...
             break;
@@ -22,8 +25,8 @@ function new_user_insert($dataArr) {
     global $mysqli;
     $user_name = $dataArr["user_name"];
     $user_phone = $dataArr["user_phone"];
-    $sql = "INSERT INTO `USERS` (user_name, user_phone) VALUES (\"$user_name\", \"$user_phone\");";
-    if ($mysqli->query($sql)) {
+    $query = "INSERT INTO `USERS` (user_name, user_phone) VALUES (\"$user_name\", \"$user_phone\");";
+    if ($mysqli->query($query)) {
         echo json_encode(['result'=>true]);
     } else {
         echo json_encode(['result'=>false]);
@@ -32,7 +35,7 @@ function new_user_insert($dataArr) {
 
 function user_select($user_no) {
     global $mysqli;
-    $sql = "SELECT
+    $query = "SELECT
             *,
             CASE 
                 WHEN EXISTS (SELECT * FROM `USER_TYPE` AS USER_TYPE WHERE USER_TYPE.no = USERS.status)
@@ -40,30 +43,12 @@ function user_select($user_no) {
                 ELSE NULL
             END AS user_comment
             FROM `USERS` AS USERS WHERE user_no = $user_no;";
-    $result = $mysqli->query($sql);
+    $result = $mysqli->query($query);
     $row = $result->fetch_assoc();
     return $row;
 }
 
 function user_update($dataArr) {
-    try {
-        global $mysqli;
-        if (isset($dataArr["status"]))
-            $query = "UPDATE USERS SET status = {$dataArr["status"]} WHERE user_no = {$dataArr["user_no"]}";
-        if (isset($dataArr["user_name"]))
-            $query = "UPDATE USERS SET user_name = \"{$dataArr["user_name"]}\" WHERE user_no = {$dataArr["user_no"]}";
-        if (isset($dataArr["user_phone"]))
-            $query = "UPDATE USERS SET user_phone = \"{$dataArr["user_phone"]}\" WHERE user_no = {$dataArr["user_no"]}";
-        if ($mysqli->query($query)) {
-            $json = json_encode(["result" => true]);
-        }
-    } catch (Exception $e) {
-        $msg = "Exception {$e->getCode()} : {$e->getMessage()} in {$e->getFile()} on line {$e->getLine()}!";
-        $json = json_encode(["msg" => $msg]);
-    }
-    echo $json;
-}
-function amount_update($dataArr) {
     try {
         global $mysqli;
         if (isset($dataArr["status"]))
@@ -81,6 +66,32 @@ function amount_update($dataArr) {
         $json = json_encode(["msg" => $msg]);
     }
     echo $json;
+}
+
+function amount_insert($dataArr) {
+    try {
+        global $mysqli;
+        $user_no = $dataArr["user_no"];
+        $type = $dataArr["type"];
+        $val = $dataArr["val"];
+
+        $query = "INSERT INTO `AMOUNT` (user_no, $type) VALUES ($user_no, $val);";
+        if ($mysqli->query($query)) {
+            $json = json_encode(["result" => true, "user_data" => amount_select($user_no, $type)]);
+        }
+    } catch (Exception $e) {
+        $msg = "Exception {$e->getCode()} : {$e->getMessage()} in {$e->getFile()} on line {$e->getLine()}!";
+        $json = json_encode(["msg" => $msg]);
+    }
+    echo $json;
+}
+
+function amount_select($user_no, $type) {
+    global $mysqli;
+    $query = "SELECT SUM($type) AS $type FROM `AMOUNT` WHERE user_no = $user_no;";
+    $result = $mysqli->query($query);
+    $row = $result->fetch_assoc();
+    return $row[$type];
 }
 
 function users($start=0, $list_num=0, $params=[]) {

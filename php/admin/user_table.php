@@ -130,7 +130,7 @@ if($e_pageNum > $total_page){
                         . "<span class=\"btn\" data-user--no=\"{$user["user_no"]}\" data-type=\"estimate\" name=\"form\">추가</span>"
                         . "<span class=\"btn\" data-user--no=\"{$user["user_no"]}\" data-type=\"estimate\" name=\"list\">목록보기</span>"
                         . "</div>"
-                        . "<div name=\"sum\">{$user["estimate"]}</div>"
+                        . "<div name=\"sum\">" . number_format($user["estimate"]) . "</div>"
                         . "<div class=\"form hidden\">"
                         . "<input type=\"text\">"
                         . "<button type=\"button\" data-type=\"estimate\" name=\"insert\" data-user--no=\"{$user["user_no"]}\">추가</button>"

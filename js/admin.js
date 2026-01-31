@@ -16,6 +16,16 @@ const fn_phone_format = (char) => {
     return char;
 }
 
+const fn_thousand_format = (char) => {
+    char = char.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return char;
+}
+
+const fn_only_num = (char) => {
+    char = char.replace(/[^0-9]/g, '');
+    return char;
+}
+
 const fn_update_input_css = (status, element)  =>{
     if (status == "active") {
         element.prop('disabled', false);
@@ -124,7 +134,7 @@ user_el.find('select[name="user_type"]').change(function (e) {
     });
 });
 
-// 유저 이름, 휴대폰번호, 견적금액, 납부금액 업데이트
+// 유저 이름, 휴대폰번호 업데이트
 user_el.find('[name="user_name"] .btn, [name="user_phone"] .btn').click(function (event) {
     const target = $(event.target);
     const user_no = target.data("user--no");;
@@ -186,9 +196,27 @@ $('.amount .btn-group .btn').click(function () {
 $('.amount .form button').click(function () {
     const user_no = $(this).data("user--no");
     const btn_type = $(this).data("type");
-    const val = $(`#${user_no}`).find(`[name="${btn_type}"]`).find('.form').find('input').val();
-    console.log("🚀 ~ btn_type:", btn_type)
-    console.log("🚀 ~ val:", val)
+    const element = $(`#${user_no}`).find(`[name="${btn_type}"]`);
+    const char = element.find('.form input').val();
+    const val = fn_only_num(char);
+    const dataArr = {fn: "amount_insert", user_no: user_no, type: btn_type, val: val};
+
+    $.ajax({
+        url: "/php/controller/db_module.php",
+        type: "post",
+        data: {
+            dataArr: dataArr
+        }
+    }).done(function (data) {
+        data = JSON.parse(data);
+        const result = data.result;
+        const user_data = result && data.user_data;
+        element.find('[name="sum"]').text(fn_thousand_format(user_data));
+        element.find('[name="form"]').text("추가");
+        element.find('.form input').val("");
+        element.find('.form').toggleClass("flex");
+    });
+    
 });
 
 $(document).on('click', '.user__table .form_open, .recall__form .close', function() {
