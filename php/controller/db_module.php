@@ -94,6 +94,14 @@ function amount_select($user_no, $type) {
     return $row[$type];
 }
 
+function amount_list($user_no) {
+    global $mysqli;
+    $query = "SELECT * FROM `AMOUNT` WHERE user_no = $user_no;";
+    $result = $mysqli->query($query);
+    $row = $result->fetch_assoc();
+    return $row[$type];
+}
+
 function users($start=0, $list_num=0, $params=[]) {
     global $mysqli;
     $param_str = "";

@@ -22,20 +22,18 @@ const fn_thousand_format = (char) => {
 }
 
 const fn_only_num = (char) => {
-    // 1. 콤마 제거 및 숫자/소수점/음수 기호 외 문자 제거
-    let val = char;
-    val = val.replace(/[^0-9.-]/g, '');
+    char = char.replace(/[^0-9-]/g, '');
     
-    // 2. 음수 기호 처리 (맨 앞만 허용)
+    // 음수 기호 처리 (맨 앞만 허용)
     let isNegative = false;
-    if (val.charAt(0) === '-') {
+    if (char.charAt(0) === '-') {
         isNegative = true;
-        val = val.substring(1);
+        char = char.substring(1);
     }
     
-    // 4. 음수 기호 복원 및 결과 반영
-    val = (isNegative ? '-' : '') + val;
-    return val;
+    // 음수 기호 복원 및 결과 반영
+    char = (isNegative ? '-' : '') + char;
+    return char;
 }
 
 const fn_update_input_css = (status, element)  =>{
@@ -208,7 +206,7 @@ $('.amount .btn-group .btn').click(function () {
 $('.amount .form input').keyup(function () {
     let char = $(this).val();
     char = fn_only_num(char);
-    // char = fn_thousand_format(char);
+    char = fn_thousand_format(char);
     $(this).val(char);
 });
 
