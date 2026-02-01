@@ -15,22 +15,24 @@ if (isset($_POST["dataArr"])) {
         case "amount_insert":
             amount_insert($dataArr);
             break;
+        case "amount_list":
+            amount_list($dataArr);
+            break;
         default:
             # code...
             break;
     }
 }
 
+// 새로운 user insert
 function new_user_insert($dataArr) {
     global $mysqli;
     $user_name = $dataArr["user_name"];
     $user_phone = $dataArr["user_phone"];
     $query = "INSERT INTO `USERS` (user_name, user_phone) VALUES (\"$user_name\", \"$user_phone\");";
-    if ($mysqli->query($query)) {
-        echo json_encode(['result'=>true]);
-    } else {
-        echo json_encode(['result'=>false]);
-    }
+    $json = $mysqli->query($query) ? json_encode(['result'=>true]) : json_encode(['result'=>false]);
+    $mysqli->close();
+    echo $json;
 }
 
 function user_select($user_no) {
@@ -94,12 +96,19 @@ function amount_select($user_no, $type) {
     return $row[$type];
 }
 
-function amount_list($user_no) {
+function amount_list($dataArr) {
     global $mysqli;
-    $query = "SELECT * FROM `AMOUNT` WHERE user_no = $user_no;";
+    $list = [];
+    $user_no = $dataArr["user_no"];
+    $type = $dataArr["type"];
+    $query = "SELECT * FROM `AMOUNT` WHERE $type != 0 AND user_no = $user_no ORDER BY reg_dt DESC;";
     $result = $mysqli->query($query);
-    $row = $result->fetch_assoc();
-    return $row[$type];
+
+    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+        $list[] = $row;
+    }
+    echo json_encode(["result" => $list]);
+
 }
 
 function users($start=0, $list_num=0, $params=[]) {

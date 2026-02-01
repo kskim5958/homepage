@@ -87,8 +87,8 @@ if($e_pageNum > $total_page){
                     <th>상태</th>
                     <th>이름</th>
                     <th>연락처</th>
-                    <th>진행금액</th>
                     <th>견적금액</th>
+                    <th>납부금액</th>
                     <th>리콜상태</th>
                 </tr>
             </thead>

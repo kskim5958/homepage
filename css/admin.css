@@ -54,6 +54,7 @@
 .amount .btn-group {display: flex; flex-direction: row; gap: 5px; font-size: 0.8em; font-weight: 500; justify-content: baseline;}
 .amount .btn-group .btn {cursor: pointer; color: var(--color-orange-1);}
 .amount [name="sum"] {text-align: left;}
+.amount .amount__list {font-size: 0.8em; text-align: left;}
 
 .user__table .recall__column {text-align: left;}
 .user__table .recall__column .form_open,

@@ -50,6 +50,19 @@ const fn_update_input_css = (status, element)  =>{
         .css('background-color', 'transparent')
         .css('border-radius', 'unset');
     }
+
+}
+
+const fn_amount_list_html = (btn_type, result)  =>{
+    let html = `<ul class="amount__list">`;
+    result.forEach((list, index) => {
+        html += `<li>
+            <span class="item">${list.reg_dt} [${fn_thousand_format(list[btn_type])}원]</span>
+            <span class="btn" name="del" data-amount--no="${list.no}">삭제</span>
+            </li>`;
+    });
+    html += "</ul>";
+    return html;
 }
 
 // user search form 셀렉트 액션
@@ -188,21 +201,44 @@ user_el.find('[name="user_name"] .btn, [name="user_phone"] .btn').click(function
     }
 });
 
-// user 견적금액, 납부금액 추가 버튼
+// user 견적금액, 납부금액 추가와 리스트 조회
 $('.amount .btn-group .btn').click(function () {
     const user_no = $(this).data('user--no');
     const btn_type = $(this).data("type");
     const btn_name = $(this).attr('name');
+    const element = $(`#${user_no}`).find(`[name="${btn_type}"]`);
+
     if (btn_name == "form") {
-        $(`#${user_no}`).find(`[name="${btn_type}"]`).find(`.${btn_name}`).toggleClass("flex");
+        let btn_text = $(this).text();
+        const toggle_text = "취소";
+        btn_text = btn_text.includes(toggle_text) ? btn_text.replace(toggle_text, "") : `${btn_text}${toggle_text}`;
+        element.find(`.${btn_name}`).toggleClass("flex");
+        $(this).text(btn_text);
     }
-    if ($(this).text() == '추가') {
-        $(this).text('추가취소');
-    } else {
-        $(this).text('추가');
+    if (btn_name == "list") {
+        if (element.find(".amount__list").length > 0) {
+            element.find(".amount__list").remove();
+        } else {
+            const dataArr = {fn: "amount_list", user_no: user_no, type: btn_type};
+            $.ajax({
+                url: "/php/controller/db_module.php",
+                type: "post",
+                data: {dataArr: dataArr}
+            }).done(function (data) {
+                data = JSON.parse(data);
+                const result = data.result;
+                if (result.length == 0) {
+                    const swap = (btn_type == "payment") ? "납부금액" : "견적금액";
+                    alert(`${swap}의 내역이 없습니다.`);
+                } else {
+                    element.append(fn_amount_list_html(btn_type, result));
+                }
+            });
+        }
     }
 });
 
+// user 견적금액, 납부금액 키업(숫자 숫자만/쉼표)
 $('.amount .form input').keyup(function () {
     let char = $(this).val();
     char = fn_only_num(char);
@@ -210,6 +246,7 @@ $('.amount .form input').keyup(function () {
     $(this).val(char);
 });
 
+// user 견적금액, 납부금액 추가
 $('.amount .form button').click(function () {
     const user_no = $(this).data("user--no");
     const btn_type = $(this).data("type");
@@ -217,7 +254,6 @@ $('.amount .form button').click(function () {
     const char = element.find('.form input').val();
     const val = fn_only_num(char);
     const dataArr = {fn: "amount_insert", user_no: user_no, type: btn_type, val: val};
-    console.log("🚀 ~ dataArr:", dataArr)
 
     $.ajax({
         url: "/php/controller/db_module.php",
