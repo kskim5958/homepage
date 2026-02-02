@@ -65,6 +65,16 @@ const fn_amount_list_html = (btn_type, result)  =>{
     return html;
 }
 
+const fn_null_besides = (val)  =>{
+    let result = false;
+    result = (val === null && typeof val === "undefined") ? true : false;
+    if (typeof val === "string") {
+        val = val.replace(" ", "");
+        result = (val === "") ? true : false;
+    }
+    return result;
+}
+
 // user search form 셀렉트 액션
 sch_el.find('select[name="search_type"]').change(function () {
     const element = sch_el.find('input[name="search_text"]');
@@ -109,6 +119,18 @@ user_fm_el.find('input').keyup(function () {
     $(this).val(char);
 });
 
+user_el.find('[name="user_name"]').find("input").keyup(function () {
+    let char = $(this).val();
+    char = fn_kor_format(char);
+    $(this).val(char);
+});
+
+user_el.find('[name="user_phone"]').find("input").keyup(function () {
+    let char = $(this).val();
+    char = fn_phone_format(char);
+    $(this).val(char);
+});
+
 // new user insert 버튼 액션
 user_fm_el.find('button[name="insert_btn"]').click(function () {
     const user_name = user_fm_el.find('input[name="user_name"]').val();
@@ -124,11 +146,7 @@ user_fm_el.find('button[name="insert_btn"]').click(function () {
     }).done(function (data) {
         data = JSON.parse(data);
         const result = data.result;
-        if (result) {
-            alert(`${user_name}님, ${user_phone} 연락처로 등록하였습니다!`);
-        } else {
-            alert('등록에 실패하였습니다!');
-        }
+        result ? alert(`${user_name}님, ${user_phone} 연락처로 등록하였습니다!`) : alert('등록에 실패하였습니다!');
     });
     window.location.href = path;
 });
@@ -148,11 +166,12 @@ user_el.find('select[name="user_type"]').change(function (e) {
     }).done(function (data) {
         data = JSON.parse(data);
         const result = data.result;
-        const user_data = data.user_data;
         if (result) {
-            alert(`${user_data.user_name}님의 상태를 [${user_data.user_comment}]로/으로 변경하였습니다!`);
+            const user_arr = data.user_arr;
+            alert(`${user_arr.user_name}님의 상태를 [${user_arr.user_comment}]로/으로 변경하였습니다!`);
         } else {
-            alert(`${user_data.msg}`);
+            alert("업데이트에 실패하였습니다.\n콘솔로그를 확인하세요!");
+            console.log(data.error)
         }
     });
 });
@@ -177,12 +196,12 @@ user_el.find('[name="user_name"] .btn, [name="user_phone"] .btn').click(function
     if (target.hasClass("action")) {
         fn_update_input_css("inactive", element.find("input"));
         if (btn_name == "user_name") {
-            dataArr.user_name = input_val;
             dataArr.fn = "user_update";
+            dataArr.user_name = input_val;
         }
         if (btn_name == "user_phone") {
-            dataArr.user_phone = input_val;
             dataArr.fn = "user_update";
+            dataArr.user_phone = input_val;
         }
         $.ajax({
             url: "/php/controller/db_module.php",
@@ -195,7 +214,8 @@ user_el.find('[name="user_name"] .btn, [name="user_phone"] .btn').click(function
             if (data.result) {
                 alert(`[${GLOBAL_ADMIN_INPUT_TEXT}] 에서 [${input_val}]로/으로 변경하였습니다!`);
             } else {
-                alert(`${user_data.msg}`);
+                alert("업데이트에 실패하였습니다.\n콘솔로그를 확인하세요!");
+                console.log(data.error)
             }
         });
     }
@@ -272,80 +292,3 @@ $('.amount .form button').click(function () {
     });
     
 });
-
-$(document).on('click', '.user__table .form_open, .recall__form .close', function() {
-    const user_id = $(this).attr('data-id');
-    $('.recall__row[data-id="' + user_id + '"]').toggle();
-});
-
-$(document).on('click', '.recall__column .recall_list_open', function() {
-    $(this).parent().children('.hide').toggle();
-});
-
-$(document).on('click', '.recall__form .insert', function() {
-    const userNo = $(this).attr('data-id');
-    const element = $('.recall__form[data-id="' + userNo + '"]');
-    const comment_type = element.find('select[name="comment-type"] option:selected').text();
-    const comment_text = element.find('input[name="comment-text"]').val();
-    const comment = comment_text == '' ? comment_type : comment_text;
-    
-    $.ajax({
-        url: "/php/controller/db_module.php",
-        type: "post",
-        data: {
-            functionName : 'recall_insert',
-            userNo : userNo,
-            comment : comment
-        }
-    }).done(function (data) {
-        data = JSON.parse(data);
-        if (data.result) {
-            let html = '<li class="form_open" data-id="' + userNo + '">리콜추가</li>';
-            html += fn_html(userNo, data.list);
-            $('#' + userNo).find('.recall__column ul').empty();
-            $('#' + userNo).find('.recall__column ul').append(html);
-        } else {
-            console.log(data.error);
-        }
-    });
-});
-
-$(document).on('click', '.recall__column .del', function() {
-    let recallNo = $(this).attr('data-id');
-    let userNo = $(this).attr('data-userid');
-    
-    $.ajax({
-        url: "/php/controller/db_module.php",
-        type: "post",
-        data: {
-            functionName : 'recall_update',
-            userNo : userNo,
-            recallNo : recallNo
-        }
-    }).done(function (data) {
-        data = JSON.parse(data);
-        if (data.result) {
-            let html = '<li class="form_open" data-id="' + userNo + '">리콜추가</li>';
-            html += fn_html(userNo, data.list);
-            $('#' + userNo).find('.recall__column ul').empty();
-            $('#' + userNo).find('.recall__column ul').append(html);
-        } else {
-            console.log(data.error);
-        }
-    });
-});
-
-const fn_html = (userNo, data)=>{
-    let html = '';
-    let dataCnt = data.length;
-    data.forEach((list, index) => {
-        const classAttribute = index > 2 ? 'class="hide"' : '';
-        html += '<li ' + classAttribute + '>'
-        + list.recallDate + '&nbsp;'
-        + list.comment + '&nbsp;'
-        + '<span class="del" data-id="' + list.no + '" data-userid="' + list.userNo + '">삭제</span>'
-        + '</li>';
-    });
-    if (dataCnt > 3) html += '<li class="recall_list_open" data-id="' + userNo + '">더보기</li>';
-    return html;
-}

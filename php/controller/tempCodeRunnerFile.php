@@ -1,2 +1,0 @@
-<?php
-fetch_assoc

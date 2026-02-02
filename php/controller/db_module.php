@@ -30,11 +30,13 @@ function new_user_insert($dataArr) {
     $user_name = $dataArr["user_name"];
     $user_phone = $dataArr["user_phone"];
     $query = "INSERT INTO `USERS` (user_name, user_phone) VALUES (\"$user_name\", \"$user_phone\");";
-    $json = $mysqli->query($query) ? json_encode(['result'=>true]) : json_encode(['result'=>false]);
+    $result = $mysqli->query($query);
     $mysqli->close();
+    $json = json_encode(['result' => $result]);
     echo $json;
 }
 
+// user 조회
 function user_select($user_no) {
     global $mysqli;
     $query = "SELECT
@@ -46,26 +48,26 @@ function user_select($user_no) {
             END AS user_comment
             FROM `USERS` AS USERS WHERE user_no = $user_no;";
     $result = $mysqli->query($query);
-    $row = $result->fetch_assoc();
-    return $row;
+    $column = $result->fetch_assoc();
+    return $column;
 }
 
+// user 업데이트
 function user_update($dataArr) {
-    try {
-        global $mysqli;
-        if (isset($dataArr["status"]))
-            $query = "UPDATE USERS SET status = {$dataArr["status"]} WHERE user_no = {$dataArr["user_no"]}";
-        if (isset($dataArr["user_name"]))
-            $query = "UPDATE USERS SET user_name = {$dataArr["user_name"]} WHERE user_no = {$dataArr["user_no"]}";
-        if (isset($dataArr["user_phone"]))
-            $query = "UPDATE USERS SET user_phone = {$dataArr["user_phone"]} WHERE user_no = {$dataArr["user_no"]}";
-        if ($mysqli->query($query)) {
-            $user_data = user_select($dataArr["user_no"]);
-            $json = json_encode(["result" => true, "user_data" => $user_data]);
-        }
-    } catch (Exception $e) {
-        $msg = "Exception {$e->getCode()} : {$e->getMessage()} in {$e->getFile()} on line {$e->getLine()}!";
-        $json = json_encode(["msg" => $msg]);
+    global $mysqli;
+    $user_no = $dataArr["user_no"];
+    if (isset($dataArr["status"]))
+        $query = "UPDATE USERS SET status = {$dataArr["status"]} WHERE user_no = $user_no";
+    if (isset($dataArr["user_name"]))
+        $query = "UPDATE USERS SET user_name = \"{$dataArr["user_name"]}\" WHERE user_no = $user_no";
+    if (isset($dataArr["user_phone"]))
+        $query = "UPDATE USERS SET user_phone = \"{$dataArr["user_phone"]}\" WHERE user_no = $user_no";
+    $result = $mysqli->query($query);
+    if ($result) {
+        $column = user_select($user_no);
+        $json = json_encode(['result' => $result, 'user_arr' => $column]);
+    } else {
+        $json = json_encode(['result' => $result, 'error' => "{$dataArr["fn"]} : {$mysqli->error}"]);
     }
     echo $json;
 }
@@ -256,4 +258,11 @@ function user_type_list() {
         ];
     }
     return $list;
+}
+
+function DB_Exception ($e) {
+    // throw new Exception ("A error has occured", 42);
+    $msg = "Exception {$e->getCode()} : {$e->getMessage()} in {$e->getFile()} on line {$e->getLine()}!";
+    $json = json_encode(["msg" => $msg]);
+    return $json;
 }
