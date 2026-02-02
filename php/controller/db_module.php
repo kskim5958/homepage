@@ -32,11 +32,15 @@ function new_user_insert($dataArr) {
     $query = "INSERT INTO `USERS` (user_name, user_phone) VALUES (\"$user_name\", \"$user_phone\");";
     $result = $mysqli->query($query);
     $mysqli->close();
-    $json = json_encode(['result' => $result]);
-    echo $json;
+    if ($result) {
+        $json = json_encode(['result' => $result]);
+        echo $json;
+    } else {
+        mysqli_error_msg($mysqli);
+    }
 }
 
-// user 조회
+// user 단순조회
 function user_select($user_no) {
     global $mysqli;
     $query = "SELECT
@@ -56,41 +60,36 @@ function user_select($user_no) {
 function user_update($dataArr) {
     global $mysqli;
     $user_no = $dataArr["user_no"];
-    if (isset($dataArr["status"]))
-        $query = "UPDATE USERS SET status = {$dataArr["status"]} WHERE user_no = $user_no";
-    if (isset($dataArr["user_name"]))
-        $query = "UPDATE USERS SET user_name = \"{$dataArr["user_name"]}\" WHERE user_no = $user_no";
-    if (isset($dataArr["user_phone"]))
-        $query = "UPDATE USERS SET user_phone = \"{$dataArr["user_phone"]}\" WHERE user_no = $user_no";
+    $btn_name = $dataArr["btn_name"];
+    $val = $dataArr["val"];
+    $val = ($btn_name == "status") ? $val : "\"$val\"";
+    $query = "UPDATE USERS SET $btn_name = $val WHERE user_no = $user_no";
     $result = $mysqli->query($query);
     if ($result) {
         $column = user_select($user_no);
         $json = json_encode(['result' => $result, 'user_arr' => $column]);
+        echo $json;
     } else {
-        $json = json_encode(['result' => $result, 'error' => "{$dataArr["fn"]} : {$mysqli->error}"]);
+        mysqli_error_msg($mysqli);
     }
-    echo $json;
 }
 
 function amount_insert($dataArr) {
-    try {
-        global $mysqli;
-        $user_no = $dataArr["user_no"];
-        $type = $dataArr["type"];
-        $val = $dataArr["val"];
-
-        $query = "INSERT INTO `AMOUNT` (user_no, $type) VALUES ($user_no, $val);";
-        if ($mysqli->query($query)) {
-            $json = json_encode(["result" => true, "user_data" => amount_select($user_no, $type)]);
-        }
-    } catch (Exception $e) {
-        $msg = "Exception {$e->getCode()} : {$e->getMessage()} in {$e->getFile()} on line {$e->getLine()}!";
-        $json = json_encode(["msg" => $msg]);
+    global $mysqli;
+    $user_no = $dataArr["user_no"];
+    $type = $dataArr["type"];
+    $val = $dataArr["val"];
+    $query = "INSERT INTO `AMOUNT` (user_no, $type) VALUES ($user_no, $val);";
+    $result = $mysqli->query($query);
+    if ($result) {
+        $json = json_encode(["result" => $result, "amount_sum" => amount_sum_select($user_no, $type)]);
+        echo $json;
+    } else {
+        mysqli_error_msg($mysqli);
     }
-    echo $json;
 }
 
-function amount_select($user_no, $type) {
+function amount_sum_select($user_no, $type) {
     global $mysqli;
     $query = "SELECT SUM($type) AS $type FROM `AMOUNT` WHERE user_no = $user_no;";
     $result = $mysqli->query($query);
@@ -113,6 +112,7 @@ function amount_list($dataArr) {
 
 }
 
+// users 리스트 조회
 function users($start=0, $list_num=0, $params=[]) {
     global $mysqli;
     $param_str = "";
@@ -265,4 +265,10 @@ function DB_Exception ($e) {
     $msg = "Exception {$e->getCode()} : {$e->getMessage()} in {$e->getFile()} on line {$e->getLine()}!";
     $json = json_encode(["msg" => $msg]);
     return $json;
+}
+
+function mysqli_error_msg ($mysqli) {
+    /** @var mysqli $mysqli */
+    $json = json_encode(["result" => false, "error" => $mysqli->error]);
+    echo $json;
 }

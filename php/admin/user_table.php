@@ -102,7 +102,7 @@ if($e_pageNum > $total_page){
                         . "<td name=\"reg_dt\">{$user["reg_dt"]}</td>"
                         . "<td name=\"old_dt\">{$user["old_dt"]}</td>"
                         . '<td name="status">'
-                        . "<select name=\"user_type\" data-user--no=\"{$user["user_no"]}\">";
+                        . "<select name=\"user_type\" data-btn--name=\"status\" data-user--no=\"{$user["user_no"]}\">";
                         foreach ($user_type_list as $user_type) {
                             $selected = ($user['status'] == $user_type['no']) ? 'selected' : '';
                             echo "<option $selected value=\"{$user_type["no"]}\">{$user_type["user_type"]}</option>";

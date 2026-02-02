@@ -154,8 +154,11 @@ user_fm_el.find('button[name="insert_btn"]').click(function () {
 // user 상태 업데이트
 user_el.find('select[name="user_type"]').change(function (e) { 
     const user_no = $(this).data('user--no');
-    const status = $(this).val();
-    const dataArr ={fn: 'user_update', user_no: user_no, status: status};
+    const btn_name = $(this).data("btn--name");
+    const val = $(this).val();
+    let dataArr ={fn: 'user_update', user_no: user_no};
+    dataArr.btn_name = btn_name;
+    dataArr.val = val;
 
     $.ajax({
         url: "/php/controller/db_module.php",
@@ -182,11 +185,11 @@ user_el.find('[name="user_name"] .btn, [name="user_phone"] .btn').click(function
     const user_no = target.data("user--no");;
     const btn_name = target.data("btn--name");
     const element = $(`#${user_no} [name="${btn_name}"]`);
-    const input_val = element.find("input").val();
-    let dataArr ={user_no: user_no};
+    const val = element.find("input").val();
+    let dataArr ={fn: 'user_update', user_no: user_no};
     element.find(".btn").toggle();
     if (target.hasClass("update")) {
-        GLOBAL_ADMIN_INPUT_TEXT = input_val;
+        GLOBAL_ADMIN_INPUT_TEXT = val;
         fn_update_input_css("active", element.find("input"));
     }
     if (target.hasClass("close")) {
@@ -196,12 +199,12 @@ user_el.find('[name="user_name"] .btn, [name="user_phone"] .btn').click(function
     if (target.hasClass("action")) {
         fn_update_input_css("inactive", element.find("input"));
         if (btn_name == "user_name") {
-            dataArr.fn = "user_update";
-            dataArr.user_name = input_val;
+            dataArr.btn_name = btn_name;
+            dataArr.val = val;
         }
         if (btn_name == "user_phone") {
-            dataArr.fn = "user_update";
-            dataArr.user_phone = input_val;
+            dataArr.btn_name = btn_name;
+            dataArr.val = val;
         }
         $.ajax({
             url: "/php/controller/db_module.php",
@@ -211,8 +214,9 @@ user_el.find('[name="user_name"] .btn, [name="user_phone"] .btn').click(function
         },
         }).done(function (data) {
             data = JSON.parse(data);
-            if (data.result) {
-                alert(`[${GLOBAL_ADMIN_INPUT_TEXT}] 에서 [${input_val}]로/으로 변경하였습니다!`);
+            const result = data.result;
+            if (result) {
+                alert(`[${GLOBAL_ADMIN_INPUT_TEXT}] 에서 [${val}]로/으로 변경하였습니다!`);
             } else {
                 alert("업데이트에 실패하였습니다.\n콘솔로그를 확인하세요!");
                 console.log(data.error)
@@ -284,11 +288,16 @@ $('.amount .form button').click(function () {
     }).done(function (data) {
         data = JSON.parse(data);
         const result = data.result;
-        const user_data = result && data.user_data;
-        element.find('[name="sum"]').text(fn_thousand_format(user_data));
-        element.find('[name="form"]').text("추가");
-        element.find('.form input').val("");
-        element.find('.form').toggleClass("flex");
+        if (result) {
+            const amount_sum = data.amount_sum;
+            element.find('[name="sum"]').text(fn_thousand_format(amount_sum));
+            element.find('[name="form"]').text("추가");
+            element.find('.form input').val("");
+            element.find('.form').toggleClass("flex");
+        } else {
+            alert("납부금 추가/조회에 실패하였습니다.\n콘솔로그를 확인하세요!");
+            console.log(data.error)
+        }
     });
     
 });
