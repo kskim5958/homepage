@@ -251,11 +251,18 @@ $('.amount .btn-group .btn').click(function () {
             }).done(function (data) {
                 data = JSON.parse(data);
                 const result = data.result;
-                if (result.length == 0) {
-                    const swap = (btn_type == "payment") ? "납부금액" : "견적금액";
-                    alert(`${swap}의 내역이 없습니다.`);
+
+                if (result) {
+                    const list = data.list;
+                    if (list.length == 0) {
+                        const swap = (btn_type == "payment") ? "납부금액" : "견적금액";
+                        alert(`${swap}의 내역이 없습니다.`);
+                    } else {
+                        element.append(fn_amount_list_html(btn_type, list));
+                    }
                 } else {
-                    element.append(fn_amount_list_html(btn_type, result));
+                    alert("납부금 추가/조회에 실패하였습니다.\n콘솔로그를 확인하세요!");
+                    console.log(data.error)
                 }
             });
         }
@@ -290,10 +297,13 @@ $('.amount .form button').click(function () {
         const result = data.result;
         if (result) {
             const amount_sum = data.amount_sum;
-            element.find('[name="sum"]').text(fn_thousand_format(amount_sum));
+            element.find('[name="sum"]').text(fn_thousand_format(amount_sum[btn_type]));
             element.find('[name="form"]').text("추가");
             element.find('.form input').val("");
             element.find('.form').toggleClass("flex");
+            if (element.find(".amount__list").length > 0) {
+                element.find(".amount__list").remove();
+            }
         } else {
             alert("납부금 추가/조회에 실패하였습니다.\n콘솔로그를 확인하세요!");
             console.log(data.error)

@@ -56,17 +56,15 @@
 .amount [name="sum"] {text-align: left;}
 .amount .amount__list {font-size: 0.8em; text-align: left;}
 
-.user__table .recall__column {text-align: left;}
-.user__table .recall__column .form_open,
-.user__table .recall__column .del,
-.user__table .recall__column .recall_list_open {color: var(--color-orange-1); cursor: pointer; width: fit-content;}
-.user__table .recall__column .hide {display: none;}
-
-.user__table .recall__row {display: none;}
-.user__table .recall__row td {border-left: none; border-right: none;}
-.user__table .recall__form {display: flex; flex-direction: row; gap: 0.5em; align-items: center; justify-content: end;}
-.user__table .recall__form select, .recall__form input, .recall__form button {padding: 5px 10px;}
-.user__table .recall__form input {width: 300px;}
-.user__table .recall__form button {cursor: pointer;}
+.recall .form input {width: 12em; background-color: var(--color-gray-4); padding: 5px 10px; border-radius: 20px; font-size: 0.9em; border: none;}
+.recall .form button {font-size: 0.9em; padding: 5px 10px; border-radius: 10px; background-color: var(--color-green-4);}
+.recall .form {justify-content: start;}
+.recall .form.hidden {display: none;}
+.recall .form.flex {display: flex;}
+.recall .btn-group,
+.recall .btn-group {display: flex; flex-direction: row; gap: 5px; font-size: 0.8em; font-weight: 500; justify-content: baseline;}
+.recall .btn-group .btn {cursor: pointer; color: var(--color-orange-1);}
+.recall [name="sum"] {text-align: left;}
+.recall .recall__list {font-size: 0.8em; text-align: left;}
 
 #pager {padding-top: 1rem; text-align: center;}

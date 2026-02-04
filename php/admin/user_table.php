@@ -146,37 +146,26 @@ if($e_pageNum > $total_page){
                         . "<input type=\"text\">"
                         . "<button type=\"button\" data-type=\"payment\" name=\"insert\" data-user--no=\"{$user["user_no"]}\">추가</button>"
                         . "</div>"
-                        . "</td>"
-                        . "<td class=\"recall__column\">"
-                        . "<ul>";
-                    echo "<li class=\"form_open\" data-user--no=\"{$user["user_no"]}\">리콜추가</li>";
-                    $recall_list = recall_list($user["user_no"]);
-                    $recallCnt = count($recall_list);
-                    if ($recallCnt != 0) {
-                        foreach ($recall_list as $index => $recall) {
-                            $index > 2 ? $classAttribute = "class=\"hide\"" : $classAttribute = "";
-                            echo "<li $classAttribute>"
-                                . "{$recall["reg_dt"]}&nbsp;"
-                                . "{$recall["comment"]}&nbsp;"
-                                . "<span class=\"del\" data-recall--no=\"{$recall["no"]}\" data-user--no=\"{$recall["userNo"]}\">삭제</span>"
-                                . "</li>";
+                        . "</td>";
+
+                        $recall_list = recall_list($user["user_no"]);
+                        echo "<td class=\"recall\" name=\"recall\">"
+                        . "<div class=\"btn-group\">"
+                        . "<span class=\"btn\" data-user--no=\"{$user["user_no"]}\" name=\"form\">추가</span>"
+                        . "<span class=\"btn\" data-user--no=\"{$user["user_no"]}\" name=\"list\">목록보기</span>"
+                        . "</div>"
+                        . "<div name=\"sum\">" .  count($recall_list) . " 건</div>"
+                        . "<div class=\"form hidden\">"
+                        . "<input type=\"text\">"
+                        . "<button type=\"button\" name=\"insert\" data-user--no=\"{$user["user_no"]}\">추가</button>"
+                        . "</div>";
+                        if (count($recall_list) != 0) {
+                            echo "<ul class=\"recall__list\">"
+                            . "<li>{$recall_list[0]["reg_dt"]}</li>"
+                            . "</ul>";
                         }
-                        if ($recallCnt > 3) echo "<li class=\"recall__list__open\" data-user--no=\"{$user["user_no"]}\">더보기</li>";
-                    }
-                    echo "</ul></td></tr>";
-                    echo "<tr class=\"recall__row\" data-user--no=\"{$user["user_no"]}\">";
-                    echo "<td colspan=\"10\">";
-                    echo "<div class=\"recall__form\" data-user--no=\"{$user["user_no"]}\">";
-                    echo "<select name=\"recall_type\">";
-                    $recall_type_list = recall_type_list();
-                    foreach ($recall_type_list as $recall_type) {
-                        echo "<option value=\"{$recall_type["no"]}\">{$recall_type["recall_type"]}</option>";
-                    }
-                    echo "</select>"
-                        . "<input name=\"comment_text\" type=\"text\" placeholder=\"기타 : 내용\">"
-                        . "<button type=\"button\" class=\"insert\" data-user--no=\"{$user["user_no"]}\">추가하기</button>"
-                        . "<button type=\"button\" class=\"close\" data-user--no=\"{$user["user_no"]}\">닫기</button>"
-                        . "</div></td></tr>";
+                        echo "</td>"
+                        . "</tr>";
                 }
                 ?>
             </tbody>

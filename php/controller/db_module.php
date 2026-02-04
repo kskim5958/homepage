@@ -82,19 +82,20 @@ function amount_insert($dataArr) {
     $query = "INSERT INTO `AMOUNT` (user_no, $type) VALUES ($user_no, $val);";
     $result = $mysqli->query($query);
     if ($result) {
-        $json = json_encode(["result" => $result, "amount_sum" => amount_sum_select($user_no, $type)]);
+        $json = json_encode(["result" => $result, "amount_sum" => amount_sum($user_no)]);
         echo $json;
     } else {
         mysqli_error_msg($mysqli);
     }
 }
 
-function amount_sum_select($user_no, $type) {
+function amount_sum($user_no) {
     global $mysqli;
-    $query = "SELECT SUM($type) AS $type FROM `AMOUNT` WHERE user_no = $user_no;";
+    // $query = "SELECT SUM($type) AS $type FROM `AMOUNT` WHERE user_no = $user_no;";
+    $query = "SELECT user_no, SUM(estimate) AS estimate, SUM(payment) AS payment FROM `AMOUNT` WHERE user_no = $user_no GROUP BY user_no;";
     $result = $mysqli->query($query);
-    $row = $result->fetch_assoc();
-    return $row[$type];
+    $column = $result->fetch_assoc();
+    return $column;
 }
 
 function amount_list($dataArr) {
@@ -105,11 +106,14 @@ function amount_list($dataArr) {
     $query = "SELECT * FROM `AMOUNT` WHERE $type != 0 AND user_no = $user_no ORDER BY reg_dt DESC;";
     $result = $mysqli->query($query);
 
-    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-        $list[] = $row;
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $list[] = $row;
+        }
+        echo json_encode(["result" => true, "list" => $list]);
+    } else {
+        mysqli_error_msg($mysqli);
     }
-    echo json_encode(["result" => $list]);
-
 }
 
 // users 리스트 조회
@@ -186,19 +190,16 @@ function users($start=0, $list_num=0, $params=[]) {
     return $list;
 }
 
-function recall_list($userNo) {
+function recall_list($user_no) {
     global $mysqli;
     $list = [];
-    $sql = "SELECT * FROM `RECALL` WHERE update_no = 0 AND user_no = $userNo ORDER BY reg_dt DESC;";
-    $result = $mysqli->query($sql);
-    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-        $list[] = [
-            'no'=>$row['no']
-            ,'user_no'=>$row['user_no']
-            ,'reg_dt'=>$row['reg_dt']
-            ,'comment'=>$row['comment']
-            ,'update_no'=>$row['update_no']
-        ];
+    $query = "SELECT * FROM `RECALL` WHERE update_no = 0 AND user_no = $user_no ORDER BY reg_dt DESC;";
+    $result = $mysqli->query($query);
+
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $list[] = $row;
+        }
     }
     return $list;
 }
