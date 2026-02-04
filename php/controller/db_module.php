@@ -190,7 +190,7 @@ function users($start=0, $list_num=0, $params=[]) {
     return $list;
 }
 
-function recall_list($user_no) {
+function recall_list($user_no, $json = false) {
     global $mysqli;
     $list = [];
     $query = "SELECT * FROM `RECALL` WHERE update_no = 0 AND user_no = $user_no ORDER BY reg_dt DESC;";
@@ -200,8 +200,19 @@ function recall_list($user_no) {
         while ($row = $result->fetch_assoc()) {
             $list[] = $row;
         }
+        if ($json) {
+            $json = json_encode(["result" => true, "list" => $list]);
+            echo $json;
+        } else {
+            return $list;
+        }
+    } else {
+        if ($json) {
+            mysqli_error_msg($mysqli);
+        } else {
+            return $list;
+        }
     }
-    return $list;
 }
 
 function recall_insert() {
