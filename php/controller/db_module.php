@@ -134,73 +134,54 @@ function users($start=0, $list_num=0, $params=[]) {
             $param_str = "$param_str $key LIKE \"%$value%\"";
         }
     }
-    $sql = "
-        SELECT
-        *
-        FROM
+    $query = "
+        SELECT * FROM
         (SELECT
-        USERS.user_no AS user_no,
-        USERS.reg_dt AS reg_dt,
-        USERS.old_dt AS old_dt,
-        USERS.user_name AS user_name,
-        USERS.user_phone AS user_phone,
-        USERS.user_path AS user_path,
-        USERS.user_ip AS user_ip,
-        USERS.user_device AS user_device,
-        USERS.status AS status,
-        USERS.overlap AS overlap,
-        USERS.estimate AS estimate,
-        USERS.payment AS payment,
-        IFNULL(RECALL.cnt, 0) AS recall_cnt,
-        RECALL.reg_dt AS recall_reg_dt,
-        RECALL.comment AS recall_comment
+        T1.user_no AS user_no,
+        T1.reg_dt AS first_reg_dt,
+        T2.reg_dt AS latest_reg_dt,
+        T1.user_name AS user_name,
+        T1.user_phone AS user_phone,
+        IFNULL(T3.estimate, 0) AS estimate,
+        IFNULL(T3.payment, 0) AS payment,
+        T1.user_path AS user_path,
+        T1.user_ip AS user_ip,
+        T1.user_device AS user_device,
+        T1.status AS status,
+        T1.update_no AS update_no,
+        T1.dup_cnt AS dup_cnt,
+        T4.recall_reg_dt AS recall_reg_dt,
+        T4.recall_comment AS recall_comment,
+        IFNULL(T4.recall_cnt, 0) AS recall_cnt
         FROM
-        (SELECT
-        *
-        FROM
-        (SELECT
-        N_USERS.user_no AS user_no,
-        N_USERS.reg_dt AS reg_dt,
-        N_USERS.old_dt AS old_dt,
-        N_USERS.user_name AS user_name,
-        N_USERS.user_phone AS user_phone,
-        N_USERS.user_path AS user_path,
-        N_USERS.user_ip AS user_ip,
-        N_USERS.user_device AS user_device,
-        N_USERS.status AS status,
-        N_USERS.overlap AS overlap,
-        IFNULL(AMOUNT.estimate, 0) AS estimate,
-        IFNULL(AMOUNT.payment, 0) AS payment
-        FROM
-        (SELECT 
-        OLD_USERS.user_no AS user_no,
-        OLD_USERS.reg_dt AS old_dt,
-        REM_USERS.reg_dt AS reg_dt,
-        OLD_USERS.user_name AS user_name,
-        OLD_USERS.user_phone AS user_phone,
-        OLD_USERS.user_path AS user_path,
-        OLD_USERS.user_ip AS user_ip,
-        OLD_USERS.user_device AS user_device,
-        OLD_USERS.status AS status,
-        OLD_USERS.overlap AS overlap
-        FROM
-        (SELECT *, COUNT(T1.user_phone) AS overlap FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY user_phone ORDER BY reg_dt ASC) as rn FROM `USERS`) AS T1 GROUP BY T1.user_phone) AS OLD_USERS
+        (SELECT * FROM
+        (SELECT *,
+        ROW_NUMBER() OVER (PARTITION BY user_phone ORDER BY reg_dt ASC) AS first_data,
+        COUNT(*) OVER (PARTITION BY user_phone) AS dup_cnt
+        FROM `USERS`) AS T WHERE T.first_data = 1) AS T1
         LEFT JOIN
-        (SELECT T2.reg_dt, T2.user_phone FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY user_phone ORDER BY reg_dt DESC) as rn FROM `USERS`) AS T2 WHERE T2.rn = 1) AS REM_USERS
-        ON OLD_USERS.user_phone = REM_USERS.user_phone ORDER BY reg_dt DESC) AS N_USERS
+        (SELECT T.user_phone AS user_phone, T.reg_dt AS reg_dt FROM
+        (SELECT *,
+        ROW_NUMBER() OVER (PARTITION BY user_phone ORDER BY reg_dt DESC) AS latest_data
+        FROM `USERS`) AS T WHERE T.latest_data = 1) AS T2 ON T1.user_phone = T2.user_phone
         LEFT JOIN
-        (SELECT user_no, SUM(estimate) AS estimate, SUM(payment) AS payment FROM `AMOUNT` GROUP BY user_no) AS AMOUNT
-        ON N_USERS.user_no = AMOUNT.user_no) AS USERS 
-        ORDER BY reg_dt DESC) AS USERS
+        (SELECT user_no, SUM(estimate) as estimate, SUM(payment) AS payment
+        FROM `AMOUNT` GROUP BY user_no) AS T3 ON T1.user_no = T3.user_no
         LEFT JOIN
         (SELECT
-        *, COUNT(user_no) AS cnt
+        T.user_no AS user_no,
+        T.reg_dt AS recall_reg_dt,
+        T.comment AS recall_comment,
+        T.recall_cnt AS recall_cnt
         FROM
-        (SELECT * FROM `RECALL` ORDER BY reg_dt DESC) AS RECALL GROUP BY user_no) AS RECALL
-        ON USERS.user_no = RECALL.user_no) AS USERS $param_str ORDER BY reg_dt DESC $limit;
+        (SELECT *, 
+        ROW_NUMBER() OVER(PARTITION BY user_no ORDER BY reg_dt DESC) AS rn,
+        COUNT(*) OVER(PARTITION BY user_no) AS recall_cnt
+        FROM `RECALL`) AS T WHERE T.rn = 1) AS T4 ON T1.user_no = T4.user_no) AS USERS
+        $param_str ORDER BY latest_reg_dt DESC $limit;
     ";
-    $result = $mysqli->query($sql);
-    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+    $result = $mysqli->query($query);
+    while ($row = $result->fetch_assoc()) {
         $list[] = $row;
     }
     return $list;

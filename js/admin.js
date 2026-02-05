@@ -297,7 +297,7 @@ $('.amount .form button').click(function () {
         const result = data.result;
         if (result) {
             const amount_sum = data.amount_sum;
-            element.find('[name="sum"]').text(fn_thousand_format(amount_sum[btn_type]));
+            element.find('[name="sum"]').text(fn_thousand_format(amount_sum[btn_type]) + " 원");
             element.find('[name="form"]').text("추가");
             element.find('.form input').val("");
             element.find('.form').toggleClass("flex");

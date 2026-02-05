@@ -99,8 +99,8 @@ if($e_pageNum > $total_page){
                 foreach ($users as $user) {
                     echo "<tr class=\"user__information\" id=\"{$user["user_no"]}\">"
                         . "<td name=\"user_no\">{$user["user_no"]}</td>"
-                        . "<td name=\"reg_dt\">{$user["reg_dt"]}</td>"
-                        . "<td name=\"old_dt\">{$user["old_dt"]}</td>"
+                        . "<td name=\"first_reg_dt\">{$user["first_reg_dt"]}</td>"
+                        . "<td name=\"latest_reg_dt\">{$user["latest_reg_dt"]}</td>"
                         . '<td name="status">'
                         . "<select name=\"user_type\" data-btn--name=\"status\" data-user--no=\"{$user["user_no"]}\">";
                         foreach ($user_type_list as $user_type) {
@@ -109,8 +109,11 @@ if($e_pageNum > $total_page){
                         }
                     echo "</select>"
                         . "</td>"
-                        . "<td name=\"user_name\">"
-                        . "<div class=\"form\">"
+                        . "<td name=\"user_name\">";
+                    if ($user["dup_cnt"] > 1) {
+                        echo "<span class=\"dup__cnt\">(중복 {$user["dup_cnt"]}개)</span>";
+                    }
+                    echo "<div class=\"form\">"
                         . "<input data-user--no=\"{$user["user_no"]}\" type=\"text\" value=\"{$user["user_name"]}\" disabled>"
                         . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"user_name\" class=\"btn update\">수정</span>"
                         . "<span data-user--no=\"{$user["user_no"]}\" data-btn--name=\"user_name\" class=\"btn action\">수정하기</span>"
@@ -130,7 +133,7 @@ if($e_pageNum > $total_page){
                         . "<span class=\"btn\" data-user--no=\"{$user["user_no"]}\" data-type=\"estimate\" name=\"form\">추가</span>"
                         . "<span class=\"btn\" data-user--no=\"{$user["user_no"]}\" data-type=\"estimate\" name=\"list\">목록보기</span>"
                         . "</div>"
-                        . "<div name=\"sum\">" . number_format($user["estimate"]) . "</div>"
+                        . "<div name=\"sum\">" . number_format($user["estimate"]) . " 원</div>"
                         . "<div class=\"form hidden\">"
                         . "<input type=\"text\">"
                         . "<button type=\"button\" data-type=\"estimate\" name=\"insert\" data-user--no=\"{$user["user_no"]}\">추가</button>"
@@ -141,7 +144,7 @@ if($e_pageNum > $total_page){
                         . "<span class=\"btn\" data-user--no=\"{$user["user_no"]}\" data-type=\"payment\" name=\"form\">추가</span>"
                         . "<span class=\"btn\" data-user--no=\"{$user["user_no"]}\" data-type=\"payment\" name=\"list\">목록보기</span>"
                         . "</div>"
-                        . "<div name=\"sum\">" . number_format($user["payment"]) . "</div>"
+                        . "<div name=\"sum\">" . number_format($user["payment"]) . " 원</div>"
                         . "<div class=\"form hidden\">"
                         . "<input type=\"text\">"
                         . "<button type=\"button\" data-type=\"payment\" name=\"insert\" data-user--no=\"{$user["user_no"]}\">추가</button>"
