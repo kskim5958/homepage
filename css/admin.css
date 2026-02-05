@@ -66,5 +66,8 @@
 .recall .btn-group .btn {cursor: pointer; color: var(--color-orange-1);}
 .recall [name="sum"] {text-align: left;}
 .recall .recall__list {font-size: 0.8em; text-align: left;}
+.recall .recall__list li {max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+
+.recall .recall__type {border: 1px solid var(--color-gray-3) !important; font-size: 0.8em;}
 
 #pager {padding-top: 1rem; text-align: center;}

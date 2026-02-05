@@ -311,3 +311,74 @@ $('.amount .form button').click(function () {
     });
     
 });
+
+// user 견적금액, 납부금액 추가와 리스트 조회
+$('.recall .btn-group .btn').click(function () {
+    const user_no = $(this).data('user--no');
+    const btn_type = "recall";
+    const btn_name = $(this).attr('name');
+    const element = $(`#${user_no}`).find(`[name="${btn_type}"]`);
+
+    if (btn_name == "form") {
+        let btn_text = $(this).text();
+        const toggle_text = "취소";
+        btn_text = btn_text.includes(toggle_text) ? btn_text.replace(toggle_text, "") : `${btn_text}${toggle_text}`;
+        element.find(`.${btn_name}`).toggleClass("flex");
+        $(this).text(btn_text);
+    }
+    if (btn_name == "list") {
+        if (element.find(".recall__list").length > 0) {
+            element.find(".recall__list").remove();
+        } else {
+            const dataArr = {fn: "recall_list", user_no: user_no, type: btn_type};
+            $.ajax({
+                url: "/php/controller/db_module.php",
+                type: "post",
+                data: {dataArr: dataArr}
+            }).done(function (data) {
+                data = JSON.parse(data);
+                const result = data.result;
+                if (result) {
+                    const list = data.list;
+                    if (list.length == 0) {
+                        alert(`리콜내역이 없습니다.`);
+                    } else {
+                        element.append(fn_amount_list_html(btn_type, list));
+                    }
+                } else {
+                    alert("납부금 추가/조회에 실패하였습니다.\n콘솔로그를 확인하세요!");
+                    console.log(data.error)
+                }
+            });
+        }
+    }
+});
+
+// user 견적금액, 납부금액 추가
+$('.recall .form button[name="insert"]').click(function () {
+    const user_no = $(this).data("user--no");
+    const btn_type = "recall"
+    const element = $(`#${user_no}`).find(`[name="${btn_type}"]`);
+    const select_val = element.find('select[name="recall_type"]').children("option:selected").text();
+    const input_val = (element.find('input[name="recall_text"]').val()).replace(" ", "");
+    const comment = (input_val == "") ? select_val : input_val;
+    const dataArr = {fn: "recall_insert", user_no: user_no, comment: comment};
+
+    $.ajax({
+        url: "/php/controller/db_module.php",
+        type: "post",
+        data: {
+            dataArr: dataArr
+        }
+    }).done(function (data) {
+        data = JSON.parse(data);
+        const result = data.result;
+        if (result) {
+            alert("리콜등록을 완료하였습니다.");
+        } else {
+            alert("리콜등록을 실패하였습니다.\n콘솔로그를 확인하세요!");
+            console.log(data.error)
+        }
+    });
+    
+});

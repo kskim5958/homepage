@@ -146,22 +146,26 @@ if($e_pageNum > $total_page){
                         . "<input type=\"text\">"
                         . "<button type=\"button\" data-type=\"payment\" name=\"insert\" data-user--no=\"{$user["user_no"]}\">추가</button>"
                         . "</div>"
-                        . "</td>";
-
-                        $recall_list = recall_list($user["user_no"]);
-                        echo "<td class=\"recall\" name=\"recall\">"
+                        . "</td>"
+                        . "<td class=\"recall\" name=\"recall\">"
                         . "<div class=\"btn-group\">"
                         . "<span class=\"btn\" data-user--no=\"{$user["user_no"]}\" name=\"form\">추가</span>"
                         . "<span class=\"btn\" data-user--no=\"{$user["user_no"]}\" name=\"list\">목록보기</span>"
                         . "</div>"
-                        . "<div name=\"sum\">" .  count($recall_list) . " 건</div>"
-                        . "<div class=\"form hidden\">"
-                        . "<input type=\"text\">"
+                        . "<div name=\"sum\">{$user["recall_cnt"]} 건</div>"
+                        . "<div class=\"form hidden\">";
+                        echo "<select class=\"recall__type\" name=\"recall_type\">";
+                        $recall_type_list = recall_type_list();
+                        foreach ($recall_type_list as $recall_type) {
+                            echo "<option value=\"{$recall_type["no"]}\">{$recall_type["recall_type"]}</option>";
+                        }
+                        echo "</select>";
+                        echo "<input type=\"text\" name=\"recall_text\">"
                         . "<button type=\"button\" name=\"insert\" data-user--no=\"{$user["user_no"]}\">추가</button>"
                         . "</div>";
-                        if (count($recall_list) != 0) {
+                        if ($user["recall_cnt"] != 0) {
                             echo "<ul class=\"recall__list\">"
-                            . "<li>{$recall_list[0]["reg_dt"]}</li>"
+                            . "<li>{$user["recall_reg_dt"]} {$user["recall_comment"]}</li>"
                             . "</ul>";
                         }
                         echo "</td>"

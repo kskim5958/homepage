@@ -18,6 +18,9 @@ if (isset($_POST["dataArr"])) {
         case "amount_list":
             amount_list($dataArr);
             break;
+        case "recall_insert":
+            recall_insert($dataArr);
+            break;
         default:
             # code...
             break;
@@ -136,6 +139,26 @@ function users($start=0, $list_num=0, $params=[]) {
         *
         FROM
         (SELECT
+        USERS.user_no AS user_no,
+        USERS.reg_dt AS reg_dt,
+        USERS.old_dt AS old_dt,
+        USERS.user_name AS user_name,
+        USERS.user_phone AS user_phone,
+        USERS.user_path AS user_path,
+        USERS.user_ip AS user_ip,
+        USERS.user_device AS user_device,
+        USERS.status AS status,
+        USERS.overlap AS overlap,
+        USERS.estimate AS estimate,
+        USERS.payment AS payment,
+        IFNULL(RECALL.cnt, 0) AS recall_cnt,
+        RECALL.reg_dt AS recall_reg_dt,
+        RECALL.comment AS recall_comment
+        FROM
+        (SELECT
+        *
+        FROM
+        (SELECT
         N_USERS.user_no AS user_no,
         N_USERS.reg_dt AS reg_dt,
         N_USERS.old_dt AS old_dt,
@@ -168,32 +191,28 @@ function users($start=0, $list_num=0, $params=[]) {
         LEFT JOIN
         (SELECT user_no, SUM(estimate) AS estimate, SUM(payment) AS payment FROM `AMOUNT` GROUP BY user_no) AS AMOUNT
         ON N_USERS.user_no = AMOUNT.user_no) AS USERS 
-        $param_str ORDER BY reg_dt DESC $limit;
+        ORDER BY reg_dt DESC) AS USERS
+        LEFT JOIN
+        (SELECT
+        *, COUNT(user_no) AS cnt
+        FROM
+        (SELECT * FROM `RECALL` ORDER BY reg_dt DESC) AS RECALL GROUP BY user_no) AS RECALL
+        ON USERS.user_no = RECALL.user_no) AS USERS $param_str ORDER BY reg_dt DESC $limit;
     ";
     $result = $mysqli->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-        $list[] = [
-        "user_no" =>$row["user_no"],
-        "reg_dt" =>$row["reg_dt"],
-        "old_dt" =>$row["old_dt"],
-        "user_name" =>$row["user_name"],
-        "user_phone" =>$row["user_phone"],
-        "user_path" =>$row["user_path"],
-        "user_ip" =>$row["user_ip"],
-        "user_device" =>$row["user_device"],
-        "status" =>$row["status"],
-        "overlap" =>$row["overlap"],
-        "estimate" =>$row["estimate"],
-        "payment" =>$row["payment"]
-        ];
+        $list[] = $row;
     }
     return $list;
 }
 
-function recall_list($user_no, $json = false) {
+function recall_select($user_no, $json = false) {
     global $mysqli;
     $list = [];
-    $query = "SELECT * FROM `RECALL` WHERE update_no = 0 AND user_no = $user_no ORDER BY reg_dt DESC;";
+    $query = "SELECT
+            *, COUNT(user_no) AS cnt
+            FROM
+            (SELECT * FROM `RECALL` ORDER BY reg_dt DESC) AS RECALL GROUP BY $user_no;";
     $result = $mysqli->query($query);
 
     if ($result) {
@@ -215,19 +234,19 @@ function recall_list($user_no, $json = false) {
     }
 }
 
-function recall_insert() {
+function recall_insert($dataArr) {
     global $mysqli;
-    $userNo = $_POST['userNo'];
-    $comment = $_POST['comment'];
-    $sql = "INSERT INTO RECALL (userNo, recallDate ,comment) VALUES ($userNo, CURRENT_TIMESTAMP, \"$comment\");";
-    if ($mysqli->query($sql)) {
-        # 성공하면 리콜목록 가져오기
-        $json = json_encode(['result'=>true, 'list'=>recall_list($userNo)]);
+    $user_no = $dataArr["user_no"];
+    $comment = $dataArr['comment'];
+    $query = "INSERT INTO `RECALL` (user_no, comment) VALUES ($user_no, \"$comment\");";
+    $result = $mysqli->query($query);
+
+    if ($result) {
+        $json = json_encode(["result" => true]);
+        echo $json;
     } else {
-        # 실패하면 자바스크립트에 알림
-        $json = json_encode(['error'=>"recall insert false: $mysqli->errno"]);
+        mysqli_error_msg($mysqli);
     }
-    echo $json;
 }
 
 function recall_update() {
@@ -237,7 +256,7 @@ function recall_update() {
     $sql = "UPDATE RECALL SET status = 1 WHERE no = $recallNo";
     if ($mysqli->query($sql)) {
         # 성공하면 리콜목록 가져오기
-        $json = json_encode(['result'=>true, 'list'=>recall_list($userNo)]);
+        $json = json_encode(['result'=>true, 'list'=>recall_select($userNo)]);
     } else {
         # 실패하면 자바스크립트에 알림
         $json = json_encode(['error'=>"recall update false: $mysqli->errno"]);
@@ -248,13 +267,13 @@ function recall_update() {
 function recall_type_list() {
     global $mysqli;
     $list = [];
-    $sql ='SELECT * FROM RECALL_TYPE ORDER BY no ASC';
-    $result = $mysqli->query($sql);
-    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-        $list[] = [
-            'no'=>$row['no']
-            ,'recall_type'=>$row['recall_type']
-        ];
+    $query ="SELECT * FROM `RECALL_TYPE` ORDER BY no ASC";
+    $result = $mysqli->query($query);
+
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $list[] = $row;
+        }
     }
     return $list;
 }
