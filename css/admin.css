@@ -46,6 +46,8 @@
 .user__information .form .btn.close,
 .user__information .form .btn.action {display: none;}
 
+.user__information .list .btn {color: var(--color-red-1); cursor: pointer;}
+
 
 .amount .form input {width: 12em; background-color: var(--color-gray-4); padding: 5px 10px; border-radius: 20px; font-size: 0.9em; border: none;}
 .amount .form button {font-size: 0.9em; padding: 5px 10px; border-radius: 10px; background-color: var(--color-green-4);}

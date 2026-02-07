@@ -54,11 +54,23 @@ const fn_update_input_css = (status, element)  =>{
 }
 
 const fn_amount_list_html = (btn_type, result)  =>{
-    let html = `<ul class="amount__list">`;
+    let html = `<ul class="list amount__list">`;
     result.forEach((list, index) => {
         html += `<li>
             <span class="item">${list.reg_dt} [${fn_thousand_format(list[btn_type])}원]</span>
-            <span class="btn" name="del" data-amount--no="${list.no}">삭제</span>
+            <span class="btn" name="del" data-btn--type="${btn_type}" data-user--no="${list.user_no}" data-no="${list.no}">삭제</span>
+            </li>`;
+    });
+    html += "</ul>";
+    return html;
+}
+
+const fn_recall_list_html = (list)  =>{
+    let html = `<ul class="list recall__list">`;
+    list.forEach((recall, index) => {
+        html += `<li>
+            <span class="item">${recall.reg_dt} ${recall.comment}</span>
+            <span class="btn" name="del" data-btn--type="recall" data-user--no="${recall.user_no}" data-no="${recall.no}">삭제</span>
             </li>`;
     });
     html += "</ul>";
@@ -312,12 +324,11 @@ $('.amount .form button').click(function () {
     
 });
 
-// user 견적금액, 납부금액 추가와 리스트 조회
+// user 리콜리스트 조회
 $('.recall .btn-group .btn').click(function () {
     const user_no = $(this).data('user--no');
-    const btn_type = "recall";
     const btn_name = $(this).attr('name');
-    const element = $(`#${user_no}`).find(`[name="${btn_type}"]`);
+    const element = $(`#${user_no}`).find(`[name="recall"]`);
 
     if (btn_name == "form") {
         let btn_text = $(this).text();
@@ -330,7 +341,7 @@ $('.recall .btn-group .btn').click(function () {
         if (element.find(".recall__list").length > 0) {
             element.find(".recall__list").remove();
         } else {
-            const dataArr = {fn: "recall_list", user_no: user_no, type: btn_type};
+            const dataArr = {fn: "recall_list", user_no: user_no};
             $.ajax({
                 url: "/php/controller/db_module.php",
                 type: "post",
@@ -343,10 +354,10 @@ $('.recall .btn-group .btn').click(function () {
                     if (list.length == 0) {
                         alert(`리콜내역이 없습니다.`);
                     } else {
-                        element.append(fn_amount_list_html(btn_type, list));
+                        element.append(fn_recall_list_html(list));
                     }
                 } else {
-                    alert("납부금 추가/조회에 실패하였습니다.\n콘솔로그를 확인하세요!");
+                    alert("리콜 추가/조회에 실패하였습니다.\n콘솔로그를 확인하세요!");
                     console.log(data.error)
                 }
             });
@@ -354,7 +365,7 @@ $('.recall .btn-group .btn').click(function () {
     }
 });
 
-// user 견적금액, 납부금액 추가
+// user 리콜추가
 $('.recall .form button[name="insert"]').click(function () {
     const user_no = $(this).data("user--no");
     const btn_type = "recall"
@@ -381,4 +392,16 @@ $('.recall .form button[name="insert"]').click(function () {
         }
     });
     
+});
+
+$(document).on("click", '.user__information .list .btn', function (event) {
+    const target = $(event.target);
+    let btn_type = target.data("btn--type");
+    if (btn_type == "estimate" || btn_type == "payment") {
+        btn_type = "amount";
+    }
+    const user_no = target.data("user--no");
+    const no = target.data("no");
+    const dataArr = {fn: `${btn_type}_update`, user_no: user_no, no: no};
+    console.log("🚀 ~ dataArr:", dataArr)
 });
