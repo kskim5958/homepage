@@ -396,12 +396,30 @@ $('.recall .form button[name="insert"]').click(function () {
 
 $(document).on("click", '.user__information .list .btn', function (event) {
     const target = $(event.target);
-    let btn_type = target.data("btn--type");
+    const btn_type = target.data("btn--type");
+    let fn = `${btn_type}_update`;
     if (btn_type == "estimate" || btn_type == "payment") {
-        btn_type = "amount";
+        fn = "amount_update";
     }
     const user_no = target.data("user--no");
     const no = target.data("no");
-    const dataArr = {fn: `${btn_type}_update`, user_no: user_no, no: no};
-    console.log("🚀 ~ dataArr:", dataArr)
+    const dataArr = {fn: fn, no: no, user_no: user_no, type: btn_type};
+
+    $.ajax({
+        url: "/php/controller/db_module.php",
+        type: "post",
+        data: {
+            dataArr: dataArr
+        }
+    }).done(function (data) {
+        data = JSON.parse(data);
+        const result = data.result;
+        const list = data.list;
+        const list_cnt = list.length;
+        if (result) {
+        } else {
+            // alert("리콜등록을 실패하였습니다.\n콘솔로그를 확인하세요!");
+            console.log(data.error)
+        }
+    });
 });

@@ -15,6 +15,9 @@ if (isset($_POST["dataArr"])) {
         case "amount_insert":
             amount_insert($dataArr);
             break;
+        case "amount_update":
+            amount_update($dataArr);
+            break;
         case "amount_list":
             amount_list($dataArr);
             break;
@@ -23,6 +26,9 @@ if (isset($_POST["dataArr"])) {
             break;
         case "recall_list":
             recall_list($dataArr);
+            break;
+        case "recall_update":
+            recall_update($dataArr);
             break;
         default:
             # code...
@@ -97,28 +103,52 @@ function amount_insert($dataArr) {
 
 function amount_sum($user_no) {
     global $mysqli;
-    // $query = "SELECT SUM($type) AS $type FROM `AMOUNT` WHERE user_no = $user_no;";
-    $query = "SELECT user_no, SUM(estimate) AS estimate, SUM(payment) AS payment FROM `AMOUNT` WHERE user_no = $user_no GROUP BY user_no;";
+    $query = "SELECT user_no, SUM(estimate) AS estimate, SUM(payment) AS payment FROM `AMOUNT` WHERE update_no = 0 AND user_no = $user_no GROUP BY user_no;";
     $result = $mysqli->query($query);
     $column = $result->fetch_assoc();
     return $column;
 }
 
-function amount_list($dataArr) {
+function amount_list($dataArr, $data_format="json") {
     global $mysqli;
     $list = [];
     $user_no = $dataArr["user_no"];
     $type = $dataArr["type"];
-    $query = "SELECT * FROM `AMOUNT` WHERE $type != 0 AND user_no = $user_no ORDER BY reg_dt DESC;";
+    $query = "SELECT * FROM `AMOUNT` WHERE update_no = 0 AND $type != 0 AND user_no = $user_no ORDER BY reg_dt DESC;";
     $result = $mysqli->query($query);
 
     if ($result) {
         while ($row = $result->fetch_assoc()) {
             $list[] = $row;
         }
-        echo json_encode(["result" => true, "list" => $list]);
+        if ($data_format == "arr") {
+            $list = ["result" => true, "list" => $list];
+            return $list;
+        } else {
+            $json = json_encode(["result" => true, "list" => $list]);
+            echo $json;
+        }
     } else {
-        mysqli_error_msg($mysqli);
+        if ($data_format == "arr") {
+            $error_msg = ["result" => false, "error" => $mysqli->error];
+            return $error_msg;
+        } else {
+            mysqli_error_msg($mysqli);
+        }
+    }
+}
+
+function amount_update($dataArr) {
+    global $mysqli;
+    $no = $dataArr["no"];
+    $query = "UPDATE `AMOUNT` SET update_no = 1 WHERE no = $no;";
+    $result = $mysqli->query($query);
+
+    if ($result) {
+        $json = json_encode(amount_list($dataArr, "arr"));
+        echo $json;
+    } else {
+        mysqli_error($mysqli);
     }
 }
 
@@ -169,7 +199,7 @@ function users($start=0, $list_num=0, $params=[]) {
         FROM `USERS`) AS T WHERE T.latest_data = 1) AS T2 ON T1.user_phone = T2.user_phone
         LEFT JOIN
         (SELECT user_no, SUM(estimate) as estimate, SUM(payment) AS payment
-        FROM `AMOUNT` GROUP BY user_no) AS T3 ON T1.user_no = T3.user_no
+        FROM `AMOUNT` WHERE update_no = 0 GROUP BY user_no) AS T3 ON T1.user_no = T3.user_no
         LEFT JOIN
         (SELECT
         T.user_no AS user_no,
@@ -190,6 +220,36 @@ function users($start=0, $list_num=0, $params=[]) {
     return $list;
 }
 
+function recall_insert($dataArr) {
+    global $mysqli;
+    $user_no = $dataArr["user_no"];
+    $comment = $dataArr['comment'];
+    $query = "INSERT INTO `RECALL` (user_no, comment) VALUES ($user_no, \"$comment\");";
+    $result = $mysqli->query($query);
+
+    if ($result) {
+        $json = json_encode(["result" => true]);
+        echo $json;
+    } else {
+        mysqli_error_msg($mysqli);
+    }
+}
+
+function recall_update($dataArr) {
+    global $mysqli;
+    $user_no = $dataArr["user_no"];
+    $comment = $dataArr['comment'];
+    $query = "INSERT INTO `RECALL` (user_no, comment) VALUES ($user_no, \"$comment\");";
+    $result = $mysqli->query($query);
+
+    if ($result) {
+        $json = json_encode(["result" => true]);
+        echo $json;
+    } else {
+        mysqli_error_msg($mysqli);
+    }
+}
+
 function recall_list ($dataArr) {
     global $mysqli;
     $list = [];
@@ -206,23 +266,6 @@ function recall_list ($dataArr) {
         mysqli_error_msg($mysqli);
     }
 }
-
-function recall_insert($dataArr) {
-    global $mysqli;
-    $user_no = $dataArr["user_no"];
-    $comment = $dataArr['comment'];
-    $query = "INSERT INTO `RECALL` (user_no, comment) VALUES ($user_no, \"$comment\");";
-    $result = $mysqli->query($query);
-
-    if ($result) {
-        $json = json_encode(["result" => true]);
-        echo $json;
-    } else {
-        mysqli_error_msg($mysqli);
-    }
-}
-
-
 
 function recall_type_list() {
     global $mysqli;
