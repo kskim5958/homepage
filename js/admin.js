@@ -17,7 +17,9 @@ const fn_phone_format = (char) => {
 }
 
 const fn_thousand_format = (char) => {
-    char = char.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (char != 0) {
+        char = char.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
     return char;
 }
 
@@ -53,12 +55,12 @@ const fn_update_input_css = (status, element)  =>{
 
 }
 
-const fn_amount_list_html = (btn_type, result)  =>{
+const fn_amount_list_html = (btn_type, list)  =>{
     let html = `<ul class="list amount__list">`;
-    result.forEach((list, index) => {
+    list.forEach((item, index) => {
         html += `<li>
-            <span class="item">${list.reg_dt} [${fn_thousand_format(list[btn_type])}원]</span>
-            <span class="btn" name="del" data-btn--type="${btn_type}" data-user--no="${list.user_no}" data-no="${list.no}">삭제</span>
+            <span class="item">${item.reg_dt} [${fn_thousand_format(item[btn_type])}원]</span>
+            <span class="btn" name="del" data-btn--type="${btn_type}" data-user--no="${item.user_no}" data-no="${item.no}">삭제</span>
             </li>`;
     });
     html += "</ul>";
@@ -186,7 +188,7 @@ user_el.find('select[name="user_type"]').change(function (e) {
             alert(`${user_arr.user_name}님의 상태를 [${user_arr.user_comment}]로/으로 변경하였습니다!`);
         } else {
             alert("업데이트에 실패하였습니다.\n콘솔로그를 확인하세요!");
-            console.log(data.error)
+            console.log(data.error);
         }
     });
 });
@@ -231,7 +233,7 @@ user_el.find('[name="user_name"] .btn, [name="user_phone"] .btn').click(function
                 alert(`[${GLOBAL_ADMIN_INPUT_TEXT}] 에서 [${val}]로/으로 변경하였습니다!`);
             } else {
                 alert("업데이트에 실패하였습니다.\n콘솔로그를 확인하세요!");
-                console.log(data.error)
+                console.log(data.error);
             }
         });
     }
@@ -274,7 +276,7 @@ $('.amount .btn-group .btn').click(function () {
                     }
                 } else {
                     alert("납부금 추가/조회에 실패하였습니다.\n콘솔로그를 확인하세요!");
-                    console.log(data.error)
+                    console.log(data.error);
                 }
             });
         }
@@ -318,7 +320,7 @@ $('.amount .form button').click(function () {
             }
         } else {
             alert("납부금 추가/조회에 실패하였습니다.\n콘솔로그를 확인하세요!");
-            console.log(data.error)
+            console.log(data.error);
         }
     });
     
@@ -358,7 +360,7 @@ $('.recall .btn-group .btn').click(function () {
                     }
                 } else {
                     alert("리콜 추가/조회에 실패하였습니다.\n콘솔로그를 확인하세요!");
-                    console.log(data.error)
+                    console.log(data.error);
                 }
             });
         }
@@ -388,7 +390,7 @@ $('.recall .form button[name="insert"]').click(function () {
             alert("리콜등록을 완료하였습니다.");
         } else {
             alert("리콜등록을 실패하였습니다.\n콘솔로그를 확인하세요!");
-            console.log(data.error)
+            console.log(data.error);
         }
     });
     
@@ -403,6 +405,7 @@ $(document).on("click", '.user__information .list .btn', function (event) {
     }
     const user_no = target.data("user--no");
     const no = target.data("no");
+    const element = $(`#${user_no}`).find(`[name="${btn_type}"]`);
     const dataArr = {fn: fn, no: no, user_no: user_no, type: btn_type};
 
     $.ajax({
@@ -414,12 +417,21 @@ $(document).on("click", '.user__information .list .btn', function (event) {
     }).done(function (data) {
         data = JSON.parse(data);
         const result = data.result;
-        const list = data.list;
-        const list_cnt = list.length;
         if (result) {
+            const list = data.list;
+            const list_cnt = list.length;
+            const sum = (list_cnt == 0) ? data.sum : data.sum[btn_type];
+            const error = data.error;
+            element.find('[name="sum"]').text(fn_thousand_format(sum) + " 원");
+            element.find(".amount__list").remove();
+            element.append(fn_amount_list_html(btn_type, list));
+            if (error.length != 0) {
+                error.forEach((msg, index) => {
+                    console.log(`[${index}] ${msg}`)
+                });
+            }
         } else {
-            // alert("리콜등록을 실패하였습니다.\n콘솔로그를 확인하세요!");
-            console.log(data.error)
+            console.log(data.error);
         }
     });
 });

@@ -140,12 +140,26 @@ function amount_list($dataArr, $data_format="json") {
 
 function amount_update($dataArr) {
     global $mysqli;
+    $user_no = $dataArr["user_no"];
     $no = $dataArr["no"];
     $query = "UPDATE `AMOUNT` SET update_no = 1 WHERE no = $no;";
     $result = $mysqli->query($query);
 
     if ($result) {
-        $json = json_encode(amount_list($dataArr, "arr"));
+        $amount_list = [];
+        $amount_sum = 0;
+        $error = [];
+        $data_list = amount_list($dataArr, "arr");
+        $data_result = $data_list["result"];
+        if ($data_result) {
+            $amount_list = $data_list["list"];
+            if (count($amount_list) != 0) {
+                $amount_sum = amount_sum($user_no);
+            }
+        } else {
+            $error[] = $data_list["error"];
+        }
+        $json = json_encode(["result" => true, "list" => $amount_list, "sum" => $amount_sum, "error" => $error]);
         echo $json;
     } else {
         mysqli_error($mysqli);
