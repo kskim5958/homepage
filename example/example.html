@@ -15,6 +15,12 @@
     <span class="sum"></span>
     <span class="btn"></span>
 </section>
+<div id="my_div" class="my_class">
+    <div class="search_class my_class1"></div>
+    <div class="search_class my_class2"></div>
+    <div class="search_class my_class3"></div>
+    <div class="search_class my_class4"></div>
+</div>
 </body>
 <script src="/js/jquery-3.7.1.min.js"></script>
 <script>
@@ -28,5 +34,18 @@
             element.find('input').prop('disabled', true);
         }
     });
+    
+    const my_div = $("#my_div");
+    const my_div_cnt = my_div.length;
+    const my_class1 = my_div.find(".my_class1");
+    const my_class1_cnt = my_class1.length;
+    const my_class2 = my_div.find(".my_class5");
+    console.log("🚀 ~ my_class2:", my_class2)
+    const my_class2_cnt = my_class2.length;
+    $("body").append(my_div_cnt + "<br>");
+    $("body").append(my_class1_cnt + "<br>");
+    $("body").append(my_class2_cnt + "<br>");
+    $("body").append(my_div.hasClass("my_class") + "<br>");
+    $("body").append(my_div.find(".search_class").hasClass("my_class1") + "<br>");
 </script>
 </html>
