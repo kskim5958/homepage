@@ -224,7 +224,7 @@ function users($start=0, $list_num=0, $params=[]) {
         (SELECT *, 
         ROW_NUMBER() OVER(PARTITION BY user_no ORDER BY reg_dt DESC) AS rn,
         COUNT(*) OVER(PARTITION BY user_no) AS recall_cnt
-        FROM `RECALL`) AS T WHERE T.rn = 1) AS T4 ON T1.user_no = T4.user_no) AS USERS
+        FROM `RECALL` WHERE update_no = 0) AS T WHERE T.rn = 1) AS T4 ON T1.user_no = T4.user_no) AS USERS
         $param_str ORDER BY latest_reg_dt DESC $limit;
     ";
     $result = $mysqli->query($query);
@@ -252,19 +252,28 @@ function recall_insert($dataArr) {
 function recall_update($dataArr) {
     global $mysqli;
     $user_no = $dataArr["user_no"];
-    $comment = $dataArr['comment'];
-    $query = "INSERT INTO `RECALL` (user_no, comment) VALUES ($user_no, \"$comment\");";
+    $no = $dataArr["no"];
+    $query = "UPDATE `RECALL` SET update_no = 1 WHERE no = $no;";
     $result = $mysqli->query($query);
 
     if ($result) {
-        $json = json_encode(["result" => true]);
+        $recall_list = [];
+        $error = [];
+        $data_list = recall_list($dataArr, "arr");
+        $data_result = $data_list["result"];
+        if ($data_result) {
+            $recall_list = $data_list["list"];
+        } else {
+            $error[] = $data_list["error"];
+        }
+        $json = json_encode(["result" => true, "list" => $recall_list, "error" => $error]);
         echo $json;
     } else {
-        mysqli_error_msg($mysqli);
+        mysqli_error($mysqli);
     }
 }
 
-function recall_list ($dataArr) {
+function recall_list ($dataArr, $data_format="json") {
     global $mysqli;
     $list = [];
     $user_no = $dataArr["user_no"];
@@ -275,9 +284,20 @@ function recall_list ($dataArr) {
         while ($row = $result->fetch_assoc()) {
             $list[] = $row;
         }
-        echo json_encode(["result" => true, "list" => $list]);
+        if ($data_format == "arr") {
+            $list = ["result" => true, "list" => $list];
+            return $list;
+        } else {
+            $json = json_encode(["result" => true, "list" => $list]);
+            echo $json;
+        }
     } else {
-        mysqli_error_msg($mysqli);
+        if ($data_format == "arr") {
+            $error_msg = ["result" => false, "error" => $mysqli->error];
+            return $error_msg;
+        } else {
+            mysqli_error_msg($mysqli);
+        }
     }
 }
 

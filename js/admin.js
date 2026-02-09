@@ -17,9 +17,7 @@ const fn_phone_format = (char) => {
 }
 
 const fn_thousand_format = (char) => {
-    if (char != 0) {
-        char = char.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
+    char = String(char).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return char;
 }
 
@@ -420,11 +418,17 @@ $(document).on("click", '.user__information .list .btn', function (event) {
         if (result) {
             const list = data.list;
             const list_cnt = list.length;
-            const sum = (list_cnt == 0) ? data.sum : data.sum[btn_type];
             const error = data.error;
-            element.find('[name="sum"]').text(fn_thousand_format(sum) + " 원");
-            element.find(".amount__list").remove();
-            element.append(fn_amount_list_html(btn_type, list));
+            if (btn_type == "estimate" || btn_type == "payment") {
+                const sum = (list_cnt == 0) ? data.sum : data.sum[btn_type];
+                element.find('[name="sum"]').text(fn_thousand_format(sum) + " 원");
+                element.find(".amount__list").remove();
+                element.append(fn_amount_list_html(btn_type, list));
+            } else {
+                element.find('[name="sum"]').text(fn_thousand_format(list_cnt) + " 건");
+                element.find(".recall__list").remove();
+                element.append(fn_recall_list_html(list));
+            }
             if (error.length != 0) {
                 error.forEach((msg, index) => {
                     console.log(`[${index}] ${msg}`)
