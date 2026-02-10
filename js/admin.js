@@ -447,11 +447,24 @@ $(document).on("click", '.user__information .list .btn', function (event) {
     });
 });
 
-const fn_reorder_list = (element, type) => {
+const fn_reorder_list = (element, list, type) => {
     const class_el = element.find(`.${type}__list`);
     const has_class = (class_el.length > 0) ? true : false;
     if (has_class) {
-        class_el.remove();
+        if (type == "recall") {
+            const del_btn = (class_el.find(`[name="${type}"]`).length > 0) ? true : false;
+            if (del_btn) {
+                class_el.remove();
+                const html = fn_recall_list_html(list);
+                element.append(html);
+            } else {
+                
+            }
+        } else {
+            class_el.remove();
+            const html = fn_amount_list_html(type, list);
+            element.append(html);
+        }
     }
 }
 
