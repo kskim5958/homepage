@@ -448,23 +448,26 @@ $(document).on("click", '.user__information .list .btn', function (event) {
 });
 
 const fn_reorder_list = (element, list, type) => {
-    const class_el = element.find(`.${type}__list`);
-    const has_class = (class_el.length > 0) ? true : false;
-    if (has_class) {
-        if (type == "recall") {
-            const del_btn = (class_el.find(`[name="${type}"]`).length > 0) ? true : false;
-            if (del_btn) {
-                class_el.remove();
-                const html = fn_recall_list_html(list);
-                element.append(html);
-            } else {
-                
-            }
-        } else {
+    if (list.length != 0) {
+        const class_el = element.find(`.${type}__list`);
+        const has_class = (class_el.length > 0) ? true : false;
+        let html = "";
+        if (has_class) {
             class_el.remove();
-            const html = fn_amount_list_html(type, list);
+            if (type == "recall") {
+                const del_btn = (class_el.find(`[name="${type}"]`).length > 0) ? true : false;
+                if (del_btn) {
+                    html = fn_recall_list_html(list);
+                } else {
+                    html = fn_recall_list_basic_html(list);
+                }
+            } else {
+                html = fn_amount_list_html(type, list);
+            }
             element.append(html);
         }
+    } else {
+        // insert form 초기화 및 list form remove
     }
 }
 
@@ -493,6 +496,16 @@ const fn_recall_list_html = (list)  =>{
                 <span class="btn" name="del" data-btn--type="recall" data-user--no="${recall.user_no}" data-no="${recall.no}">삭제</span>
                 </li>`;
         });
+        html += "</ul>";
+    }
+    return html;
+}
+
+const fn_recall_list_basic_html = (list)  =>{
+    let html = "";
+    if (list.length != 0) {
+        html = `<ul class="list recall__list">`;
+        html += `<li><span class="item">${list[0].reg_dt} ${list[0].comment}</span></li>`;
         html += "</ul>";
     }
     return html;
