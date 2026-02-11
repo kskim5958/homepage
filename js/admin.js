@@ -315,7 +315,7 @@ $('.amount .form button').click(function () {
         const result = data.result;
         if (result) {
             const amount_sum = data.amount_sum;
-            element.find('[name="sum"]').text(fn_thousand_format(amount_sum[btn_type]) + " 원");
+            element.find('[name="sum"]').find('.val').text(fn_thousand_format(amount_sum[btn_type]));
             element.find('[name="form"]').text("추가");
             element.find('.form input').val("");
             element.find('.form').toggleClass("flex");
@@ -397,7 +397,6 @@ $('.recall .form button[name="insert"]').click(function () {
             console.log(data.error);
         }
     });
-    
 });
 
 // user 납부금 삭제, 리콜 삭제
@@ -424,18 +423,8 @@ $(document).on("click", '.user__information .list .btn', function (event) {
         const result = data.result;
         if (result) {
             const list = data.list;
-            const list_cnt = list.length;
             const error = data.error;
-            if (btn_type == "estimate" || btn_type == "payment") {
-                const sum = (list_cnt == 0) ? data.sum : data.sum[btn_type];
-                element.find('[name="sum"]').text(fn_thousand_format(sum) + " 원");
-                element.find(".amount__list").remove();
-                element.append(fn_amount_list_html(btn_type, list));
-            } else {
-                element.find('[name="sum"]').text(fn_thousand_format(list_cnt) + " 건");
-                element.find(".recall__list").remove();
-                element.append(fn_recall_list_html(list));
-            }
+            fn_reorder_list(element, list, btn_type);
             if (error.length != 0) {
                 error.forEach((msg, index) => {
                     console.log(`[${index}] ${msg}`)
@@ -448,14 +437,15 @@ $(document).on("click", '.user__information .list .btn', function (event) {
 });
 
 const fn_reorder_list = (element, list, type) => {
+    const list_type = (type == "recall") ? type : "amount";
+    const class_el = element.find(`.${list_type}__list`);
+    const has_class = (class_el.length > 0) ? true : false;
+    let html = "";
     if (list.length != 0) {
-        const class_el = element.find(`.${type}__list`);
-        const has_class = (class_el.length > 0) ? true : false;
-        let html = "";
         if (has_class) {
             class_el.remove();
             if (type == "recall") {
-                const del_btn = (class_el.find(`[name="${type}"]`).length > 0) ? true : false;
+                const del_btn = (class_el.find('[name="del"]').length > 0) ? true : false;
                 if (del_btn) {
                     html = fn_recall_list_html(list);
                 } else {
@@ -467,12 +457,22 @@ const fn_reorder_list = (element, list, type) => {
             element.append(html);
         }
     } else {
-        // insert form 초기화 및 list form remove
+        class_el.remove();
+    }
+    if (type == "recall") {
+        element.find('[name="sum"]').find('.val').text(list.length);
+    } else {
+        let sum = 0;
+        list.forEach(item => {
+            sum += parseInt(item[type]);
+        });
+        element.find('[name="sum"]').find('.val').text(sum);
     }
 }
 
 const fn_amount_list_html = (type, list)  =>{
     let html = "";
+    let sum = 0;
     if (list.length != 0) {
         html = `<ul class="list amount__list">`;
         list.forEach((item, index) => {
