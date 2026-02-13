@@ -53,36 +53,6 @@ const fn_update_input_css = (status, element)  =>{
 
 }
 
-// const fn_amount_list_html = (btn_type, list)  =>{
-//     let html = "";
-//     if (list.length != 0) {
-//         html = `<ul class="list amount__list">`;
-//         list.forEach((item, index) => {
-//             html += `<li>
-//                 <span class="item">${item.reg_dt} [${fn_thousand_format(item[btn_type])}원]</span>
-//                 <span class="btn" name="del" data-btn--type="${btn_type}" data-user--no="${item.user_no}" data-no="${item.no}">삭제</span>
-//                 </li>`;
-//         });
-//         html += "</ul>";
-//     }
-//     return html;
-// }
-
-// const fn_recall_list_html = (list)  =>{
-//     let html = "";
-//     if (list.length != 0) {
-//         html = `<ul class="list recall__list">`;
-//         list.forEach((recall, index) => {
-//             html += `<li>
-//                 <span class="item">${recall.reg_dt} ${recall.comment}</span>
-//                 <span class="btn" name="del" data-btn--type="recall" data-user--no="${recall.user_no}" data-no="${recall.no}">삭제</span>
-//                 </li>`;
-//         });
-//         html += "</ul>";
-//     }
-//     return html;
-// }
-
 const fn_null_besides = (val)  =>{
     let result = false;
     result = (val === null && typeof val === "undefined") ? true : false;
@@ -91,6 +61,81 @@ const fn_null_besides = (val)  =>{
         result = (val === "") ? true : false;
     }
     return result;
+}
+
+const fn_amount_list_html = (type, list)  =>{
+    let html = "";
+    let sum = 0;
+    if (list.length != 0) {
+        html = `<ul class="list amount__list">`;
+        list.forEach((item, index) => {
+            html += `<li>
+                <span class="item">${item.reg_dt} [${fn_thousand_format(item[type])}원]</span>
+                <span class="btn" name="del" data-btn--type="${type}" data-user--no="${item.user_no}" data-no="${item.no}">삭제</span>
+                </li>`;
+        });
+        html += "</ul>";
+    }
+    return html;
+}
+
+const fn_recall_list_html = (list)  =>{
+    let html = "";
+    if (list.length != 0) {
+        html = `<ul class="list recall__list">`;
+        list.forEach((recall, index) => {
+            html += `<li>
+                <span class="item">${recall.reg_dt} ${recall.comment}</span>
+                <span class="btn" name="del" data-btn--type="recall" data-user--no="${recall.user_no}" data-no="${recall.no}">삭제</span>
+                </li>`;
+        });
+        html += "</ul>";
+    }
+    return html;
+}
+
+const fn_recall_list_basic_html = (list)  =>{
+    let html = "";
+    if (list.length != 0) {
+        html = `<ul class="list recall__list">`;
+        html += `<li><span class="item">${list[0].reg_dt} ${list[0].comment}</span></li>`;
+        html += "</ul>";
+    }
+    return html;
+}
+
+const fn_reorder_list = (element, list, type) => {
+    const list_type = (type == "recall") ? type : "amount";
+    const class_el = element.find(`.${list_type}__list`);
+    const has_class = (class_el.length > 0) ? true : false;
+    let html = "";
+    if (list.length != 0) {
+        if (has_class) {
+            class_el.remove();
+            if (type == "recall") {
+                const del_btn = (class_el.find('[name="del"]').length > 0) ? true : false;
+                if (del_btn) {
+                    html = fn_recall_list_html(list);
+                } else {
+                    html = fn_recall_list_basic_html(list);
+                }
+            } else {
+                html = fn_amount_list_html(type, list);
+            }
+            element.append(html);
+        }
+    } else {
+        class_el.remove();
+    }
+    if (type == "recall") {
+        element.find('[name="sum"]').find('.val').text(list.length);
+    } else {
+        let sum = 0;
+        list.forEach(item => {
+            sum += parseInt(item[type]);
+        });
+        element.find('[name="sum"]').find('.val').text(sum);
+    }
 }
 
 // user search form 셀렉트 액션
@@ -391,9 +436,15 @@ $('.recall .form button[name="insert"]').click(function () {
         data = JSON.parse(data);
         const result = data.result;
         if (result) {
-            alert("리콜등록을 완료하였습니다.");
+            const list = data.list;
+            const error = data.error;
+            fn_reorder_list(element, list, btn_type);
+            if (error.length != 0) {
+                error.forEach((msg, index) => {
+                    console.log(`[${index}] ${msg}`)
+                });
+            }
         } else {
-            alert("리콜등록을 실패하였습니다.\n콘솔로그를 확인하세요!");
             console.log(data.error);
         }
     });
@@ -435,78 +486,3 @@ $(document).on("click", '.user__information .list .btn', function (event) {
         }
     });
 });
-
-const fn_reorder_list = (element, list, type) => {
-    const list_type = (type == "recall") ? type : "amount";
-    const class_el = element.find(`.${list_type}__list`);
-    const has_class = (class_el.length > 0) ? true : false;
-    let html = "";
-    if (list.length != 0) {
-        if (has_class) {
-            class_el.remove();
-            if (type == "recall") {
-                const del_btn = (class_el.find('[name="del"]').length > 0) ? true : false;
-                if (del_btn) {
-                    html = fn_recall_list_html(list);
-                } else {
-                    html = fn_recall_list_basic_html(list);
-                }
-            } else {
-                html = fn_amount_list_html(type, list);
-            }
-            element.append(html);
-        }
-    } else {
-        class_el.remove();
-    }
-    if (type == "recall") {
-        element.find('[name="sum"]').find('.val').text(list.length);
-    } else {
-        let sum = 0;
-        list.forEach(item => {
-            sum += parseInt(item[type]);
-        });
-        element.find('[name="sum"]').find('.val').text(sum);
-    }
-}
-
-const fn_amount_list_html = (type, list)  =>{
-    let html = "";
-    let sum = 0;
-    if (list.length != 0) {
-        html = `<ul class="list amount__list">`;
-        list.forEach((item, index) => {
-            html += `<li>
-                <span class="item">${item.reg_dt} [${fn_thousand_format(item[type])}원]</span>
-                <span class="btn" name="del" data-btn--type="${type}" data-user--no="${item.user_no}" data-no="${item.no}">삭제</span>
-                </li>`;
-        });
-        html += "</ul>";
-    }
-    return html;
-}
-
-const fn_recall_list_html = (list)  =>{
-    let html = "";
-    if (list.length != 0) {
-        html = `<ul class="list recall__list">`;
-        list.forEach((recall, index) => {
-            html += `<li>
-                <span class="item">${recall.reg_dt} ${recall.comment}</span>
-                <span class="btn" name="del" data-btn--type="recall" data-user--no="${recall.user_no}" data-no="${recall.no}">삭제</span>
-                </li>`;
-        });
-        html += "</ul>";
-    }
-    return html;
-}
-
-const fn_recall_list_basic_html = (list)  =>{
-    let html = "";
-    if (list.length != 0) {
-        html = `<ul class="list recall__list">`;
-        html += `<li><span class="item">${list[0].reg_dt} ${list[0].comment}</span></li>`;
-        html += "</ul>";
-    }
-    return html;
-}

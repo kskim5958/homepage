@@ -242,10 +242,19 @@ function recall_insert($dataArr) {
     $result = $mysqli->query($query);
 
     if ($result) {
-        $json = json_encode(["result" => true]);
+        $recall_list = [];
+        $error = [];
+        $data_list = recall_list($dataArr, "arr");
+        $data_result = $data_list["result"];
+        if ($data_result) {
+            $recall_list = $data_list["list"];
+        } else {
+            $error[] = $data_list["error"];
+        }
+        $json = json_encode(["result" => true, "list" => $recall_list, "error" => $error]);
         echo $json;
     } else {
-        mysqli_error_msg($mysqli);
+        mysqli_error($mysqli);
     }
 }
 
