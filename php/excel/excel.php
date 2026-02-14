@@ -19,8 +19,13 @@ foreach ($data as $index => $row) {
     if ($index == 0) {
         $title_row = $row;
     } else {
-        $user_row = $row;
+        $user_row[] = $row;
     }
+}
+
+function num($val) {
+    $result = preg_replace("/[^0-9-]/", "", $val);
+    return $result;
 }
 
 // [0] : 순번  [1] : 진료일  [2] : 차트번호    [3] : 이름  [4] : 보험구분    [5] : 수입집계  [6] : 진료의사    [7] : 어시스트  [8] : 당일접수
@@ -39,20 +44,81 @@ foreach ($data as $index => $row) {
     <table>
         <thead>
             <tr>
-                <th><?php echo $title_row[1] ?></th>
-                <th><?php echo "{$title_row[2]}/{$title_row[3]}" ?></th>
-                <th><?php echo "{$title_row[10]}" ?></th>
-                <th><?php echo "보험 {$title_row[11]}" ?></th>
-                <th><?php echo "{$title_row[12]}" ?></th>
-                <th><?php echo "{$title_row[13]}" ?></th>
-                <th><?php echo "{$title_row[16]}" ?></th>
-                <th><?php echo "{$title_row[17]}" ?></th>
-                <th><?php echo "{$title_row[18]}" ?></th>
-                <th><?php echo "{$title_row[19]}" ?></th>
-                <th><?php echo "{$title_row[20]}" ?></th>
-                <th><?php echo "{$title_row[28]}" ?></th>
+                <!-- <th><?php echo $title_row[1] ?></th> -->
+                <!-- <th colspan="2"><?php echo "{$title_row[2]}/{$title_row[3]}" ?></th> -->
+                <!-- <th><?php echo "{$title_row[10]}" ?></th> -->
+                <!-- <th><?php echo "보험 {$title_row[11]}" ?></th> -->
+                <!-- <th><?php echo "{$title_row[12]}" ?></th> -->
+                <!-- <th><?php echo "{$title_row[13]}" ?></th> -->
+                <!-- <th><?php echo "{$title_row[16]}" ?></th> -->
+                <!-- <th><?php echo "{$title_row[17]}" ?></th> -->
+                <!-- <th><?php echo "{$title_row[18]}" ?></th> -->
+                <!-- <th><?php echo "{$title_row[19]}" ?></th> -->
+                <!-- <th><?php echo "{$title_row[20]}" ?></th> -->
+                <!-- <th><?php echo "{$title_row[28]}" ?></th> -->
+                 <th>순번</th>
+                 <th colspan="2">성명</th>
+                 <th>현금</th>
+                 <th>카드</th>
+                 <th>계좌이체</th>
+                 <th>현금</th>
+                 <th>카드</th>
+                 <th>계좌이체</th>
             </tr>
         </thead>
+        <tbody>
+            <?php 
+                foreach ($user_row as $index => $user) {
+                    $cash = num($user[18]);
+                    $card = num($user[17]);
+                    $online = num($user[19]);
+                    $ins = num($user[12]);
+                    $unins = num($user[13]);
+                    $ins = ($ins == 0 || $ins == "") ? 0 : $ins;
+                    $unins = ($unins == 0 || $unins == "") ? 0 : $unins;
+                    $ins_sum = $ins + $unins;
+                    $pay_sum = $cash + $card + $online;
+
+                    $ins_cash = 0;
+                    $ins_card = 0;
+                    $ins_online = 0;
+                    $unins_cash = 0;
+                    $unins_card = 0;
+                    $unins_online = 0;
+                    $diff = 0;
+                    
+                    if ($ins != 0) {
+                        switch ($ins) {
+                            case $ins == $cash:
+                                $ins_cash = $cash;
+                                break;
+                            case $ins == $cash:
+                                $ins_cash = $cash;
+                                break;
+                            case $ins == $cash:
+                                $ins_cash = $cash;
+                                break;
+                            
+                            default:
+                                # code...
+                                break;
+                        }
+                    }
+                    echo "<tr>";
+                    echo "<td>". ($index + 1) . "</td>";
+                    echo "<td colspan=\"2\">{$user[2]} {$user[3]}</td>";
+                    echo "<td>{$cash}</td>";
+                    echo "<td>{$card}</td>";
+                    echo "<td>{$online}</td>";
+                    echo "<td>{$cash}</td>";
+                    echo "<td>{$card}</td>";
+                    echo "<td>{$online}</td>";
+                    echo "</tr>";
+                }
+            ?>
+
+            <tr></tr>
+        </tbody>
     </table>
 </body>
 </html>
