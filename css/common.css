@@ -2,6 +2,7 @@
 @import url('menu.css');
 @import url('implant.css');
 @import url('admin.css');
+@import url('payment.css');
 
 .content.dr {
     padding-top: 5em;
