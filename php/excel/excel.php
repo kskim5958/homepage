@@ -4,13 +4,13 @@ include $_SERVER["DOCUMENT_ROOT"] . '/vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 // 엑셀 파일 경로
-$inputFileName = $_SERVER["DOCUMENT_ROOT"] . '/php/excel/2026-02-13진료비통계.xlsx';
+$inputFileName = $_SERVER["DOCUMENT_ROOT"] . '/php/excel/2026-02-19진료비통계.xlsx';
 
 // 엑셀 파일 타입에 맞춰 자동으로 리더 생성
 $spreadsheet = IOFactory::load($inputFileName);
 
 // 첫 번째 시트 선택
-$sheet = $spreadsheet->getActiveSheet();
+$sheet = $spreadsheet->getSheet(1);
 
 // 전체 데이터를 배열로 변환
 $data = $sheet->toArray();
@@ -36,14 +36,22 @@ function num($val) {
 ?>
 <div id="content__list">
     <section class="content__outer payment">
+        <div class="excel__form">
+            <input type="file">
+            <button type="button">엑셀읽어오기</button>
+        </div>
         <table>
             <thead>
+                <tr class="date">
+                    <th colspan="12"><?php echo $user_row[0][1]; ?></th>
+                </tr>
                 <tr>
                     <th rowspan="2">순번</th>
                     <th rowspan="2" colspan="2">성명</th>
                     <th colspan="3">보험수납</th>
                     <th colspan="3">비보험수납</th>
-                    <th rowspan="2">보험미수</th>
+                    <th rowspan="2">합계</th>
+                    <th rowspan="2">진료내역</th>
                 </tr>
                 <tr>
                     <th>현금</th>
@@ -56,78 +64,97 @@ function num($val) {
             </thead>
             <tbody>
                 <?php 
-                    foreach ($user_row as $index => $user) {
-                        $cash = num($user[18]);
-                        $card = num($user[17]);
-                        $online = num($user[19]);
-                        $ins = num($user[12]);
-                        $unins = num($user[13]);
-                        $ins = ($ins == 0 || $ins == "") ? 0 : $ins;
-                        $unins = ($unins == 0 || $unins == "") ? 0 : $unins;
-                        $ins_sum = $ins + $unins;
-                        $pay_sum = $cash + $card + $online;
+                $ins_sum_ls = ["cash" => 0, "card" => 0, "online" => 0];
+                $unins_sum_ls = ["cash" => 0, "card" => 0, "online" => 0];
+                $diff_sum = [];
+                foreach ($user_row as $index => $user) {
+                    $cash = num($user[18]);
+                    $card = num($user[17]);
+                    $online = num($user[19]);
+                    $pay_ls = ["cash" => $cash, "card" => $card, "online" => $online];
+                    $pay_sum = array_sum($pay_ls);
+                    $unins = num($user[13]);
+                    $unins = ($unins == 0 || $unins == "") ? 0 : $unins;
+                    $ins = $pay_sum - $unins;
+                    $ins_sum = $ins + $unins;
 
-                        $ins_cash = 0;
-                        $ins_card = 0;
-                        $ins_online = 0;
-                        $unins_cash = 0;
-                        $unins_card = 0;
-                        $unins_online = 0;
-                        $ins_diff = 0;
-                        $unins_diff = 0;
+                    $ins_ls = ["cash" => 0, "card" => 0, "online" => 0];
+                    $unins_ls = ["cash" => 0, "card" => 0, "online" => 0];
+                    $diff_ls = ["ins" => 0, "unins" => 0];
 
-                        
-
-                        if ($ins_sum != 0) {
-                            switch ($ins != 0) {
-                                case $ins <= $cash:
-                                    $cash = $cash - $ins;
-                                    $ins_cash = $ins;
-                                    break;
-                                case $ins <= $card:
-                                    $card = $card - $ins;
-                                    $ins_card = $ins;
-                                    break;
-                                case $ins <= $online:
-                                    $online = $online - $ins;
-                                    $ins_online = $ins;
-                                    break;
-                                default:
-                                    $ins_diff = -($ins);
-                                    break;
-                            }
-                            switch ($unins != 0) {
-                                case $unins == $cash:
-                                    $cash = $cash - $unins;
-                                    $unins_cash = $unins;
-                                    break;
-                                case $unins == $card:
-                                    $card = $card - $unins;
-                                    $unins_card = $unins;
-                                    break;
-                                case $unins == $online:
-                                    $online = $online - $unins;
-                                    $unins_online = $unins;
-                                    break;
-                                default:
-                                    $unins_diff = -($unins);
-                                    break;
+                    // 본인부담금, 비보험료 중 본인부담금만 납부한 경우
+                    if ($ins != 0 && $unins == 0) {
+                        foreach ($pay_ls as $key => $value) {
+                            if ($ins > 0 && $pay_ls[$key] != 0) {
+                                $ins -= $pay_ls[$key];
+                                $ins_ls[$key] = $pay_ls[$key];
+                                $ins_sum_ls[$key] += $pay_ls[$key];
                             }
                         }
-
-                        echo "<tr>";
-                        echo "<td>". ($index + 1) . "</td>";
-                        echo "<td colspan=\"2\">{$user[2]} {$user[3]}</td>";
-                        echo "<td>{$ins_cash}</td>";
-                        echo "<td>{$ins_card}</td>";
-                        echo "<td>{$ins_online}</td>";
-                        echo "<td>{$unins_cash}</td>";
-                        echo "<td>{$unins_card}</td>";
-                        echo "<td>{$unins_online}</td>";
-                        echo "<td>{$ins_diff}</td>";
-                        echo "</tr>";
+                        if ($ins > $pay_sum) {
+                            $diff_ls["ins"] = $pay_sum - $ins;
+                            $diff_sum[] = $diff_ls["ins"];
+                        }
                     }
+                    if ($ins == 0 && $unins != 0) {
+                        foreach ($pay_ls as $key => $value) {
+                            if ($unins > 0 && $pay_ls[$key] != 0) {
+                                $unins -= $pay_ls[$key];
+                                $unins_ls[$key] = $pay_ls[$key];
+                                $unins_sum_ls[$key] += $pay_ls[$key];
+                            }
+                        }
+                    }
+                    if ($ins != 0 && $unins != 0) {
+                        foreach ($pay_ls as $key => $value) {
+                            if ($ins > 0 && $pay_ls[$key] != 0) {
+                                $result_ins = $ins - $pay_ls[$key];
+                                if ($result_ins <= 0) {
+                                    $ins_ls[$key] = $ins;
+                                    $ins_sum_ls[$key] += $ins;
+                                } else {
+                                    continue;
+                                }
+                            }
+                        }
+                        foreach ($pay_ls as $key => $value) {
+                            if ($unins > 0 && $pay_ls[$key] != 0) {
+                                $result_unins = $unins - $pay_ls[$key];
+                                if ($result_unins <= 0) {
+                                    $unins_ls[$key] = $unins;
+                                    $unins_sum_ls[$key] += $unins;
+                                } else {
+                                    continue;
+                                }
+                            }
+                        }
+                    }
+                    echo "<tr>";
+                    echo "<td>". ($index + 1) . "</td>";
+                    echo "<td colspan=\"2\">{$user[2]} {$user[3]}</td>";
+                    echo "<td>" . number_format($ins_ls["cash"]) . "</td>";
+                    echo "<td>" . number_format($ins_ls["card"]) . "</td>";
+                    echo "<td>" . number_format($ins_ls["online"]) . "</td>";
+                    echo "<td>" . number_format($unins_ls["cash"]) . "</td>";
+                    echo "<td>" . number_format($unins_ls["card"]) . "</td>";
+                    echo "<td>" . number_format($unins_ls["online"]) . "</td>";
+                    echo "<td>" . number_format(array_sum($ins_ls) + array_sum($unins_ls)) . "</td>";
+                    echo "<td name=\"history\">{$user[25]}</td>";
+                    echo "</tr>";
+                }
                 ?>
+                <tr>
+                    <td></td>
+                    <td colspan="2"></td>
+                    <td><?php echo number_format($ins_sum_ls["cash"]) ?></td>
+                    <td><?php echo number_format($ins_sum_ls["card"]) ?></td>
+                    <td><?php echo number_format($ins_sum_ls["online"]) ?></td>
+                    <td><?php echo number_format($unins_sum_ls["cash"]) ?></td>
+                    <td><?php echo number_format($unins_sum_ls["card"]) ?></td>
+                    <td><?php echo number_format($unins_sum_ls["online"]) ?></td>
+                    <td><?php echo number_format(array_sum($ins_sum_ls) + array_sum($unins_sum_ls)) ?></td>
+                    <td></td>
+                </tr>
             </tbody>
         </table>
     </section>

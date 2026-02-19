@@ -1,6 +1,13 @@
+.excel__form {width: 1000px; margin: auto; text-align: center;}
+
+.payment {padding-bottom: 5em;}
 .payment table {margin: 0 auto; text-align: center; border-spacing: unset;}
 .payment table th,
 .payment table td {padding: 10px 20px; border-top: 1px solid var(--color-black-4); border-left: 1px solid var(--color-black-4); box-sizing: border-box;}
 .payment table tr:first-of-type th:last-of-type,
 .payment table td:last-of-type {border-right: 1px solid var(--color-black-4); box-sizing: border-box;}
 .payment table thead th {background-color: var(--color-gray-2);}
+.payment .date th {background-color: transparent !important; border-left: none !important; border-top: none !important; border-right: none !important; text-align: right;}
+
+.payment table tbody tr:last-of-type td {border-bottom: 1px solid var(--color-black-4);}
+.payment table tbody [name="history"] {max-width: 300px; text-align: left; font-size: 0.8em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
