@@ -4,13 +4,13 @@ include $_SERVER["DOCUMENT_ROOT"] . '/vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 // 엑셀 파일 경로
-$inputFileName = $_SERVER["DOCUMENT_ROOT"] . '/php/excel/2026-02-13진료비통계.xlsx';
+$inputFileName = $_SERVER["DOCUMENT_ROOT"] . '/php/excel/2026-02-19진료비통계.xlsx';
 
 // 엑셀 파일 타입에 맞춰 자동으로 리더 생성
 $spreadsheet = IOFactory::load($inputFileName);
 
 // 첫 번째 시트 선택
-$sheet = $spreadsheet->getSheet(0);
+$sheet = $spreadsheet->getSheet(1);
 
 // 전체 데이터를 배열로 변환
 $data = $sheet->toArray();
@@ -36,6 +36,10 @@ function num($val) {
 ?>
 <div id="content__list">
     <section class="content__outer payment">
+        <div class="excel__form">
+            <input type="file">
+            <button type="button" name="btn_ex_read">엑셀읽어오기</button>
+        </div>
         <table>
             <thead>
                 <tr class="date">
@@ -47,7 +51,6 @@ function num($val) {
                     <th colspan="3">보험수납</th>
                     <th colspan="3">비보험수납</th>
                     <th rowspan="2">합계</th>
-                    <th rowspan="2">보험미수</th>
                     <th rowspan="2">진료내역</th>
                 </tr>
                 <tr>
@@ -136,7 +139,6 @@ function num($val) {
                     echo "<td>" . number_format($unins_ls["card"]) . "</td>";
                     echo "<td>" . number_format($unins_ls["online"]) . "</td>";
                     echo "<td>" . number_format(array_sum($ins_ls) + array_sum($unins_ls)) . "</td>";
-                    echo "<td>" . number_format($diff_ls["ins"]) . "</td>";
                     echo "<td name=\"history\">{$user[25]}</td>";
                     echo "</tr>";
                 }
@@ -151,7 +153,6 @@ function num($val) {
                     <td><?php echo number_format($unins_sum_ls["card"]) ?></td>
                     <td><?php echo number_format($unins_sum_ls["online"]) ?></td>
                     <td><?php echo number_format(array_sum($ins_sum_ls) + array_sum($unins_sum_ls)) ?></td>
-                    <td><?php echo number_format(array_sum($diff_sum)) ?></td>
                     <td></td>
                 </tr>
             </tbody>
