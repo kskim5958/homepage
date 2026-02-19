@@ -38,7 +38,7 @@ function num($val) {
     <section class="content__outer payment">
         <div class="excel__form">
             <input type="file">
-            <button type="button">엑셀읽어오기</button>
+            <button type="button" name="btn_ex_read">엑셀읽어오기</button>
         </div>
         <table>
             <thead>
