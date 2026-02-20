@@ -32,27 +32,27 @@ const fn_payment_list_html = (list, today) => {
     let html = "";
     html += "<table>";
     html += 
-        `<thead>
-            <tr>
-                <th colspan="12">${today}</th>
-            </tr>
-            <tr>
-                <th rowspan="2">순번</th>
-                <th rowspan="2" colspan="2">성명</th>
-                <th colspan="3">보험수납</th>
-                <th colspan="3">비보험수납</th>
-                <th rowspan="2">합계</th>
-                <th rowspan="2">진료내역</th>
-            </tr>
-            <tr>
-                <th>현금</th>
-                <th>카드</th>
-                <th>계좌이체</th>
-                <th>현금</th>
-                <th>카드</th>
-                <th>계좌이체</th>
-            </tr>
-        </thead>`;
+    `<thead>
+        <tr>
+            <th colspan="12">${today}</th>
+        </tr>
+        <tr>
+            <th rowspan="2">순번</th>
+            <th rowspan="2" colspan="2">성명</th>
+            <th colspan="3">보험수납</th>
+            <th colspan="3">비보험수납</th>
+            <th rowspan="2">합계</th>
+            <th rowspan="2">진료내역</th>
+        </tr>
+        <tr>
+            <th>현금</th>
+            <th>카드</th>
+            <th>계좌이체</th>
+            <th>현금</th>
+            <th>카드</th>
+            <th>계좌이체</th>
+        </tr>
+    </thead>`;
     html += "<tbody>";
     $.each(list, function(index, arr) {
         html += "<tr>";
