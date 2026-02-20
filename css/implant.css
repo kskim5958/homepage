@@ -4,15 +4,6 @@
 .content__outer.b4af {padding: 5rem 0; background-color: var(--color-black-2); color: var(--color-white-1);}
 .content__outer.materials {padding: 5rem 0;}
 
-.content__outer {
-    padding-top: 5rem;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
-    font-family: var(--font-type-1);
-    color: var(--color-black-2);
-}
-
 .main__title {text-align: center; font-family: var(--font-type-gowun);}
 .main__title h1 {font-size: 5em;}
 .main__title h2 {font-size: 3em; width: fit-content; margin: auto; position: relative;}

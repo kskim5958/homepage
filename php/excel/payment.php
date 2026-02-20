@@ -36,10 +36,6 @@ function num($val) {
 ?>
 <div id="content__list">
     <section class="content__outer payment">
-        <div class="excel__form">
-            <input type="file">
-            <button type="button" name="btn_ex_read">엑셀읽어오기</button>
-        </div>
         <table>
             <thead>
                 <tr class="date">

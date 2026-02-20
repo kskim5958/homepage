@@ -71,7 +71,14 @@ if ($_FILES['file']['name']) {
                 $payment_ls[$index]["content"] = $r_row[$index][25];
             }
         }
-        $json = json_encode(["result" => true, "list" => $payment_ls, "today" => $r_row[0][1]]);
+        $payment_ls_sum["ins_card_sum"] = array_sum(array_column($payment_ls, "ins_card"));
+        $payment_ls_sum["ins_cash_sum"] = array_sum(array_column($payment_ls, "ins_cash"));
+        $payment_ls_sum["ins_online_sum"] = array_sum(array_column($payment_ls, "ins_online"));
+        $payment_ls_sum["unins_card_sum"] = array_sum(array_column($payment_ls, "unins_card"));
+        $payment_ls_sum["unins_cash_sum"] = array_sum(array_column($payment_ls, "unins_cash"));
+        $payment_ls_sum["unins_online_sum"] = array_sum(array_column($payment_ls, "unins_online"));
+        $payment_ls_sum["total_sum"] = array_sum($payment_ls_sum);
+        $json = json_encode(["result" => true, "list" => $payment_ls, "list_sum" => $payment_ls_sum,"today" => $r_row[0][1]]);
     } catch (Exception $e) {
         $json = json_encode(["result" => false, "error" => $e->getMessage()]);
     }
