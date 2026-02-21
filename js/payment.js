@@ -36,7 +36,7 @@ const fn_payment_list_html = (list, list_sum, today) => {
     html += 
     `<thead>
         <tr class="today__date">
-            <th colspan="12">${today}</th>
+            <th colspan="12">${today} 오늘의일계표</th>
         </tr>
         <tr class="title">
             <th rowspan="2">순번</th>
@@ -47,11 +47,11 @@ const fn_payment_list_html = (list, list_sum, today) => {
             <th rowspan="2">진료내역</th>
         </tr>
         <tr class="title">
-            <th>현금</th>
             <th>카드</th>
+            <th>현금</th>
             <th>계좌이체</th>
-            <th>현금</th>
             <th>카드</th>
+            <th>현금</th>
             <th>계좌이체</th>
         </tr>
     </thead>`;
