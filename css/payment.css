@@ -25,5 +25,6 @@
 
 @media print {
     nav, .form {display: none;}
-    #daily_today {padding: 0;}
+    .content__outer, #daily_today {margin: 0; padding: 0;}
+    @page {size: A4; margin: 10mm;}
 }
