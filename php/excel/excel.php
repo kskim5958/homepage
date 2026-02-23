@@ -4,7 +4,7 @@
         <div class="form">
             <input type="file" name="excel_file" accept=".xls, .xlsx, .csv">
             <button type="button" name="upload_btn" data-form="excel_file">Excel Read</button>
-            <button type="button" name="print_btn">인쇄하기</button>
+            <button type="button" name="dwload_btn">바탕화면으로 저장하기</button>
         </div>
         <div id="daily_today"></div>
     </section>

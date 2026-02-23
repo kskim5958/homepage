@@ -17,7 +17,7 @@ if ($_FILES['file']['name']) {
         }
         if (count($r_row) != 0) {
             foreach ($r_row as $index => $value) {
-                $name = $r_row[$index][2] . " " . $r_row[$index][3];
+                $name = $r_row[$index][3];
                 $card = num($r_row[$index][17]);
                 $cash = num($r_row[$index][18]);
                 $online = num($r_row[$index][19]);
