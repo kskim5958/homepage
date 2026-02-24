@@ -1,5 +1,5 @@
 #daily_today {padding-top: 2em; padding-bottom: 5em;}
-#daily_today table {border-collapse: collapse; font-size: 0.9em;}
+#daily_today table {width: 70%; margin: auto; border-collapse: collapse; font-size: 0.9em;}
 #daily_today .title th {background-color: #87cefa !important; font-weight: 500;}
 #daily_today th, #daily_today td {
     padding: 5px 10px;

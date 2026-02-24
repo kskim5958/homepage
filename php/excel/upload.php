@@ -37,7 +37,7 @@ if ($_FILES['file']['name']) {
                     "unins_cash" => 0,
                     "unins_online" => 0
                 ];
-                if ($ins > 0) {
+                if ($ins != 0) {
                     $var = 0;
                     if ($card > $var) {
                         $var = $card - $ins;
@@ -52,7 +52,7 @@ if ($_FILES['file']['name']) {
                         $payment_ls[$index]["ins_online"] = ($ins >= $online) ? $online : $ins;
                     }
                 }
-                if ($unins > 0) {
+                if ($unins != 0) {
                     $var = 0;
                     if ($card > $var) {
                         $var = $card - $unins;
@@ -65,6 +65,15 @@ if ($_FILES['file']['name']) {
                     if ($online > $var) {
                         $var = $online - $unins;
                         $payment_ls[$index]["unins_online"] = ($unins >= $online) ? $online : $unins;
+                    }
+                    if ($card < $var) {
+                        $payment_ls[$index]["unins_card"] = $card;
+                    }
+                    if ($cash < $var) {
+                        $payment_ls[$index]["unins_cash"] = $cash;
+                    }
+                    if ($online < $var) {
+                        $payment_ls[$index]["unins_online"] = $online;
                     }
                 }
                 $payment_ls[$index]["payment_sum"] = $card + $cash + $online;
@@ -102,5 +111,5 @@ if ($_FILES['file']['name']) {
 
 function num($val) {
     $result = preg_replace("/[^0-9-]/", "", $val);
-    return (int)$result;
+    return (int) $result;
 }

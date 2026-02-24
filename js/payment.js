@@ -93,7 +93,7 @@ const fn_payment_list_html = (list, list_sum, today) => {
     // html += '<td></td>';
     html += "</tr>";
     $.each(list, function(index, arr) {
-        html += "<tr>";
+        html += '<tr class="list">';
         html += `<td name="num">${index}</td>`;
         html += `<td name="name">${arr.name}</td>`;
         html += `<td class="pay__format" name="ins_card">${arr.ins_card}</td>`;

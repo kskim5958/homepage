@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @media print {
+            * {margin: 0; padding: 0;}
+            /* table {padding: 5em;} */
+            table {width: 90%; margin: auto; border-collapse: collapse;}
+            th, td {border: 1px solid black !important; text-align: center; color: black; background-color: wheat; box-sizing: border-box;}
+            td:nth-of-type(1) {width: 10%;}
+            td:nth-of-type(2) {width: 10%;}
+            td:nth-of-type(3) {width: 30%;}
+            td:nth-of-type(4) {width: 50%;}
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2" colspan="2">제목1</th>
+                <th>제목3</th>
+                <th>제목4</th>
+                <th>제목5</th>
+            </tr>
+            <tr>
+                <th>제목3</th>
+                <th>제목4</th>
+                <th>제목5</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2">내용1</td>
+                <td>내용2</td>
+                <td>내용3</td>
+                <td>내용4</td>
+            </tr>
+            <tr>
+                <td colspan="2">내용1</td>
+                <td>내용2</td>
+                <td>내용3</td>
+                <td>내용4</td>
+            </tr>
+            <tr>
+                <td colspan="2">내용1</td>
+                <td>내용2</td>
+                <td>내용3</td>
+                <td>내용4</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
