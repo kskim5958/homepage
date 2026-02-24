@@ -1,36 +1,8 @@
-$('[name="dwload_btn"]').click(function (e) {
+$('[name="upload_btn"]').click(function (e) {
     e.preventDefault();
-    const result = true;
-    $.ajax({
-        url: "/php/excel/dwload.php",
-        type: "POST",
-        data: form_data,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-            data = JSON.parse(data);
-            const result = data.result;
-            if (result) {
-                const list = data.list;
-                const list_sum = data.list_sum;
-                const today = data.today;
-                const html = fn_payment_list_html(list, list_sum, today);
-                $("#daily_today").append(html);
-            } else {
-                const error = data.error;
-                console.log("🚀 ~ error:", error)
-            }
-        },
-        error: function () {
-            alert("파일 읽기 실패");
-        },
-    });
-});
-
-$('[name="upload_btn"]').click(function (e) { 
-    e.preventDefault();
+    $('#daily_today').empty();
     const form = $(this).data("form");
-    const file = $(".form").find(`[name="${form}"]`);
+    const file = $(`.${form}`).find(`[name="${form}"]`);
     const file_data = file.prop('files')[0];
     const form_data = new FormData();
     form_data.append('file', file_data);
@@ -97,7 +69,7 @@ const fn_payment_list_html = (list, list_sum, today) => {
     html += "</tr>";
     $.each(list, function(index, arr) {
         html += '<tr class="list">';
-        html += `<td name="num">${index}</td>`;
+        html += `<td name="num">${index + 1}</td>`;
         html += `<td name="name">${arr.name}</td>`;
         html += `<td class="pay__format" name="ins_card">${arr.ins_card}</td>`;
         html += `<td class="pay__format" name="ins_cash">${arr.ins_cash}</td>`;

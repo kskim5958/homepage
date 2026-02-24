@@ -1,5 +1,40 @@
+.excel_file {
+    width: 80%;
+    margin: auto;
+    padding: 3em;
+    box-sizing: border-box;
+    background-color: var(--color-gray-1);
+    border-radius: 1em;
+}
+
+.excel_file .comment {padding-bottom: 1.5em; display: block !important;}
+.excel_file .comment h1 {font-size: 2em; font-weight: 600;}
+.excel_file .comment p {font-size: 1em;}
+
+.excel_file input[type=file]::file-selector-button {
+  padding: 8px 20px;
+  background: #fff;
+  border: 1px solid rgb(77,77,77);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.excel_file input[type=file]::file-selector-button:hover {
+    background-color: rgb(77,77,77);
+    color: #fff;
+}
+
+.excel_file button[type="button"] {
+    padding: 8px 20px;
+    background-color: var(--color-blue-1);
+    border: none;
+    border-radius: 10px;
+    color: var(--color-white-1);
+    cursor: pointer;
+}
+
 #daily_today {padding-top: 2em; padding-bottom: 5em;}
-#daily_today table {width: 70%; margin: auto; border-collapse: collapse; font-size: 0.9em;}
+#daily_today table {width: 80%; margin: auto; border-collapse: collapse; font-size: 0.9em;}
 #daily_today .title th {background-color: #87cefa !important; font-weight: 500;}
 #daily_today th, #daily_today td {
     padding: 5px 10px;
@@ -8,18 +43,18 @@
     text-align: center;
     box-sizing: border-box;
 }
-#daily_today tbody tr:nth-of-type(odd) {background-color: var(--color-gray-4);}
-#daily_today td[name="num"] {width: 50px;}
-#daily_today td[name="name"] {width: 200px;}
-#daily_today td.pay__format {width: 100px;}
+#daily_today tbody tr:nth-of-type(odd) {background-color: var(--color-gray-1);}
 #daily_today .today__date th {background-color: transparent; border-left: none; border-top: none; border-right: none; text-align: right; font-size: 2em; font-weight: 600;}
 #daily_today .title:nth-of-type(2) th:last-of-type {border-right: 1px solid var(--color-black-4);}
 #daily_today tbody td:last-of-type {border-right: 1px solid var(--color-black-4);}
-#daily_today .sum td {text-align: right; background-color: var(--color-ivory-1); font-weight: 700;}
+#daily_today tbody .list td {width: 12%;}
+#daily_today tbody .list td:first-of-type {width: 4%;}
+#daily_today .sum td {background-color: var(--color-ivory-1); font-weight: 700;}
+#daily_today .sum td:first-of-type {text-align: right;}
 
 @media print {
     #content__list {padding: 0 !important; margin: 0 !important;}
-    nav, .form {display: none !important;}
+    nav, .excel_file {display: none !important;}
     .content__outer {padding: 0 !important;}
     .today__date th {font-size: 1em !important;}
     table {

@@ -55,29 +55,20 @@ if ($_FILES['file']['name']) {
                 }
                 if ($unins > 0 && $payment_sum > 0) {
                     $var = 0;
-                    if ($card > $var) {
+                    if ($card > $var)
                         $var = $card - $unins;
                         $payment_ls[$index]["unins_card"] = ($unins >= $card) ? $card : $unins;
-                    }
-                    if ($cash > $var) {
+                    if ($cash > $var) 
                         $var = $cash - $unins;
                         $payment_ls[$index]["unins_cash"] = ($unins >= $cash) ? $cash : $unins;
-                    }
-                    if ($online > $var) {
+                    if ($online > $var) 
                         $var = $online - $unins;
                         $payment_ls[$index]["unins_online"] = ($unins >= $online) ? $online : $unins;
-                    }
                 }
                 if ($payment_sum < 0) {
-                    if ($card < 0) {
-                        $payment_ls[$index]["unins_card"] = $card;
-                    }
-                    if ($cash < 0) {
-                        $payment_ls[$index]["unins_cash"] = $cash;
-                    }
-                    if ($online < 0) {
-                        $payment_ls[$index]["unins_online"] = $online;
-                    }
+                    ($card < 0) && $payment_ls[$index]["unins_card"] = $card;
+                    ($cash < 0) &&$payment_ls[$index]["unins_cash"] = $cash;
+                    ($online < 0) && $payment_ls[$index]["unins_online"] = $online;
                 }
                 $payment_ls[$index]["payment_sum"] = $payment_sum;
                 $payment_ls[$index]["content"] = ($r_row[$index][25] == null) ? "-" : $r_row[$index][25];
