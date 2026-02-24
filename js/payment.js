@@ -16,6 +16,9 @@ $('[name="dwload_btn"]').click(function (e) {
                 const today = data.today;
                 const html = fn_payment_list_html(list, list_sum, today);
                 $("#daily_today").append(html);
+            } else {
+                const error = data.error;
+                console.log("🚀 ~ error:", error)
             }
         },
         error: function () {

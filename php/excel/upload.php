@@ -22,7 +22,8 @@ if ($_FILES['file']['name']) {
                 $cash = num($r_row[$index][18]);
                 $online = num($r_row[$index][19]);
                 $unins = num($r_row[$index][13]);
-                $ins = ($card + $cash + $online) - $unins;
+                $payment_sum = $card + $cash + $online;
+                $ins = ($payment_sum > 0) ? ($payment_sum - $unins) : 0;
                 $payment_ls[$index] = [
                     "name" => $name,
                     "card" => $card,
@@ -37,7 +38,7 @@ if ($_FILES['file']['name']) {
                     "unins_cash" => 0,
                     "unins_online" => 0
                 ];
-                if ($ins != 0) {
+                if ($ins > 0 && $payment_sum > 0) {
                     $var = 0;
                     if ($card > $var) {
                         $var = $card - $ins;
@@ -52,7 +53,7 @@ if ($_FILES['file']['name']) {
                         $payment_ls[$index]["ins_online"] = ($ins >= $online) ? $online : $ins;
                     }
                 }
-                if ($unins != 0) {
+                if ($unins > 0 && $payment_sum > 0) {
                     $var = 0;
                     if ($card > $var) {
                         $var = $card - $unins;
@@ -66,17 +67,19 @@ if ($_FILES['file']['name']) {
                         $var = $online - $unins;
                         $payment_ls[$index]["unins_online"] = ($unins >= $online) ? $online : $unins;
                     }
-                    if ($card < $var) {
+                }
+                if ($payment_sum < 0) {
+                    if ($card < 0) {
                         $payment_ls[$index]["unins_card"] = $card;
                     }
-                    if ($cash < $var) {
+                    if ($cash < 0) {
                         $payment_ls[$index]["unins_cash"] = $cash;
                     }
-                    if ($online < $var) {
+                    if ($online < 0) {
                         $payment_ls[$index]["unins_online"] = $online;
                     }
                 }
-                $payment_ls[$index]["payment_sum"] = $card + $cash + $online;
+                $payment_ls[$index]["payment_sum"] = $payment_sum;
                 $payment_ls[$index]["content"] = ($r_row[$index][25] == null) ? "-" : $r_row[$index][25];
             }
         }

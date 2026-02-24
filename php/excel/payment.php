@@ -35,9 +35,7 @@ function num($val) {
 // [22] : 미수(+)선수(-) [23] : 총미수/선수   [24] : 진료비구분  [25] : 진료내역   [26] : 메모    [27] : 최초내원 [28] : 내원경로
 
 foreach ($user_row as $row) {
-    foreach ($row as $key => $value) {
-        echo "[{$key}] : [{$value}]" . "<br>";
-    }
+    echo $row[17]. "<br>";
 }
 ?>
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/php/main/footer.php'; ?>
