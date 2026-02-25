@@ -8,7 +8,8 @@ img {width: 100%;}
 #upper .left {justify-content: end;}
 #upper .right {flex-direction: row-reverse; justify-content: start;}
 #lower .left, #lower .right {align-items: start;}
-#lower .left {flex-direction: row-reverse;}
+#lower .left {justify-content: end;}
+#lower .right {flex-direction: row-reverse; justify-content: start;}
 
 #teeth .teeth {width: 10%; font-size: 0;}
 #teeth .teeth.molar {width: 15%;}
