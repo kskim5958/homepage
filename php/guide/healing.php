@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/healing.css">
+</head>
+<body>
+    <section>
+        <div id="teeth">
+            <div id="upper">
+                <div class="left"></div>
+                <div class="right"></div>
+            </div>
+            <div id="lower">
+                <div class="left"></div>
+                <div class="right"></div>
+            </div>
+        </div>
+    </section>
+</body>
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="/js/healing.js"></script>
+</html>
