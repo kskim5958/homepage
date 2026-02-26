@@ -12,5 +12,7 @@ img {width: 100%;}
 #lower .left {justify-content: end;}
 #lower .right {flex-direction: row-reverse; justify-content: start;}
 
-#teeth .teeth {width: 10%; font-size: 0;}
+#teeth .teeth {width: 10%; font-size: 0; position: relative;}
 #teeth .teeth.molar {width: 15%;}
+#teeth .teeth .gbr,
+#teeth .teeth .siuns {position: absolute; top: -10%; left: 50%; transform: translate(-50%, 0); opacity: 0.3; display: none;}

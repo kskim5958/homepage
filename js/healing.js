@@ -39,7 +39,7 @@ $(document).on('click', '.teeth', function(event) {
 
     if (teeth_value_change == 6) {
         teeth_key = "basic";
-        teeth_el.children("img").css("opacity", "0.5");
+        teeth_el.children("img").css("opacity", "0.3");
     }
     if (teeth_value_change == 7) {
         teeth_key = "basic";
@@ -57,9 +57,19 @@ $(document).on('contextmenu', '.teeth', function(e) {
     const teeth_el = $(`#${teeth_id}`);
     const teeth_value = Number($(this).attr("data-value"));
     let teeth_gbr = $(this).attr("data-gbr");
-    teeth_gbr = (typeof teeth_gbr === "undefined") ? 0 : Number(teeth_gbr);
+    teeth_gbr = (typeof teeth_gbr === "undefined") ? 0 : Number(teeth_gbr) + 1;
     if (teeth_value == 4 && teeth_gbr == 0) {
-        
+        teeth_el.find("gbr").show();
+        teeth_el.find("siuns").hide();
+        teeth_el.attr("data-gbr", teeth_gbr);
+    } else if (teeth_value == 4 && teeth_gbr == 1) {
+        teeth_el.find("gbr").hide();
+        teeth_el.find("siuns").show();
+        teeth_el.attr("data-gbr", teeth_gbr);
+    } else {
+        teeth_el.find("gbr").hide();
+        teeth_el.find("siuns").hide();
+        teeth_el.removeAttr("data-gbr");
     }
 });
 
@@ -71,8 +81,18 @@ const fn_teeth_html = () => {
     for (let j = 8; j >= 1; j--) {
         const teeth_num = j + 10;
         const class_el = (j >= 6) ? " molar" : "";
-        upper_left_html += `<div id="${teeth_num}" class="teeth${class_el}" data-value="0"><img src="/img/teeth/upper/${teeth_num}_basic.png" alt=""></div>`;
-        upper_right_html += `<div id="${teeth_num + 10}" class="teeth${class_el}" data-value="0"><img ${class_el} src="/img/teeth/upper/${teeth_num}_basic.png" alt=""></div>`;
+        upper_left_html += `
+        <div id="${teeth_num}" class="teeth${class_el}" data-value="0">
+            <img src="/img/teeth/upper/${teeth_num}_basic.png" alt="">
+            <span class="gbr"></span>
+            <span class="siuns"></span>
+        </div>`;
+        upper_right_html += `
+            <div id="${teeth_num + 10}" class="teeth${class_el}" data-value="0">
+                <img ${class_el} src="/img/teeth/upper/${teeth_num}_basic.png" alt="">
+                <span class="gbr"></span>
+                <span class="siuns"></span>
+            </div>`;
     }
     for (let i = 8; i >= 1; i--) {
         const teeth_num = i + 40;
