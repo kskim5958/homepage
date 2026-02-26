@@ -59,16 +59,30 @@ $(document).on('contextmenu', '.teeth', function(e) {
     let teeth_gbr = $(this).attr("data-gbr");
     teeth_gbr = (typeof teeth_gbr === "undefined") ? 0 : Number(teeth_gbr) + 1;
     if (teeth_value == 4 && teeth_gbr == 0) {
-        teeth_el.find("gbr").show();
-        teeth_el.find("siuns").hide();
+        teeth_el.find(".gbr").show();
+        teeth_el.find(".siuns").hide();
         teeth_el.attr("data-gbr", teeth_gbr);
+        const size = teeth_el.width() * 1.2;
+        teeth_el.find(".gbr").css("width", size + "px").css("height", size + "px");
+        if (Number(teeth_id) > 30) {
+            teeth_el.find(".gbr").css("top", "unset").css("bottom", "-20%");
+        } else {
+            teeth_el.find(".gbr").css("top", "-20%").css("bottom", "unset");
+        }
     } else if (teeth_value == 4 && teeth_gbr == 1) {
-        teeth_el.find("gbr").hide();
-        teeth_el.find("siuns").show();
+        teeth_el.find(".gbr").hide();
+        teeth_el.find(".siuns").show();
         teeth_el.attr("data-gbr", teeth_gbr);
+        const size = teeth_el.width() * 1.8;
+        teeth_el.find(".siuns").css("width", size + "px").css("height", size + "px");
+        if (Number(teeth_id) > 30) {
+            teeth_el.find(".siuns").css("top", "unset").css("bottom", "-50%");
+        } else {
+            teeth_el.find(".siuns").css("top", "-50%").css("bottom", "unset");
+        }
     } else {
-        teeth_el.find("gbr").hide();
-        teeth_el.find("siuns").hide();
+        teeth_el.find(".gbr").hide();
+        teeth_el.find(".siuns").hide();
         teeth_el.removeAttr("data-gbr");
     }
 });
@@ -97,8 +111,18 @@ const fn_teeth_html = () => {
     for (let i = 8; i >= 1; i--) {
         const teeth_num = i + 40;
         const class_el = (i >= 6) ? " molar" : "";
-        lower_left_html += `<div id="${teeth_num}" class="teeth${class_el}" data-value="0"><img ${class_el} src="/img/teeth/lower/${teeth_num}_basic.png" alt=""></div>`;
-        lower_right_html += `<div id="${teeth_num - 10}" class="teeth${class_el}" data-value="0"><img ${class_el} src="/img/teeth/lower/${teeth_num}_basic.png" alt=""></div>`;
+        lower_left_html += `
+        <div id="${teeth_num}" class="teeth${class_el}" data-value="0">
+            <img ${class_el} src="/img/teeth/lower/${teeth_num}_basic.png" alt="">
+            <span class="gbr"></span>
+            <span class="siuns"></span>
+        </div>`;
+        lower_right_html += `
+        <div id="${teeth_num - 10}" class="teeth${class_el}" data-value="0">
+            <img ${class_el} src="/img/teeth/lower/${teeth_num}_basic.png" alt="">
+            <span class="gbr"></span>
+            <span class="siuns"></span>
+        </div>`;
     }
     $('#teeth').find('#upper').find('.left').append(upper_left_html);
     $('#teeth').find('#upper').find('.right').append(upper_right_html);
