@@ -46,9 +46,13 @@ $(document).on('click', '.teeth', function(event) {
         teeth_value_change = 0;
         teeth_el.children("img").css("opacity", "unset");
     }
+    teeth_el.find(".gbr").hide();
+    teeth_el.find(".siuns").hide();
+    teeth_el.removeAttr("data-gbr");
     chang_src += `/${teeth_id}_${teeth_key}.png`;
     teeth_el.attr("data-value", teeth_value_change);
     teeth_el.children("img").prop("src" , chang_src);
+    fn_calculate();
 });
 
 $(document).on('contextmenu', '.teeth', function(e) {
@@ -85,7 +89,58 @@ $(document).on('contextmenu', '.teeth', function(e) {
         teeth_el.find(".siuns").hide();
         teeth_el.removeAttr("data-gbr");
     }
+    fn_calculate();
 });
+
+const fn_calculate = () => {
+    const price_list = {1: 80000, 2: 300000, 3: 450000, 4: 250000, 5: 300000, 6: 200000, 7: 500000};
+    let val_arr = [];
+    let gbr_arr = [];
+    $("#teeth").find(".teeth").each(function () {
+        const val = Number($(this).attr("data-value"));
+        const gbr = Number($(this).attr("data-gbr"));
+        val_arr.push(val);
+        gbr_arr.push(gbr);
+    });
+    let resin = val_arr.filter(function(item) {
+        return item == 1;
+    });
+    let inlay = val_arr.filter(function(item) {
+        return item == 2;
+    });
+    let crown = val_arr.filter(function(item) {
+        return item == 3;
+    });
+    let implant = val_arr.filter(function(item) {
+        return item == 4;
+    });
+    let panic = val_arr.filter(function(item) {
+        return item == 5;
+    });
+    let gbr = gbr_arr.filter(function(item) {
+        return item == 0;
+    });
+    let siuns = gbr_arr.filter(function(item) {
+        return item == 1;
+    });
+
+    let resin_sum = 0;
+    let inlay_sum = 0;
+    let crown_sum = 0;
+    let implant_sum = 0;
+    let panic_sum = 0;
+    let gbr_sum = 0;
+    let siuns_sum = 0;
+    $.each(price_list, function (key, value) {
+      (key == 1) && (resin_sum = resin.length * value);
+      (key == 2) && (inlay_sum = inlay.length * value);
+      (key == 3) && (crown_sum = crown.length * value);
+      (key == 4) && (implant_sum = implant.length * value);
+      (key == 5) && (panic_sum = panic.length * value);
+      (key == 6) && (gbr_sum = gbr.length * value);
+      (key == 7) && (siuns_sum = siuns.length * value);
+    });
+}
 
 const fn_teeth_html = () => {
     let upper_left_html ="";

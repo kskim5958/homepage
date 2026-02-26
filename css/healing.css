@@ -24,7 +24,7 @@ img {width: 100%;}
     opacity: 0.2;
     display: none;
     z-index: 1;
-    background-size: 10px 10px;
+    background-size: 5px 5px;
     background-image: repeating-linear-gradient(45deg, #db0025 0, #db0025 1px, transparent 0, transparent 50%);
     opacity: 0.3;
     border-radius: 50%;
