@@ -2,7 +2,8 @@ $(document).ready(function (e) {
     fn_teeth_html();
 });
 
-$(document).on('click', '.teeth', function(e) {
+$(document).on('click', '.teeth', function(event) {
+    event.preventDefault();
     const teeth_arr = {
       basic: 0,
       resin: 1,
@@ -12,8 +13,9 @@ $(document).on('click', '.teeth', function(e) {
       panic: 5
     };
     let teeth_id = Number($(this).attr("id"));
-    let teeth_value = Number($(this).attr("data-value")) + 1;
-    let teeth_key = getKeyByValue(teeth_arr, teeth_value);
+    const teeth_value = Number($(this).attr("data-value"));
+    let teeth_value_change = teeth_value + 1;
+    let teeth_key = getKeyByValue(teeth_arr, teeth_value_change);
     const teeth_el = $(`#${teeth_id}`);
     const current_src = teeth_el.children("img").attr("src");
     let current_src_arr = current_src.split("/");
@@ -28,18 +30,37 @@ $(document).on('click', '.teeth', function(e) {
     });
 
     if (teeth_id >= 21 && teeth_id <= 28) {
-      teeth_id = teeth_id - 10;
-    } else if (teeth_id >= 31 && teeth_id <= 38) {
-      teeth_id = teeth_id + 10;
+        teeth_id = teeth_id - 10;
     }
 
-    if (teeth_value == 6) {
-        teeth_value = 0;
+    if (teeth_id >= 31 && teeth_id <= 38) {
+        teeth_id = teeth_id + 10;
+    }
+
+    if (teeth_value_change == 6) {
         teeth_key = "basic";
+        teeth_el.children("img").css("opacity", "0.5");
+    }
+    if (teeth_value_change == 7) {
+        teeth_key = "basic";
+        teeth_value_change = 0;
+        teeth_el.children("img").css("opacity", "unset");
     }
     chang_src += `/${teeth_id}_${teeth_key}.png`;
-    teeth_el.attr("data-value", teeth_value);
+    teeth_el.attr("data-value", teeth_value_change);
     teeth_el.children("img").prop("src" , chang_src);
+});
+
+$(document).on('contextmenu', '.teeth', function(e) {
+    e.preventDefault();
+    const teeth_id = $(this).attr("id");
+    const teeth_el = $(`#${teeth_id}`);
+    const teeth_value = Number($(this).attr("data-value"));
+    let teeth_gbr = $(this).attr("data-gbr");
+    teeth_gbr = (typeof teeth_gbr === "undefined") ? 0 : Number(teeth_gbr);
+    if (teeth_value == 4 && teeth_gbr == 0) {
+        
+    }
 });
 
 const fn_teeth_html = () => {

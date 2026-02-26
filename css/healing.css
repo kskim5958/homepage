@@ -2,6 +2,7 @@
 img {width: 100%;}
 #teeth {width: 80%;}
 #upper, #lower {width: 100%; display: flex; flex-direction: row;}
+#lower {margin-top: 3em;}
 #upper .left, #upper .right,
 #lower .left, #lower .right {width: 50%; display: flex; flex-direction: row;}
 #upper .left, #upper .right {align-items: end;}
