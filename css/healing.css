@@ -42,9 +42,13 @@ img {width: 100%;}
     right: 0;
     background-color: #211f1f;
     color: #ededed;
+    margin-right: -30%;
 }
 
-#price .inner__box {width: 80%; margin: auto; padding: 3em 0; box-sizing: border-box; font-size: 1.5em;}
+#price .btn {position: absolute; top: 0; left: 0; width: 80px; height: 80px; border-radius: 50%; background-color: #211f1f; color: #ededed; cursor: pointer;}
+#price .btn span {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+
+#price .inner__box {width: 100%; height: 100%; padding: 1em; box-sizing: border-box; font-size: 1em; overflow: hidden;}
 #price .row {display: flex; flex-direction: column; padding: 1.5em 0; box-sizing: border-box; border-bottom: 1px solid #ededed;}
 #price .row:last-of-type {border: none;}
 #price .row .col {display: flex; flex-direction: row; justify-content: space-between;}

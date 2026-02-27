@@ -1,5 +1,9 @@
 $(document).ready(function (e) {
     fn_teeth_html();
+    const btn_el = $("#price .btn");
+    const btn_width = btn_el.outerWidth();
+    btn_el.css("left", -(btn_width + 10) + "px");
+    btn_el.css("top", "10px");
 });
 
 $(document).on('click', '.teeth', function(event) {
@@ -144,13 +148,17 @@ const fn_calculate = () => {
     });
     let total = 0;
     $.each(price_list, function (index, price) {
-        const sum = price.cnt * price.unit_Price;
-        total += sum;
-        html += `<div class="row">
-            <div class="col"><span>${price.quantity} 치료</span><span>${price.cnt} 개</span></div>
-            <div class="col"><span>개당 ${price.unit_Price.toLocaleString()} 원</span><span> 합계 ${sum.toLocaleString()}</span></div>
-        </div>
-        `;
+        if (price.cnt == 0) {
+            return;
+        } else {
+            const sum = price.cnt * price.unit_Price;
+            total += sum;
+            html += `<div class="row">
+                <div class="col"><span>${price.quantity} 치료</span><span>${price.cnt} 개</span></div>
+                <div class="col"><span>개당 ${price.unit_Price.toLocaleString()} 원</span><span> 합계 ${sum.toLocaleString()}</span></div>
+            </div>
+            `;
+        }
     });
     html += `<div class="row">
                 <div class="col"><span>합계</span><span>${total.toLocaleString()} 원</span></div>
@@ -205,3 +213,15 @@ const fn_teeth_html = () => {
 const getKeyByValue = (obj, value) => {
     return Object.keys(obj).find(key => obj[key] === value);
 }
+
+$("#price .btn").click(function (e) { 
+    e.preventDefault();
+    const el = $("#price");
+    const width = el.width();
+    const margin = parseFloat(el.css("margin-right"));
+    if (margin < 0) {
+        el.css("margin-right", 0);
+    } else {
+        el.css("margin-right", -(width) + "px");
+    }
+});
