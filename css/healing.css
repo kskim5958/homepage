@@ -29,5 +29,22 @@ img {width: 100%;}
     opacity: 0.3;
     border-radius: 50%;
 }
+#teeth .teeth .sinus {
+    top: -50%;
+    background-image: repeating-linear-gradient(45deg, #001bb3 0, #001bb3 1px, transparent 0, transparent 50%);
+}
 
-#teeth .teeth .sinus {top: -50%; background-image: repeating-linear-gradient(45deg, #001bb3 0, #001bb3 1px, transparent 0, transparent 50%);}
+#price {
+    width: 30%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #211f1f;
+    color: #ededed;
+}
+
+#price .inner__box {width: 80%; margin: auto; padding: 3em 0; box-sizing: border-box; font-size: 1.5em;}
+#price .row {display: flex; flex-direction: column; padding: 1.5em 0; box-sizing: border-box; border-bottom: 1px solid #ededed;}
+#price .row:last-of-type {border: none;}
+#price .row .col {display: flex; flex-direction: row; justify-content: space-between;}

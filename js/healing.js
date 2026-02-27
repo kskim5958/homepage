@@ -93,12 +93,13 @@ $(document).on('contextmenu', '.teeth', function(e) {
 });
 
 const fn_calculate = () => {
+    let html = "";
     const price_list = { 
         1: { quantity: "레진", unit_Price: 80000 },
         2: { quantity: "인레이", unit_Price: 300000 },
         3: { quantity: "크라운", unit_Price: 450000 },
         4: { quantity: "오스템 임플란트CA", unit_Price: 250000 },
-        5: { quantity: "파닉(인공치아)", unit_Price: 80000 },
+        5: { quantity: "파닉(인공치아)", unit_Price: 300000 },
         6: { quantity: "뼈이식", unit_Price: 200000 },
         7: { quantity: "상악동거상술", unit_Price: 500000 }
     };
@@ -133,14 +134,29 @@ const fn_calculate = () => {
     });
 
     $.each(price_list, function (index, price) {
-    //   (index == 1) && (resin_sum = resin.length * value);
-    //   (index == 2) && (inlay_sum = inlay.length * value);
-    //   (index == 3) && (crown_sum = crown.length * value);
-    //   (index == 4) && (implant_sum = implant.length * value);
-    //   (index == 5) && (panic_sum = panic.length * value);
-    //   (index == 6) && (gbr_sum = gbr.length * value);
-    //   (index == 7) && (sinus_sum = sinus.length * value);
+      (index == 1) && (price.cnt = resin.length);
+      (index == 2) && (price.cnt = inlay.length);
+      (index == 3) && (price.cnt = crown.length);
+      (index == 4) && (price.cnt = implant.length);
+      (index == 5) && (price.cnt = panic.length);
+      (index == 6) && (price.cnt = gbr.length);
+      (index == 7) && (price.cnt = sinus.length);
     });
+    let total = 0;
+    $.each(price_list, function (index, price) {
+        const sum = price.cnt * price.unit_Price;
+        total += sum;
+        html += `<div class="row">
+            <div class="col"><span>${price.quantity} 치료</span><span>${price.cnt} 개</span></div>
+            <div class="col"><span>개당 ${price.unit_Price.toLocaleString()} 원</span><span> 합계 ${sum.toLocaleString()}</span></div>
+        </div>
+        `;
+    });
+    html += `<div class="row">
+                <div class="col"><span>합계</span><span>${total.toLocaleString()} 원</span></div>
+            </div>`;
+    $("#price").find(".inner__box").empty();
+    $("#price").find(".inner__box").append(html);
 }
 
 const fn_teeth_html = () => {
