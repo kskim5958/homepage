@@ -16,7 +16,7 @@ img {width: 100%;}
 #teeth .teeth {width: 10%; font-size: 0; position: relative;}
 #teeth .teeth.molar {width: 15%;}
 #teeth .teeth .gbr,
-#teeth .teeth .siuns {
+#teeth .teeth .sinus {
     position: absolute;
     top: -20%;
     left: 50%;
@@ -24,10 +24,10 @@ img {width: 100%;}
     opacity: 0.2;
     display: none;
     z-index: 1;
-    background-size: 5px 5px;
+    background-size: 7px 7px;
     background-image: repeating-linear-gradient(45deg, #db0025 0, #db0025 1px, transparent 0, transparent 50%);
     opacity: 0.3;
     border-radius: 50%;
 }
 
-#teeth .teeth .siuns {top: -50%; background-image: repeating-linear-gradient(45deg, #001bb3 0, #001bb3 1px, transparent 0, transparent 50%);}
+#teeth .teeth .sinus {top: -50%; background-image: repeating-linear-gradient(45deg, #001bb3 0, #001bb3 1px, transparent 0, transparent 50%);}

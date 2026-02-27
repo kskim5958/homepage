@@ -47,7 +47,7 @@ $(document).on('click', '.teeth', function(event) {
         teeth_el.children("img").css("opacity", "unset");
     }
     teeth_el.find(".gbr").hide();
-    teeth_el.find(".siuns").hide();
+    teeth_el.find(".sinus").hide();
     teeth_el.removeAttr("data-gbr");
     chang_src += `/${teeth_id}_${teeth_key}.png`;
     teeth_el.attr("data-value", teeth_value_change);
@@ -64,7 +64,7 @@ $(document).on('contextmenu', '.teeth', function(e) {
     teeth_gbr = (typeof teeth_gbr === "undefined") ? 0 : Number(teeth_gbr) + 1;
     if (teeth_value == 4 && teeth_gbr == 0) {
         teeth_el.find(".gbr").show();
-        teeth_el.find(".siuns").hide();
+        teeth_el.find(".sinus").hide();
         teeth_el.attr("data-gbr", teeth_gbr);
         const size = teeth_el.width() * 1.2;
         teeth_el.find(".gbr").css("width", size + "px").css("height", size + "px");
@@ -75,25 +75,33 @@ $(document).on('contextmenu', '.teeth', function(e) {
         }
     } else if (teeth_value == 4 && teeth_gbr == 1) {
         teeth_el.find(".gbr").hide();
-        teeth_el.find(".siuns").show();
+        teeth_el.find(".sinus").show();
         teeth_el.attr("data-gbr", teeth_gbr);
         const size = teeth_el.width() * 1.8;
-        teeth_el.find(".siuns").css("width", size + "px").css("height", size + "px");
+        teeth_el.find(".sinus").css("width", size + "px").css("height", size + "px");
         if (Number(teeth_id) > 30) {
-            teeth_el.find(".siuns").css("top", "unset").css("bottom", "-50%");
+            teeth_el.find(".sinus").css("top", "unset").css("bottom", "-50%");
         } else {
-            teeth_el.find(".siuns").css("top", "-50%").css("bottom", "unset");
+            teeth_el.find(".sinus").css("top", "-50%").css("bottom", "unset");
         }
     } else {
         teeth_el.find(".gbr").hide();
-        teeth_el.find(".siuns").hide();
+        teeth_el.find(".sinus").hide();
         teeth_el.removeAttr("data-gbr");
     }
     fn_calculate();
 });
 
 const fn_calculate = () => {
-    const price_list = {1: 80000, 2: 300000, 3: 450000, 4: 250000, 5: 300000, 6: 200000, 7: 500000};
+    const price_list = { 
+        1: { quantity: "레진", unit_Price: 80000 },
+        2: { quantity: "인레이", unit_Price: 300000 },
+        3: { quantity: "크라운", unit_Price: 450000 },
+        4: { quantity: "오스템 임플란트CA", unit_Price: 250000 },
+        5: { quantity: "파닉(인공치아)", unit_Price: 80000 },
+        6: { quantity: "뼈이식", unit_Price: 200000 },
+        7: { quantity: "상악동거상술", unit_Price: 500000 }
+    };
     let val_arr = [];
     let gbr_arr = [];
     $("#teeth").find(".teeth").each(function () {
@@ -120,25 +128,18 @@ const fn_calculate = () => {
     let gbr = gbr_arr.filter(function(item) {
         return item == 0;
     });
-    let siuns = gbr_arr.filter(function(item) {
+    let sinus = gbr_arr.filter(function(item) {
         return item == 1;
     });
 
-    let resin_sum = 0;
-    let inlay_sum = 0;
-    let crown_sum = 0;
-    let implant_sum = 0;
-    let panic_sum = 0;
-    let gbr_sum = 0;
-    let siuns_sum = 0;
-    $.each(price_list, function (key, value) {
-      (key == 1) && (resin_sum = resin.length * value);
-      (key == 2) && (inlay_sum = inlay.length * value);
-      (key == 3) && (crown_sum = crown.length * value);
-      (key == 4) && (implant_sum = implant.length * value);
-      (key == 5) && (panic_sum = panic.length * value);
-      (key == 6) && (gbr_sum = gbr.length * value);
-      (key == 7) && (siuns_sum = siuns.length * value);
+    $.each(price_list, function (index, price) {
+    //   (index == 1) && (resin_sum = resin.length * value);
+    //   (index == 2) && (inlay_sum = inlay.length * value);
+    //   (index == 3) && (crown_sum = crown.length * value);
+    //   (index == 4) && (implant_sum = implant.length * value);
+    //   (index == 5) && (panic_sum = panic.length * value);
+    //   (index == 6) && (gbr_sum = gbr.length * value);
+    //   (index == 7) && (sinus_sum = sinus.length * value);
     });
 }
 
@@ -154,13 +155,13 @@ const fn_teeth_html = () => {
         <div id="${teeth_num}" class="teeth${class_el}" data-value="0">
             <img src="/img/teeth/upper/${teeth_num}_basic.png" alt="">
             <span class="gbr"></span>
-            <span class="siuns"></span>
+            <span class="sinus"></span>
         </div>`;
         upper_right_html += `
             <div id="${teeth_num + 10}" class="teeth${class_el}" data-value="0">
                 <img ${class_el} src="/img/teeth/upper/${teeth_num}_basic.png" alt="">
                 <span class="gbr"></span>
-                <span class="siuns"></span>
+                <span class="sinus"></span>
             </div>`;
     }
     for (let i = 8; i >= 1; i--) {
@@ -170,13 +171,13 @@ const fn_teeth_html = () => {
         <div id="${teeth_num}" class="teeth${class_el}" data-value="0">
             <img ${class_el} src="/img/teeth/lower/${teeth_num}_basic.png" alt="">
             <span class="gbr"></span>
-            <span class="siuns"></span>
+            <span class="sinus"></span>
         </div>`;
         lower_right_html += `
         <div id="${teeth_num - 10}" class="teeth${class_el}" data-value="0">
             <img ${class_el} src="/img/teeth/lower/${teeth_num}_basic.png" alt="">
             <span class="gbr"></span>
-            <span class="siuns"></span>
+            <span class="sinus"></span>
         </div>`;
     }
     $('#teeth').find('#upper').find('.left').append(upper_left_html);
